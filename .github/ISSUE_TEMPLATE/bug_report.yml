@@ -1,5 +1,5 @@
 name: Bug report
-about: Reproducible Studio behavior problem
+description: Reproducible Studio behavior problem
 labels: [bug]
 body:
   - type: input
