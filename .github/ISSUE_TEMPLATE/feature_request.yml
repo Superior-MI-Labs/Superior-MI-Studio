@@ -1,5 +1,5 @@
 name: Architecture or feature proposal
-about: Suggest a capability while respecting existing ownership
+description: Suggest a capability while respecting existing ownership
 labels: [enhancement]
 body:
   - type: textarea
