@@ -1,0 +1,30 @@
+# Bytecode and virtual environments
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Agent/test logs, screenshots, generated diagnostic artifacts
+.agent-artifacts/
+qualification-*/
+SMI-NodeLab-Logs/
+*.log
+
+# Optional external code-index/search tools
+.graphify/
+GRAPH_REPORT.md
+
+# OS/editor artifacts
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Generated binaries/swap
+*.tmp
+*.swp

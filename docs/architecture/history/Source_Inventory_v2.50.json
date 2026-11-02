@@ -1,0 +1,1214 @@
+{
+  "basis": "unexecuted static analysis of supplied v2.50 source only",
+  "modules": [
+    {
+      "module": "__init__.py",
+      "lines": 1,
+      "classes": [],
+      "functions": 0,
+      "largest_functions": [],
+      "imports_local": []
+    },
+    {
+      "module": "__main__.py",
+      "lines": 2,
+      "classes": [],
+      "functions": 0,
+      "largest_functions": [],
+      "imports_local": [
+        "gui"
+      ]
+    },
+    {
+      "module": "assets.py",
+      "lines": 44,
+      "classes": [
+        {
+          "name": "AssetIndex",
+          "start": 11
+        }
+      ],
+      "functions": 2,
+      "largest_functions": [
+        {
+          "name": "__init__",
+          "start": 12,
+          "lines": 28
+        },
+        {
+          "name": "find",
+          "start": 41,
+          "lines": 4
+        }
+      ],
+      "imports_local": []
+    },
+    {
+      "module": "authoring_actions.py",
+      "lines": 136,
+      "classes": [
+        {
+          "name": "CreationAction",
+          "start": 19
+        }
+      ],
+      "functions": 2,
+      "largest_functions": [
+        {
+          "name": "available_actions",
+          "start": 29,
+          "lines": 100
+        },
+        {
+          "name": "search_actions",
+          "start": 131,
+          "lines": 6
+        }
+      ],
+      "imports_local": [
+        "operation_catalog",
+        "python_authoring"
+      ]
+    },
+    {
+      "module": "authoring_contract.py",
+      "lines": 115,
+      "classes": [
+        {
+          "name": "QualifiedOperation",
+          "start": 12
+        },
+        {
+          "name": "OperandReference",
+          "start": 42
+        },
+        {
+          "name": "ValueAssignment",
+          "start": 57
+        },
+        {
+          "name": "CallComposition",
+          "start": 75
+        },
+        {
+          "name": "BinaryComposition",
+          "start": 97
+        }
+      ],
+      "functions": 5,
+      "largest_functions": [
+        {
+          "name": "validate_catalog",
+          "start": 25,
+          "lines": 14
+        },
+        {
+          "name": "__post_init__",
+          "start": 86,
+          "lines": 8
+        },
+        {
+          "name": "__post_init__",
+          "start": 109,
+          "lines": 7
+        },
+        {
+          "name": "__post_init__",
+          "start": 67,
+          "lines": 5
+        },
+        {
+          "name": "__post_init__",
+          "start": 51,
+          "lines": 3
+        }
+      ],
+      "imports_local": []
+    },
+    {
+      "module": "boundary_edit.py",
+      "lines": 59,
+      "classes": [
+        {
+          "name": "BoundaryEditError",
+          "start": 12
+        }
+      ],
+      "functions": 2,
+      "largest_functions": [
+        {
+          "name": "parameter_source",
+          "start": 16,
+          "lines": 22
+        },
+        {
+          "name": "terminal_return_target",
+          "start": 40,
+          "lines": 20
+        }
+      ],
+      "imports_local": [
+        "semantic_contract"
+      ]
+    },
+    {
+      "module": "docking.py",
+      "lines": 187,
+      "classes": [
+        {
+          "name": "DockGrip",
+          "start": 16
+        },
+        {
+          "name": "DockRegionController",
+          "start": 83
+        }
+      ],
+      "functions": 20,
+      "largest_functions": [
+        {
+          "name": "__init__",
+          "start": 18,
+          "lines": 20
+        },
+        {
+          "name": "contextMenuEvent",
+          "start": 61,
+          "lines": 16
+        },
+        {
+          "name": "set_mode",
+          "start": 160,
+          "lines": 14
+        },
+        {
+          "name": "__init__",
+          "start": 90,
+          "lines": 11
+        },
+        {
+          "name": "register",
+          "start": 108,
+          "lines": 11
+        }
+      ],
+      "imports_local": []
+    },
+    {
+      "module": "edge_presentation.py",
+      "lines": 39,
+      "classes": [
+        {
+          "name": "EdgeStyle",
+          "start": 9
+        }
+      ],
+      "functions": 2,
+      "largest_functions": [
+        {
+          "name": "exit_edge_style",
+          "start": 31,
+          "lines": 9
+        },
+        {
+          "name": "edge_style",
+          "start": 22,
+          "lines": 7
+        }
+      ],
+      "imports_local": []
+    },
+    {
+      "module": "exit_routes.py",
+      "lines": 88,
+      "classes": [
+        {
+          "name": "ExitRoute",
+          "start": 13
+        },
+        {
+          "name": "FoldedExitConnection",
+          "start": 60
+        }
+      ],
+      "functions": 2,
+      "largest_functions": [
+        {
+          "name": "project_exit_routes",
+          "start": 25,
+          "lines": 32
+        },
+        {
+          "name": "project_folded_exit_connections",
+          "start": 71,
+          "lines": 18
+        }
+      ],
+      "imports_local": [
+        "semantic_contract"
+      ]
+    },
+    {
+      "module": "external_icons.py",
+      "lines": 91,
+      "classes": [
+        {
+          "name": "ExternalIconAtlas",
+          "start": 29
+        }
+      ],
+      "functions": 6,
+      "largest_functions": [
+        {
+          "name": "from_directory",
+          "start": 47,
+          "lines": 24
+        },
+        {
+          "name": "discover",
+          "start": 35,
+          "lines": 10
+        },
+        {
+          "name": "default_icon_atlas_directory",
+          "start": 18,
+          "lines": 8
+        },
+        {
+          "name": "icon_id_for_resource",
+          "start": 76,
+          "lines": 7
+        },
+        {
+          "name": "icon_id_for_source",
+          "start": 85,
+          "lines": 7
+        }
+      ],
+      "imports_local": []
+    },
+    {
+      "module": "graph_layout.py",
+      "lines": 111,
+      "classes": [],
+      "functions": 3,
+      "largest_functions": [
+        {
+          "name": "arrange",
+          "start": 26,
+          "lines": 86
+        },
+        {
+          "name": "node_size",
+          "start": 11,
+          "lines": 8
+        },
+        {
+          "name": "source_line",
+          "start": 21,
+          "lines": 3
+        }
+      ],
+      "imports_local": []
+    },
+    {
+      "module": "graph_routes.py",
+      "lines": 78,
+      "classes": [
+        {
+          "name": "GraphRouteError",
+          "start": 18
+        },
+        {
+          "name": "ResolvedGraph",
+          "start": 23
+        }
+      ],
+      "functions": 1,
+      "largest_functions": [
+        {
+          "name": "resolve_graph",
+          "start": 30,
+          "lines": 49
+        }
+      ],
+      "imports_local": [
+        "navigation",
+        "python_graph",
+        "resource_graph",
+        "semantic_contract"
+      ]
+    },
+    {
+      "module": "graph_surface.py",
+      "lines": 298,
+      "classes": [
+        {
+          "name": "GraphSurfaceState",
+          "start": 16
+        },
+        {
+          "name": "OverviewMap",
+          "start": 206
+        }
+      ],
+      "functions": 20,
+      "largest_functions": [
+        {
+          "name": "frame_visible_bounds",
+          "start": 159,
+          "lines": 28
+        },
+        {
+          "name": "fit_contents",
+          "start": 61,
+          "lines": 25
+        },
+        {
+          "name": "overview_map",
+          "start": 255,
+          "lines": 24
+        },
+        {
+          "name": "overview_viewport_size",
+          "start": 232,
+          "lines": 21
+        },
+        {
+          "name": "resize_handle",
+          "start": 118,
+          "lines": 20
+        }
+      ],
+      "imports_local": []
+    },
+    {
+      "module": "gui.py",
+      "lines": 5108,
+      "classes": [
+        {
+          "name": "Waveform",
+          "start": 97
+        },
+        {
+          "name": "RowWidget",
+          "start": 118
+        },
+        {
+          "name": "SectionWidget",
+          "start": 217
+        },
+        {
+          "name": "NodeBody",
+          "start": 264
+        },
+        {
+          "name": "PortItem",
+          "start": 303
+        },
+        {
+          "name": "BoundaryPortItem",
+          "start": 438
+        },
+        {
+          "name": "ExitLaneItem",
+          "start": 471
+        },
+        {
+          "name": "ReturnFacetItem",
+          "start": 498
+        },
+        {
+          "name": "GraphContentItem",
+          "start": 529
+        },
+        {
+          "name": "GraphSurfaceItem",
+          "start": 549
+        },
+        {
+          "name": "NodeItem",
+          "start": 654
+        },
+        {
+          "name": "GraphOverview",
+          "start": 1161
+        },
+        {
+          "name": "GraphCanvas",
+          "start": 1253
+        },
+        {
+          "name": "GraphTabView",
+          "start": 2182
+        },
+        {
+          "name": "SourceTabView",
+          "start": 2195
+        },
+        {
+          "name": "ResourceTabView",
+          "start": 2207
+        },
+        {
+          "name": "NativeLab",
+          "start": 2216
+        }
+      ],
+      "functions": 305,
+      "largest_functions": [
+        {
+          "name": "_create_qualified_operation",
+          "start": 3242,
+          "lines": 362
+        },
+        {
+          "name": "update_edges",
+          "start": 1520,
+          "lines": 155
+        },
+        {
+          "name": "_build_library",
+          "start": 2730,
+          "lines": 124
+        },
+        {
+          "name": "_refresh_navigation",
+          "start": 3860,
+          "lines": 107
+        },
+        {
+          "name": "rebuild",
+          "start": 1419,
+          "lines": 100
+        }
+      ],
+      "imports_local": [
+        "assets",
+        "authoring_actions",
+        "authoring_contract",
+        "boundary_edit",
+        "docking",
+        "edge_presentation",
+        "exit_routes",
+        "external_icons",
+        "graph_routes",
+        "graph_surface",
+        "icon_styles",
+        "model",
+        "navigation",
+        "operation_catalog",
+        "presentation_state",
+        "python_authoring",
+        "python_edit",
+        "python_graph",
+        "python_highlight",
+        "resource_graph",
+        "semantic_contract",
+        "source_connection",
+        "source_editor"
+      ]
+    },
+    {
+      "module": "icon_styles.py",
+      "lines": 59,
+      "classes": [
+        {
+          "name": "IconHint",
+          "start": 10
+        }
+      ],
+      "functions": 1,
+      "largest_functions": [
+        {
+          "name": "icon_hint",
+          "start": 42,
+          "lines": 18
+        }
+      ],
+      "imports_local": [
+        "external_icons"
+      ]
+    },
+    {
+      "module": "model.py",
+      "lines": 289,
+      "classes": [],
+      "functions": 20,
+      "largest_functions": [
+        {
+          "name": "validate",
+          "start": 192,
+          "lines": 60
+        },
+        {
+          "name": "parse_input_default",
+          "start": 32,
+          "lines": 33
+        },
+        {
+          "name": "make_node",
+          "start": 101,
+          "lines": 26
+        },
+        {
+          "name": "transaction",
+          "start": 254,
+          "lines": 18
+        },
+        {
+          "name": "row",
+          "start": 80,
+          "lines": 14
+        }
+      ],
+      "imports_local": [
+        "semantic_contract"
+      ]
+    },
+    {
+      "module": "navigation.py",
+      "lines": 257,
+      "classes": [
+        {
+          "name": "Route",
+          "start": 15
+        },
+        {
+          "name": "Crumb",
+          "start": 32
+        },
+        {
+          "name": "NavigationHistory",
+          "start": 117
+        },
+        {
+          "name": "GraphViewSession",
+          "start": 172
+        },
+        {
+          "name": "GraphViewSessions",
+          "start": 230
+        }
+      ],
+      "functions": 25,
+      "largest_functions": [
+        {
+          "name": "source_crumbs",
+          "start": 45,
+          "lines": 22
+        },
+        {
+          "name": "activate",
+          "start": 199,
+          "lines": 20
+        },
+        {
+          "name": "root_camera_slot",
+          "start": 99,
+          "lines": 16
+        },
+        {
+          "name": "replace_current",
+          "start": 156,
+          "lines": 14
+        },
+        {
+          "name": "shorten_crumb",
+          "start": 70,
+          "lines": 13
+        }
+      ],
+      "imports_local": []
+    },
+    {
+      "module": "operation_catalog.py",
+      "lines": 105,
+      "classes": [
+        {
+          "name": "ObservedOperation",
+          "start": 14
+        },
+        {
+          "name": "FunctionBoundary",
+          "start": 50
+        }
+      ],
+      "functions": 3,
+      "largest_functions": [
+        {
+          "name": "function_boundaries",
+          "start": 64,
+          "lines": 30
+        },
+        {
+          "name": "observed_operations",
+          "start": 23,
+          "lines": 24
+        },
+        {
+          "name": "qualified_operations",
+          "start": 96,
+          "lines": 10
+        }
+      ],
+      "imports_local": [
+        "python_authoring",
+        "semantic_contract"
+      ]
+    },
+    {
+      "module": "presentation_state.py",
+      "lines": 148,
+      "classes": [
+        {
+          "name": "PresentationStore",
+          "start": 115
+        }
+      ],
+      "functions": 11,
+      "largest_functions": [
+        {
+          "name": "validate",
+          "start": 78,
+          "lines": 31
+        },
+        {
+          "name": "_records",
+          "start": 45,
+          "lines": 16
+        },
+        {
+          "name": "save",
+          "start": 133,
+          "lines": 16
+        },
+        {
+          "name": "load",
+          "start": 120,
+          "lines": 12
+        },
+        {
+          "name": "default_location",
+          "start": 20,
+          "lines": 9
+        }
+      ],
+      "imports_local": []
+    },
+    {
+      "module": "python_authoring.py",
+      "lines": 1531,
+      "classes": [],
+      "functions": 58,
+      "largest_functions": [
+        {
+          "name": "definitions",
+          "start": 23,
+          "lines": 138
+        },
+        {
+          "name": "propose_add_optional_parameter",
+          "start": 882,
+          "lines": 80
+        },
+        {
+          "name": "propose_rename_parameter",
+          "start": 1463,
+          "lines": 69
+        },
+        {
+          "name": "_qualified_composition_scope",
+          "start": 1090,
+          "lines": 54
+        },
+        {
+          "name": "_branch_proposal",
+          "start": 206,
+          "lines": 51
+        }
+      ],
+      "imports_local": [
+        "authoring_contract",
+        "python_edit",
+        "python_graph"
+      ]
+    },
+    {
+      "module": "python_edit.py",
+      "lines": 564,
+      "classes": [
+        {
+          "name": "EditProposal",
+          "start": 24
+        },
+        {
+          "name": "SourceEditHistory",
+          "start": 500
+        }
+      ],
+      "functions": 22,
+      "largest_functions": [
+        {
+          "name": "rewire_source_operand",
+          "start": 265,
+          "lines": 193
+        },
+        {
+          "name": "_safe_preceding_local_binding",
+          "start": 151,
+          "lines": 75
+        },
+        {
+          "name": "apply_proposal",
+          "start": 460,
+          "lines": 38
+        },
+        {
+          "name": "_constant_expression_kind",
+          "start": 228,
+          "lines": 35
+        },
+        {
+          "name": "_straight_line_regions",
+          "start": 127,
+          "lines": 22
+        }
+      ],
+      "imports_local": [
+        "python_graph"
+      ]
+    },
+    {
+      "module": "python_graph.py",
+      "lines": 1566,
+      "classes": [
+        {
+          "name": "SourceError",
+          "start": 20
+        },
+        {
+          "name": "Scope",
+          "start": 188
+        },
+        {
+          "name": "SourceSymbol",
+          "start": 199
+        },
+        {
+          "name": "LoopContext",
+          "start": 209
+        },
+        {
+          "name": "PythonDocument",
+          "start": 222
+        },
+        {
+          "name": "Reads",
+          "start": 100
+        },
+        {
+          "name": "Visitor",
+          "start": 134
+        },
+        {
+          "name": "ModuleCalls",
+          "start": 413
+        },
+        {
+          "name": "BindingLocations",
+          "start": 275
+        }
+      ],
+      "functions": 68,
+      "largest_functions": [
+        {
+          "name": "_body_graph",
+          "start": 915,
+          "lines": 627
+        },
+        {
+          "name": "emit_sequence",
+          "start": 1084,
+          "lines": 444
+        },
+        {
+          "name": "_module_graph",
+          "start": 338,
+          "lines": 287
+        },
+        {
+          "name": "composite_file_graph",
+          "start": 729,
+          "lines": 174
+        },
+        {
+          "name": "expression",
+          "start": 952,
+          "lines": 97
+        }
+      ],
+      "imports_local": [
+        "graph_layout",
+        "python_presentation"
+      ]
+    },
+    {
+      "module": "python_highlight.py",
+      "lines": 28,
+      "classes": [
+        {
+          "name": "PythonSyntaxHighlighter",
+          "start": 8
+        }
+      ],
+      "functions": 3,
+      "largest_functions": [
+        {
+          "name": "__init__",
+          "start": 9,
+          "lines": 13
+        },
+        {
+          "name": "highlightBlock",
+          "start": 23,
+          "lines": 6
+        },
+        {
+          "name": "fmt",
+          "start": 11,
+          "lines": 4
+        }
+      ],
+      "imports_local": []
+    },
+    {
+      "module": "python_presentation.py",
+      "lines": 471,
+      "classes": [
+        {
+          "name": "Scan",
+          "start": 18
+        }
+      ],
+      "functions": 15,
+      "largest_functions": [
+        {
+          "name": "readable_scope_graph",
+          "start": 128,
+          "lines": 344
+        },
+        {
+          "name": "_reference_source",
+          "start": 88,
+          "lines": 32
+        },
+        {
+          "name": "_source_nodes",
+          "start": 15,
+          "lines": 29
+        },
+        {
+          "name": "_written_names",
+          "start": 46,
+          "lines": 28
+        },
+        {
+          "name": "real_destinations",
+          "start": 323,
+          "lines": 10
+        }
+      ],
+      "imports_local": []
+    },
+    {
+      "module": "qt_smoke.py",
+      "lines": 1720,
+      "classes": [],
+      "functions": 10,
+      "largest_functions": [
+        {
+          "name": "main",
+          "start": 39,
+          "lines": 1680
+        },
+        {
+          "name": "capture_node",
+          "start": 15,
+          "lines": 22
+        },
+        {
+          "name": "assert_folded_geometry",
+          "start": 756,
+          "lines": 17
+        },
+        {
+          "name": "close_creation_search",
+          "start": 1437,
+          "lines": 15
+        },
+        {
+          "name": "accept_call_form",
+          "start": 1300,
+          "lines": 12
+        }
+      ],
+      "imports_local": [
+        "authoring_actions",
+        "authoring_contract",
+        "boundary_edit",
+        "graph_routes",
+        "gui",
+        "model",
+        "navigation",
+        "operation_catalog",
+        "python_authoring",
+        "python_edit",
+        "python_graph",
+        "source_connection"
+      ]
+    },
+    {
+      "module": "resource_graph.py",
+      "lines": 190,
+      "classes": [
+        {
+          "name": "ResourceError",
+          "start": 20
+        },
+        {
+          "name": "ResourceEntry",
+          "start": 24
+        }
+      ],
+      "functions": 6,
+      "largest_functions": [
+        {
+          "name": "directory_graph",
+          "start": 66,
+          "lines": 125
+        },
+        {
+          "name": "attach_children",
+          "start": 89,
+          "lines": 49
+        },
+        {
+          "name": "snapshot",
+          "start": 40,
+          "lines": 24
+        },
+        {
+          "name": "entries",
+          "start": 49,
+          "lines": 11
+        },
+        {
+          "name": "_entry",
+          "start": 31,
+          "lines": 7
+        }
+      ],
+      "imports_local": [
+        "graph_surface",
+        "source_associations"
+      ]
+    },
+    {
+      "module": "semantic_contract.py",
+      "lines": 445,
+      "classes": [
+        {
+          "name": "ContractError",
+          "start": 19
+        },
+        {
+          "name": "SourceLocation",
+          "start": 24
+        },
+        {
+          "name": "PortDescriptor",
+          "start": 32
+        },
+        {
+          "name": "ExitDescriptor",
+          "start": 42
+        },
+        {
+          "name": "InterfaceDescriptor",
+          "start": 63
+        },
+        {
+          "name": "AppearanceDescriptor",
+          "start": 73
+        },
+        {
+          "name": "NodeDescriptor",
+          "start": 88
+        },
+        {
+          "name": "SourceEvidence",
+          "start": 126
+        },
+        {
+          "name": "EdgeDescriptor",
+          "start": 134
+        },
+        {
+          "name": "GraphDescriptor",
+          "start": 146
+        }
+      ],
+      "functions": 7,
+      "largest_functions": [
+        {
+          "name": "describe_graph",
+          "start": 184,
+          "lines": 219
+        },
+        {
+          "name": "validated_port_payloads",
+          "start": 154,
+          "lines": 28
+        },
+        {
+          "name": "port_presentation_role",
+          "start": 423,
+          "lines": 23
+        },
+        {
+          "name": "canvas_graph_source",
+          "start": 405,
+          "lines": 16
+        },
+        {
+          "name": "operation_kind",
+          "start": 110,
+          "lines": 13
+        }
+      ],
+      "imports_local": []
+    },
+    {
+      "module": "source_associations.py",
+      "lines": 117,
+      "classes": [
+        {
+          "name": "ImportCandidate",
+          "start": 17
+        },
+        {
+          "name": "SymbolCandidate",
+          "start": 64
+        }
+      ],
+      "functions": 3,
+      "largest_functions": [
+        {
+          "name": "local_python_symbol_candidates",
+          "start": 75,
+          "lines": 43
+        },
+        {
+          "name": "local_python_imports",
+          "start": 25,
+          "lines": 37
+        },
+        {
+          "name": "parse_small",
+          "start": 86,
+          "lines": 6
+        }
+      ],
+      "imports_local": []
+    },
+    {
+      "module": "source_connection.py",
+      "lines": 61,
+      "classes": [
+        {
+          "name": "ConnectionCheck",
+          "start": 16
+        }
+      ],
+      "functions": 1,
+      "largest_functions": [
+        {
+          "name": "inspect_connection",
+          "start": 24,
+          "lines": 38
+        }
+      ],
+      "imports_local": [
+        "python_edit",
+        "python_graph"
+      ]
+    },
+    {
+      "module": "source_editor.py",
+      "lines": 70,
+      "classes": [],
+      "functions": 4,
+      "largest_functions": [
+        {
+          "name": "prepare_source_change",
+          "start": 39,
+          "lines": 26
+        },
+        {
+          "name": "span_to_utf16",
+          "start": 18,
+          "lines": 19
+        },
+        {
+          "name": "save_source_change",
+          "start": 67,
+          "lines": 4
+        },
+        {
+          "name": "_utf16_units",
+          "start": 14,
+          "lines": 2
+        }
+      ],
+      "imports_local": [
+        "python_edit",
+        "python_graph"
+      ]
+    }
+  ],
+  "summary": {
+    "total_modules": 30,
+    "total_python_lines": 13978,
+    "module_import_fan_in": {
+      "gui": 2,
+      "operation_catalog": 3,
+      "python_authoring": 4,
+      "semantic_contract": 6,
+      "navigation": 3,
+      "python_graph": 7,
+      "resource_graph": 2,
+      "assets": 1,
+      "authoring_actions": 2,
+      "authoring_contract": 3,
+      "boundary_edit": 2,
+      "docking": 1,
+      "edge_presentation": 1,
+      "exit_routes": 1,
+      "external_icons": 2,
+      "graph_routes": 2,
+      "graph_surface": 2,
+      "icon_styles": 1,
+      "model": 2,
+      "presentation_state": 1,
+      "python_edit": 5,
+      "python_highlight": 1,
+      "source_connection": 2,
+      "source_editor": 1,
+      "graph_layout": 1,
+      "python_presentation": 1,
+      "source_associations": 1
+    },
+    "test_files": 70
+  }
+}

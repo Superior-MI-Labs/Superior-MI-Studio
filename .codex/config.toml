@@ -1,0 +1,4 @@
+# Conservative project configuration; user-level sandbox/approval/model settings remain in charge.
+# Project config is applied only when the Codex client trusts the repository.
+[agents]
+max_concurrent_threads_per_session = 3

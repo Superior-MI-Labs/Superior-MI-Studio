@@ -1,0 +1,30 @@
+name: Bug report
+about: Reproducible Studio behavior problem
+labels: [bug]
+body:
+  - type: input
+    id: version
+    attributes:
+      label: Studio version
+      placeholder: v2.120 source candidate
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      description: Include expected vs actual behavior. Remove private paths and project contents.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Environment and verification evidence
+      description: OS, Qt/Python versions, exact test commands and redacted logs/screenshots.
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: Before submitting
+      options:
+        - label: I reviewed logs and screenshots for personal information or secrets.
+          required: true

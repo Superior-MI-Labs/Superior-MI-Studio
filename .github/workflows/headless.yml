@@ -1,0 +1,55 @@
+name: Studio headless qualification
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+jobs:
+  headless:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify repository guidance and existing Python behavior
+        run: bash scripts/agent-verify.sh --headless
+      - name: Save failure logs
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: studio-headless-diagnostics
+          path: .agent-artifacts/qualification/
+          if-no-files-found: ignore
+# This job is an early Linux/Qt gate; WolfCat-Studio native qualification
+# remains necessary for a release to replace the local known-good version.
+  native-qt:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Ubuntu's PyQt6 runtime (same interpreter as Qt launcher)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends python3-pyqt6
+          /usr/bin/python3 -c 'from PyQt6 import QtWidgets; print("PyQt6 ready")'
+      - name: Qualify headless semantics and real offscreen Qt interactions
+        run: bash scripts/agent-verify.sh --native
+        env:
+          SMI_LOG_DIR: ${{ github.workspace }}/.agent-artifacts/native-qualification
+      - name: Retain verified native Qt screenshots for review
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: studio-native-qt-screenshots
+          path: .agent-artifacts/native-qualification/qualification-*/**/*.png
+          if-no-files-found: warn
+          retention-days: 14
+      - name: Retain native Qt logs and screenshots on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: studio-native-qt-diagnostics
+          path: .agent-artifacts/native-qualification/
+          if-no-files-found: ignore

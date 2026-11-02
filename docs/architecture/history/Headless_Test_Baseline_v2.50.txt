@@ -1,0 +1,9 @@
+----------------------------------------------------------------------
+Ran 606 tests in 3.562s
+
+OK
+Removed old log: qualification-20261028-031122-12.tar.gz
+Removed old log: qualification-20261028-031122-12
+Removed old log: launch-20261028-031122-22.log
+Removed old standalone log: SMI-v2.12-doctor.log
+Removing old version: /tmp/tmp9v0wozsk/Superior-MI-Python-Visual-Programming-Lab-v2.12

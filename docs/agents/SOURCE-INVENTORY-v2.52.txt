@@ -1,0 +1,30 @@
+__init__.py                        1 lines | imports: 
+__main__.py                        2 lines | imports: .gui
+assets.py                         44 lines | imports: 
+authoring_actions.py             155 lines | imports: .operation_catalog, .python_authoring
+authoring_contract.py            115 lines | imports: 
+boundary_edit.py                  59 lines | imports: .semantic_contract
+docking.py                       187 lines | imports: 
+edge_presentation.py              39 lines | imports: 
+exit_routes.py                    88 lines | imports: .semantic_contract
+external_icons.py                 91 lines | imports: 
+graph_layout.py                  111 lines | imports: 
+graph_routes.py                   78 lines | imports: .navigation, .python_graph, .resource_graph, .semantic_contract
+graph_surface.py                 298 lines | imports: 
+gui.py                          5133 lines | imports: ., .assets, .authoring_actions, .authoring_contract, .boundary_edit, .docking, .edge_presentation, .exit_routes, .external_icons, .graph_routes, .graph_surface, .icon_styles, .navigation, .operation_catalog, .presentation_state, .python_authoring, .python_edit, .python_graph, .python_highlight, .resource_graph, .semantic_contract, .source_connection, .source_editor
+icon_styles.py                    59 lines | imports: .external_icons
+model.py                         289 lines | imports: .semantic_contract
+navigation.py                    257 lines | imports: 
+operation_catalog.py             105 lines | imports: .python_authoring, .semantic_contract
+presentation_state.py            148 lines | imports: 
+python_authoring.py             1531 lines | imports: .authoring_contract, .python_edit, .python_graph
+python_edit.py                   615 lines | imports: .python_graph
+python_graph.py                 1566 lines | imports: .graph_layout, .python_presentation
+python_highlight.py               28 lines | imports: 
+python_presentation.py           471 lines | imports: 
+qt_smoke.py                     1771 lines | imports: ., .authoring_contract, .boundary_edit, .graph_routes, .gui, .navigation, .operation_catalog, .python_authoring, .python_edit, .python_graph, .source_connection, studio_native.authoring_actions
+resource_graph.py                190 lines | imports: .graph_surface, .source_associations
+semantic_contract.py             445 lines | imports: 
+source_associations.py           117 lines | imports: 
+source_connection.py              61 lines | imports: .python_edit, .python_graph
+source_editor.py                  70 lines | imports: .python_edit, .python_graph

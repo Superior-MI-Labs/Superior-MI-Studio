@@ -1,0 +1,474 @@
+{
+  "format": "smi.dynamic-node-lab",
+  "version": 1,
+  "nodes": [
+    {
+      "id": "node-1-23aqv",
+      "kind": "audio",
+      "title": "AUDIO MIX",
+      "subtitle": "Sound · mixing · output",
+      "accent": "#27cbed",
+      "x": 175,
+      "y": 130,
+      "draft_ports": {
+        "inputs": [
+          {
+            "id": "port-2-ns4j8",
+            "label": "Audio",
+            "type": "audio"
+          },
+          {
+            "id": "port-3-xpq8e",
+            "label": "Music",
+            "type": "audio"
+          },
+          {
+            "id": "port-4-995z7",
+            "label": "Voice",
+            "type": "audio"
+          },
+          {
+            "id": "port-5-7t07v",
+            "label": "SFX",
+            "type": "audio"
+          }
+        ],
+        "outputs": [
+          {
+            "id": "port-6-18v09",
+            "label": "Mix",
+            "type": "audio"
+          },
+          {
+            "id": "port-7-vemkn",
+            "label": "Stems",
+            "type": "audio"
+          },
+          {
+            "id": "port-8-67l5f",
+            "label": "Analysis",
+            "type": "object"
+          }
+        ]
+      },
+      "containers": [
+        {
+          "id": "section-a-wrn8s",
+          "title": "WAVEFORM",
+          "collapsed": false,
+          "page": 0,
+          "visible_rows": 5,
+          "rows": [
+            {
+              "id": "row-9-mdxn5",
+              "kind": "preview",
+              "label": "Waveform preview",
+              "tags": [],
+              "value": "waveform"
+            }
+          ]
+        },
+        {
+          "id": "section-f-31w8g",
+          "title": "MIX CHANNELS",
+          "collapsed": false,
+          "page": 0,
+          "visible_rows": 5,
+          "rows": [
+            {
+              "id": "row-b-ktf9f",
+              "kind": "slider",
+              "label": "Music",
+              "tags": [],
+              "value": 0.66,
+              "min": 0,
+              "max": 1,
+              "step": 0.01,
+              "unit": " dB"
+            },
+            {
+              "id": "row-c-2dkvz",
+              "kind": "slider",
+              "label": "Voice",
+              "tags": [],
+              "value": 0.53,
+              "min": 0,
+              "max": 1,
+              "step": 0.01,
+              "unit": " dB"
+            },
+            {
+              "id": "row-d-qkas3",
+              "kind": "slider",
+              "label": "SFX",
+              "tags": [],
+              "value": 0.42,
+              "min": 0,
+              "max": 1,
+              "step": 0.01,
+              "unit": " dB"
+            },
+            {
+              "id": "row-e-i32mb",
+              "kind": "slider",
+              "label": "Master",
+              "tags": [],
+              "value": 0.77,
+              "min": 0,
+              "max": 1,
+              "step": 0.01,
+              "unit": " dB"
+            }
+          ]
+        },
+        {
+          "id": "section-j-2fzcr",
+          "title": "OUTPUT SETUP",
+          "collapsed": false,
+          "page": 0,
+          "visible_rows": 5,
+          "rows": [
+            {
+              "id": "row-g-h3d5v",
+              "kind": "toggle",
+              "label": "Enhance",
+              "tags": [],
+              "value": true
+            },
+            {
+              "id": "row-h-ux4zu",
+              "kind": "dropdown",
+              "label": "Profile",
+              "tags": [],
+              "value": "Studio",
+              "options": [
+                "Studio",
+                "Podcast",
+                "Broadcast"
+              ]
+            },
+            {
+              "id": "row-i-2nact",
+              "kind": "text",
+              "label": "Export name",
+              "tags": [],
+              "value": "Hello, Studio"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "node-k-vttyo",
+      "kind": "fx",
+      "title": "SIGNAL PROCESSOR",
+      "subtitle": "Equalizer · audio effects",
+      "accent": "#8b98ff",
+      "x": 750,
+      "y": 225,
+      "draft_ports": {
+        "inputs": [
+          {
+            "id": "port-l-qovgz",
+            "label": "Source",
+            "type": "audio"
+          },
+          {
+            "id": "port-m-2fk69",
+            "label": "Sidechain",
+            "type": "audio"
+          },
+          {
+            "id": "port-n-7ypx0",
+            "label": "Amount",
+            "type": "f32"
+          }
+        ],
+        "outputs": [
+          {
+            "id": "port-o-yd26m",
+            "label": "Processed",
+            "type": "audio"
+          },
+          {
+            "id": "port-p-s10l4",
+            "label": "Envelope",
+            "type": "f32"
+          }
+        ]
+      },
+      "containers": [
+        {
+          "id": "section-t-p5nqc",
+          "title": "EQUALIZER",
+          "collapsed": false,
+          "page": 0,
+          "visible_rows": 5,
+          "rows": [
+            {
+              "id": "row-q-qq6my",
+              "kind": "slider",
+              "label": "Low",
+              "tags": [],
+              "value": 0.55,
+              "min": 0,
+              "max": 1,
+              "step": 0.01,
+              "unit": " dB"
+            },
+            {
+              "id": "row-r-bkvqe",
+              "kind": "slider",
+              "label": "Mid",
+              "tags": [],
+              "value": 0.55,
+              "min": 0,
+              "max": 1,
+              "step": 0.01,
+              "unit": " dB"
+            },
+            {
+              "id": "row-s-hqv9r",
+              "kind": "slider",
+              "label": "High",
+              "tags": [],
+              "value": 0.55,
+              "min": 0,
+              "max": 1,
+              "step": 0.01,
+              "unit": " dB"
+            }
+          ]
+        },
+        {
+          "id": "section-w-scb1l",
+          "title": "PROCESSING",
+          "collapsed": false,
+          "page": 0,
+          "visible_rows": 5,
+          "rows": [
+            {
+              "id": "row-u-pjh2p",
+              "kind": "toggle",
+              "label": "Limiter",
+              "tags": [],
+              "value": true
+            },
+            {
+              "id": "row-v-kw8v3",
+              "kind": "dropdown",
+              "label": "Quality",
+              "tags": [],
+              "value": "Studio",
+              "options": [
+                "Studio",
+                "Podcast",
+                "Broadcast"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "node-x-jhxds",
+      "kind": "folder",
+      "title": "ASSET COLLECTION",
+      "subtitle": "100 files · bounded listing",
+      "accent": "#d7a967",
+      "x": 185,
+      "y": 810,
+      "draft_ports": {
+        "inputs": [],
+        "outputs": [
+          {
+            "id": "port-y-ivquy",
+            "label": "Files",
+            "type": "object"
+          },
+          {
+            "id": "port-z-02ebi",
+            "label": "Count",
+            "type": "u32"
+          }
+        ]
+      },
+      "containers": [
+        {
+          "id": "section-11-xyrdn",
+          "title": "FILES",
+          "collapsed": false,
+          "page": 0,
+          "visible_rows": 5,
+          "rows": [
+            {
+              "id": "row-10-fdtoq",
+              "kind": "collection",
+              "label": "Texture files",
+              "tags": [],
+              "items": [
+                "dataset_001.png",
+                "dataset_002.png",
+                "dataset_003.png",
+                "dataset_004.png",
+                "dataset_005.png",
+                "dataset_006.png",
+                "dataset_007.png",
+                "dataset_008.png",
+                "dataset_009.png",
+                "dataset_010.png",
+                "dataset_011.png",
+                "dataset_012.png",
+                "dataset_013.png",
+                "dataset_014.png",
+                "dataset_015.png",
+                "dataset_016.png",
+                "dataset_017.png",
+                "dataset_018.png",
+                "dataset_019.png",
+                "dataset_020.png",
+                "dataset_021.png",
+                "dataset_022.png",
+                "dataset_023.png",
+                "dataset_024.png",
+                "dataset_025.png",
+                "dataset_026.png",
+                "dataset_027.png",
+                "dataset_028.png",
+                "dataset_029.png",
+                "dataset_030.png",
+                "dataset_031.png",
+                "dataset_032.png",
+                "dataset_033.png",
+                "dataset_034.png",
+                "dataset_035.png",
+                "dataset_036.png",
+                "dataset_037.png",
+                "dataset_038.png",
+                "dataset_039.png",
+                "dataset_040.png",
+                "dataset_041.png",
+                "dataset_042.png",
+                "dataset_043.png",
+                "dataset_044.png",
+                "dataset_045.png",
+                "dataset_046.png",
+                "dataset_047.png",
+                "dataset_048.png",
+                "dataset_049.png",
+                "dataset_050.png",
+                "dataset_051.png",
+                "dataset_052.png",
+                "dataset_053.png",
+                "dataset_054.png",
+                "dataset_055.png",
+                "dataset_056.png",
+                "dataset_057.png",
+                "dataset_058.png",
+                "dataset_059.png",
+                "dataset_060.png",
+                "dataset_061.png",
+                "dataset_062.png",
+                "dataset_063.png",
+                "dataset_064.png",
+                "dataset_065.png",
+                "dataset_066.png",
+                "dataset_067.png",
+                "dataset_068.png",
+                "dataset_069.png",
+                "dataset_070.png",
+                "dataset_071.png",
+                "dataset_072.png",
+                "dataset_073.png",
+                "dataset_074.png",
+                "dataset_075.png",
+                "dataset_076.png",
+                "dataset_077.png",
+                "dataset_078.png",
+                "dataset_079.png",
+                "dataset_080.png",
+                "dataset_081.png",
+                "dataset_082.png",
+                "dataset_083.png",
+                "dataset_084.png",
+                "dataset_085.png",
+                "dataset_086.png",
+                "dataset_087.png",
+                "dataset_088.png",
+                "dataset_089.png",
+                "dataset_090.png",
+                "dataset_091.png",
+                "dataset_092.png",
+                "dataset_093.png",
+                "dataset_094.png",
+                "dataset_095.png",
+                "dataset_096.png",
+                "dataset_097.png",
+                "dataset_098.png",
+                "dataset_099.png",
+                "dataset_100.png"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "section-14-rdyxg",
+          "title": "OPTIONS",
+          "collapsed": false,
+          "page": 0,
+          "visible_rows": 5,
+          "rows": [
+            {
+              "id": "row-12-11hkx",
+              "kind": "toggle",
+              "label": "Recursive",
+              "tags": [],
+              "value": true
+            },
+            {
+              "id": "row-13-wlned",
+              "kind": "dropdown",
+              "label": "Sort by",
+              "tags": [],
+              "value": "Studio",
+              "options": [
+                "Studio",
+                "Podcast",
+                "Broadcast"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge-15-wqzzq",
+      "source": "node-1-23aqv",
+      "sourcePort": "port-6-18v09",
+      "target": "node-k-vttyo",
+      "targetPort": "port-l-qovgz"
+    }
+  ],
+  "settings": {
+    "port_label_mode": "contextual",
+    "show_grid": true,
+    "default_visible_rows": 5,
+    "type_colors": {
+      "u32": "#eab05b",
+      "i32": "#f2787f",
+      "f32": "#25cce0",
+      "f64": "#6caaf4",
+      "bool": "#4bdca3",
+      "string": "#ce91f8",
+      "vector": "#8e95ff",
+      "image": "#5dc5ff",
+      "audio": "#e77cce",
+      "video": "#a994ff",
+      "event": "#ffd36c",
+      "object": "#b3c6d8",
+      "execution": "#ffffff"
+    }
+  }
+}

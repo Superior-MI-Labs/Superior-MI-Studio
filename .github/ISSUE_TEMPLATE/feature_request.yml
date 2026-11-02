@@ -1,0 +1,21 @@
+name: Architecture or feature proposal
+about: Suggest a capability while respecting existing ownership
+labels: [enhancement]
+body:
+  - type: textarea
+    id: user_problem
+    attributes:
+      label: Problem to solve
+      description: Explain the user workflow rather than only a proposed UI element.
+    validations:
+      required: true
+  - type: textarea
+    id: owner
+    attributes:
+      label: Existing subsystem and competing approaches
+      description: Which current contract can own this? What are at least two approaches and why would one be cleaner?
+  - type: textarea
+    id: tests
+    attributes:
+      label: Acceptance tests and edge cases
+      description: State the source-preservation and regression gates required.

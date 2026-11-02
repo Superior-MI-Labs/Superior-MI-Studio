@@ -1,0 +1,6357 @@
+{
+  "schema_version": 1,
+  "pack_id": "org.superior-mi.sci-fi-prototype",
+  "version": "0.1.0",
+  "display_name": "Superior MI Sci-Fi Asset Atlas \u2014 Draft One",
+  "description": "Deterministically generated transparent PNG visual prototype based on prior approved production-grid inventory. Individual artwork remains subject to design review and render-fit validation.",
+  "status": "ready",
+  "keywords": [
+    "metallic",
+    "cyber",
+    "sci-fi",
+    "transparent",
+    "draft",
+    "tintable"
+  ],
+  "sheets": [
+    {
+      "id": "01-shell",
+      "image": "textures/01-shell.png",
+      "columns": 8,
+      "rows": 6,
+      "cell_px": 128,
+      "width_px": 1024,
+      "height_px": 768,
+      "assets": [
+        {
+          "id": "shell.corner.tl",
+          "slot": "node.shell",
+          "cells": {
+            "x": 0,
+            "y": 0,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "shell",
+            "corner",
+            "tl"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "shell.corner.tr",
+          "slot": "node.shell",
+          "cells": {
+            "x": 1,
+            "y": 0,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "shell",
+            "corner",
+            "tr"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "shell.corner.bl",
+          "slot": "node.shell",
+          "cells": {
+            "x": 2,
+            "y": 0,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "shell",
+            "corner",
+            "bl"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "shell.corner.br",
+          "slot": "node.shell",
+          "cells": {
+            "x": 3,
+            "y": 0,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "shell",
+            "corner",
+            "br"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "shell.header",
+          "slot": "node.shell",
+          "cells": {
+            "x": 4,
+            "y": 0,
+            "w": 3,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "shell",
+            "header"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "shell.footer",
+          "slot": "node.shell",
+          "cells": {
+            "x": 0,
+            "y": 1,
+            "w": 3,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "shell",
+            "footer"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "shell.rail.left",
+          "slot": "node.shell",
+          "cells": {
+            "x": 7,
+            "y": 0,
+            "w": 1,
+            "h": 2
+          },
+          "states": [],
+          "tags": [
+            "shell",
+            "rail",
+            "left"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "shell.rail.right",
+          "slot": "node.shell",
+          "cells": {
+            "x": 3,
+            "y": 1,
+            "w": 1,
+            "h": 2
+          },
+          "states": [],
+          "tags": [
+            "shell",
+            "rail",
+            "right"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "shell.body",
+          "slot": "node.shell",
+          "cells": {
+            "x": 4,
+            "y": 1,
+            "w": 3,
+            "h": 2
+          },
+          "states": [],
+          "tags": [
+            "shell",
+            "body"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "shell.inset",
+          "slot": "node.shell",
+          "cells": {
+            "x": 0,
+            "y": 2,
+            "w": 2,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "shell",
+            "inset"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "shell.title-plate",
+          "slot": "node.shell",
+          "cells": {
+            "x": 0,
+            "y": 3,
+            "w": 2,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "shell",
+            "title",
+            "plate"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "shell.top-accent",
+          "slot": "node.shell",
+          "cells": {
+            "x": 2,
+            "y": 3,
+            "w": 2,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "shell",
+            "top",
+            "accent"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "shell.bottom-accent",
+          "slot": "node.shell",
+          "cells": {
+            "x": 4,
+            "y": 3,
+            "w": 2,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "shell",
+            "bottom",
+            "accent"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "shell.corner-emblem",
+          "slot": "node.shell",
+          "cells": {
+            "x": 2,
+            "y": 2,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "shell",
+            "corner",
+            "emblem"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "shell.ornament",
+          "slot": "node.shell",
+          "cells": {
+            "x": 7,
+            "y": 2,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "shell",
+            "ornament"
+          ],
+          "tint_mode": "none"
+        }
+      ]
+    },
+    {
+      "id": "02-containers",
+      "image": "textures/02-containers.png",
+      "columns": 12,
+      "rows": 5,
+      "cell_px": 128,
+      "width_px": 1536,
+      "height_px": 640,
+      "assets": [
+        {
+          "id": "container.panel",
+          "slot": "ui.container",
+          "cells": {
+            "x": 0,
+            "y": 0,
+            "w": 3,
+            "h": 2
+          },
+          "states": [],
+          "tags": [
+            "container",
+            "panel"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "container.group",
+          "slot": "ui.container",
+          "cells": {
+            "x": 3,
+            "y": 0,
+            "w": 3,
+            "h": 2
+          },
+          "states": [],
+          "tags": [
+            "container",
+            "group"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "container.row",
+          "slot": "ui.container",
+          "cells": {
+            "x": 6,
+            "y": 0,
+            "w": 3,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "container",
+            "row"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "container.section-header",
+          "slot": "ui.container",
+          "cells": {
+            "x": 9,
+            "y": 0,
+            "w": 3,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "container",
+            "section",
+            "header"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "container.footer",
+          "slot": "ui.container",
+          "cells": {
+            "x": 6,
+            "y": 1,
+            "w": 3,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "container",
+            "footer"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "container.tab-host",
+          "slot": "ui.container",
+          "cells": {
+            "x": 9,
+            "y": 1,
+            "w": 3,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "container",
+            "tab",
+            "host"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "container.list-viewport",
+          "slot": "ui.container",
+          "cells": {
+            "x": 0,
+            "y": 2,
+            "w": 3,
+            "h": 2
+          },
+          "states": [],
+          "tags": [
+            "container",
+            "list",
+            "viewport"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "container.preview-host",
+          "slot": "ui.container",
+          "cells": {
+            "x": 3,
+            "y": 2,
+            "w": 3,
+            "h": 2
+          },
+          "states": [],
+          "tags": [
+            "container",
+            "preview",
+            "host"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "container.tooltip",
+          "slot": "ui.container",
+          "cells": {
+            "x": 6,
+            "y": 2,
+            "w": 2,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "container",
+            "tooltip"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "container.popup",
+          "slot": "ui.container",
+          "cells": {
+            "x": 8,
+            "y": 2,
+            "w": 2,
+            "h": 2
+          },
+          "states": [],
+          "tags": [
+            "container",
+            "popup"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "container.inset",
+          "slot": "ui.container",
+          "cells": {
+            "x": 10,
+            "y": 2,
+            "w": 2,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "container",
+            "inset"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "container.divider.horizontal",
+          "slot": "ui.container",
+          "cells": {
+            "x": 6,
+            "y": 3,
+            "w": 2,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "container",
+            "divider",
+            "horizontal"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "container.divider.vertical",
+          "slot": "ui.container",
+          "cells": {
+            "x": 10,
+            "y": 3,
+            "w": 1,
+            "h": 2
+          },
+          "states": [],
+          "tags": [
+            "container",
+            "divider",
+            "vertical"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "container.scroll-track.vertical",
+          "slot": "ui.container",
+          "cells": {
+            "x": 11,
+            "y": 3,
+            "w": 1,
+            "h": 2
+          },
+          "states": [],
+          "tags": [
+            "container",
+            "scroll",
+            "track",
+            "vertical"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "container.scroll-thumb.vertical",
+          "slot": "ui.container",
+          "cells": {
+            "x": 0,
+            "y": 4,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "container",
+            "scroll",
+            "thumb",
+            "vertical"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "container.scroll-track.horizontal",
+          "slot": "ui.container",
+          "cells": {
+            "x": 1,
+            "y": 4,
+            "w": 2,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "container",
+            "scroll",
+            "track",
+            "horizontal"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "container.scroll-thumb.horizontal",
+          "slot": "ui.container",
+          "cells": {
+            "x": 3,
+            "y": 4,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "container",
+            "scroll",
+            "thumb",
+            "horizontal"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "container.empty-state",
+          "slot": "ui.container",
+          "cells": {
+            "x": 4,
+            "y": 4,
+            "w": 2,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "container",
+            "empty",
+            "state"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "container.content-mask",
+          "slot": "ui.container",
+          "cells": {
+            "x": 6,
+            "y": 4,
+            "w": 2,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "container",
+            "content",
+            "mask"
+          ],
+          "tint_mode": "none"
+        }
+      ]
+    },
+    {
+      "id": "03-ports",
+      "image": "textures/03-ports.png",
+      "columns": 16,
+      "rows": 5,
+      "cell_px": 128,
+      "width_px": 2048,
+      "height_px": 640,
+      "assets": [
+        {
+          "id": "port.socket.hollow",
+          "slot": "ui.port",
+          "cells": {
+            "x": 0,
+            "y": 0,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "port",
+            "socket",
+            "hollow"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "port.socket.filled",
+          "slot": "ui.port",
+          "cells": {
+            "x": 1,
+            "y": 0,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "port",
+            "socket",
+            "filled"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "port.socket.hover",
+          "slot": "ui.port",
+          "cells": {
+            "x": 2,
+            "y": 0,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "port",
+            "socket",
+            "hover"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "port.socket.focus",
+          "slot": "ui.port",
+          "cells": {
+            "x": 3,
+            "y": 0,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "port",
+            "socket",
+            "focus"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "port.socket.active",
+          "slot": "ui.port",
+          "cells": {
+            "x": 4,
+            "y": 0,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "port",
+            "socket",
+            "active"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "port.socket.disabled",
+          "slot": "ui.port",
+          "cells": {
+            "x": 5,
+            "y": 0,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "port",
+            "socket",
+            "disabled"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "port.socket.error",
+          "slot": "ui.port",
+          "cells": {
+            "x": 6,
+            "y": 0,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "port",
+            "socket",
+            "error"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "port.socket.warning",
+          "slot": "ui.port",
+          "cells": {
+            "x": 7,
+            "y": 0,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "port",
+            "socket",
+            "warning"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "port.socket.pending",
+          "slot": "ui.port",
+          "cells": {
+            "x": 8,
+            "y": 0,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "port",
+            "socket",
+            "pending"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "port.socket.locked",
+          "slot": "ui.port",
+          "cells": {
+            "x": 9,
+            "y": 0,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "port",
+            "socket",
+            "locked"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "port.socket.connected",
+          "slot": "ui.port",
+          "cells": {
+            "x": 10,
+            "y": 0,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "port",
+            "socket",
+            "connected"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "port.socket.drop-target",
+          "slot": "ui.port",
+          "cells": {
+            "x": 11,
+            "y": 0,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "port",
+            "socket",
+            "drop",
+            "target"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "port.ring.solid",
+          "slot": "ui.port",
+          "cells": {
+            "x": 12,
+            "y": 0,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "port",
+            "ring",
+            "solid"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "port.ring.dashed",
+          "slot": "ui.port",
+          "cells": {
+            "x": 13,
+            "y": 0,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "port",
+            "ring",
+            "dashed"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "port.ring.double",
+          "slot": "ui.port",
+          "cells": {
+            "x": 14,
+            "y": 0,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "port",
+            "ring",
+            "double"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "port.shape.square",
+          "slot": "ui.port",
+          "cells": {
+            "x": 15,
+            "y": 0,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "port",
+            "shape",
+            "square"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "port.shape.diamond",
+          "slot": "ui.port",
+          "cells": {
+            "x": 0,
+            "y": 1,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "port",
+            "shape",
+            "diamond"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "port.shape.triangle",
+          "slot": "ui.port",
+          "cells": {
+            "x": 1,
+            "y": 1,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "port",
+            "shape",
+            "triangle"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "port.shape.hexagon",
+          "slot": "ui.port",
+          "cells": {
+            "x": 2,
+            "y": 1,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "port",
+            "shape",
+            "hexagon"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "port.shape.event",
+          "slot": "ui.port",
+          "cells": {
+            "x": 3,
+            "y": 1,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "port",
+            "shape",
+            "event"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "port.shape.exec",
+          "slot": "ui.port",
+          "cells": {
+            "x": 4,
+            "y": 1,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "port",
+            "shape",
+            "exec"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "port.shape.collection",
+          "slot": "ui.port",
+          "cells": {
+            "x": 5,
+            "y": 1,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "port",
+            "shape",
+            "collection"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "port.marker.required",
+          "slot": "ui.port",
+          "cells": {
+            "x": 6,
+            "y": 1,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "port",
+            "marker",
+            "required"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "port.marker.optional",
+          "slot": "ui.port",
+          "cells": {
+            "x": 7,
+            "y": 1,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "port",
+            "marker",
+            "optional"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "port.marker.variadic",
+          "slot": "ui.port",
+          "cells": {
+            "x": 8,
+            "y": 1,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "port",
+            "marker",
+            "variadic"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "port.marker.array",
+          "slot": "ui.port",
+          "cells": {
+            "x": 9,
+            "y": 1,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "port",
+            "marker",
+            "array"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "port.marker.stream",
+          "slot": "ui.port",
+          "cells": {
+            "x": 10,
+            "y": 1,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "port",
+            "marker",
+            "stream"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "port.marker.reference",
+          "slot": "ui.port",
+          "cells": {
+            "x": 11,
+            "y": 1,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "port",
+            "marker",
+            "reference"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "port.marker.readonly",
+          "slot": "ui.port",
+          "cells": {
+            "x": 12,
+            "y": 1,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "port",
+            "marker",
+            "readonly"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "port.marker.unavailable",
+          "slot": "ui.port",
+          "cells": {
+            "x": 13,
+            "y": 1,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "port",
+            "marker",
+            "unavailable"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "port.action.add",
+          "slot": "ui.port",
+          "cells": {
+            "x": 14,
+            "y": 1,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "port",
+            "action",
+            "add"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "port.action.remove",
+          "slot": "ui.port",
+          "cells": {
+            "x": 15,
+            "y": 1,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "port",
+            "action",
+            "remove"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "port.action.reorder",
+          "slot": "ui.port",
+          "cells": {
+            "x": 0,
+            "y": 2,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "port",
+            "action",
+            "reorder"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "port.badge.counter",
+          "slot": "ui.port",
+          "cells": {
+            "x": 1,
+            "y": 2,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "port",
+            "badge",
+            "counter"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "port.badge.multi",
+          "slot": "ui.port",
+          "cells": {
+            "x": 2,
+            "y": 2,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "port",
+            "badge",
+            "multi"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "port.badge.literal",
+          "slot": "ui.port",
+          "cells": {
+            "x": 3,
+            "y": 2,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "port",
+            "badge",
+            "literal"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "port.decor.input-stub",
+          "slot": "ui.port",
+          "cells": {
+            "x": 4,
+            "y": 2,
+            "w": 2,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "port",
+            "decor",
+            "input",
+            "stub"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "port.decor.output-stub",
+          "slot": "ui.port",
+          "cells": {
+            "x": 6,
+            "y": 2,
+            "w": 2,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "port",
+            "decor",
+            "output",
+            "stub"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "port.decor.rail-join",
+          "slot": "ui.port",
+          "cells": {
+            "x": 8,
+            "y": 2,
+            "w": 2,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "port",
+            "decor",
+            "rail",
+            "join"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "port.cluster",
+          "slot": "ui.port",
+          "cells": {
+            "x": 10,
+            "y": 2,
+            "w": 2,
+            "h": 2
+          },
+          "states": [],
+          "tags": [
+            "port",
+            "cluster"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "port.anchor-highlight",
+          "slot": "ui.port",
+          "cells": {
+            "x": 12,
+            "y": 2,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "port",
+            "anchor",
+            "highlight"
+          ],
+          "tint_mode": "multiply_rgba"
+        }
+      ]
+    },
+    {
+      "id": "04-buttons",
+      "image": "textures/04-buttons.png",
+      "columns": 24,
+      "rows": 8,
+      "cell_px": 128,
+      "width_px": 3072,
+      "height_px": 1024,
+      "assets": [
+        {
+          "id": "button.primary",
+          "slot": "ui.button",
+          "cells": {
+            "x": 0,
+            "y": 0,
+            "w": 3,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "button",
+            "primary"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "button.secondary",
+          "slot": "ui.button",
+          "cells": {
+            "x": 3,
+            "y": 0,
+            "w": 3,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "button",
+            "secondary"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "button.tertiary",
+          "slot": "ui.button",
+          "cells": {
+            "x": 6,
+            "y": 0,
+            "w": 3,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "button",
+            "tertiary"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "button.destructive",
+          "slot": "ui.button",
+          "cells": {
+            "x": 9,
+            "y": 0,
+            "w": 3,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "button",
+            "destructive"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "button.icon",
+          "slot": "ui.button",
+          "cells": {
+            "x": 12,
+            "y": 0,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "button",
+            "icon"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "button.split",
+          "slot": "ui.button",
+          "cells": {
+            "x": 13,
+            "y": 0,
+            "w": 3,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "button",
+            "split"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "button.compact",
+          "slot": "ui.button",
+          "cells": {
+            "x": 16,
+            "y": 0,
+            "w": 2,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "button",
+            "compact"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "button.flat",
+          "slot": "ui.button",
+          "cells": {
+            "x": 18,
+            "y": 0,
+            "w": 2,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "button",
+            "flat"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "button.floating",
+          "slot": "ui.button",
+          "cells": {
+            "x": 20,
+            "y": 0,
+            "w": 2,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "button",
+            "floating"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "button.toolbar",
+          "slot": "ui.button",
+          "cells": {
+            "x": 22,
+            "y": 0,
+            "w": 2,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "button",
+            "toolbar"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "button.hover-overlay",
+          "slot": "ui.button",
+          "cells": {
+            "x": 0,
+            "y": 1,
+            "w": 2,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "button",
+            "hover",
+            "overlay"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "button.press-overlay",
+          "slot": "ui.button",
+          "cells": {
+            "x": 2,
+            "y": 1,
+            "w": 2,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "button",
+            "press",
+            "overlay"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "button.focus-overlay",
+          "slot": "ui.button",
+          "cells": {
+            "x": 4,
+            "y": 1,
+            "w": 2,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "button",
+            "focus",
+            "overlay"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "button.disabled-overlay",
+          "slot": "ui.button",
+          "cells": {
+            "x": 6,
+            "y": 1,
+            "w": 2,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "button",
+            "disabled",
+            "overlay"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "toggle.track.off",
+          "slot": "ui.toggle",
+          "cells": {
+            "x": 8,
+            "y": 1,
+            "w": 2,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "toggle",
+            "track",
+            "off"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "toggle.track.on",
+          "slot": "ui.toggle",
+          "cells": {
+            "x": 10,
+            "y": 1,
+            "w": 2,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "toggle",
+            "track",
+            "on"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "toggle.knob",
+          "slot": "ui.toggle",
+          "cells": {
+            "x": 12,
+            "y": 1,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "toggle",
+            "knob"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "toggle.knob.focus",
+          "slot": "ui.toggle",
+          "cells": {
+            "x": 13,
+            "y": 1,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "toggle",
+            "knob",
+            "focus"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "checkbox.box",
+          "slot": "ui.checkbox",
+          "cells": {
+            "x": 14,
+            "y": 1,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "checkbox",
+            "box"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "checkbox.tick",
+          "slot": "ui.checkbox",
+          "cells": {
+            "x": 15,
+            "y": 1,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "checkbox",
+            "tick"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "checkbox.partial",
+          "slot": "ui.checkbox",
+          "cells": {
+            "x": 16,
+            "y": 1,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "checkbox",
+            "partial"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "checkbox.invalid",
+          "slot": "ui.checkbox",
+          "cells": {
+            "x": 17,
+            "y": 1,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "checkbox",
+            "invalid"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "radio.ring",
+          "slot": "ui.radio",
+          "cells": {
+            "x": 18,
+            "y": 1,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "radio",
+            "ring"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "radio.dot",
+          "slot": "ui.radio",
+          "cells": {
+            "x": 19,
+            "y": 1,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "radio",
+            "dot"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "radio.focus",
+          "slot": "ui.radio",
+          "cells": {
+            "x": 20,
+            "y": 1,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "radio",
+            "focus"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "segmented.start",
+          "slot": "ui.segmented",
+          "cells": {
+            "x": 21,
+            "y": 1,
+            "w": 2,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "segmented",
+            "start"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "segmented.middle",
+          "slot": "ui.segmented",
+          "cells": {
+            "x": 0,
+            "y": 2,
+            "w": 2,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "segmented",
+            "middle"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "segmented.end",
+          "slot": "ui.segmented",
+          "cells": {
+            "x": 2,
+            "y": 2,
+            "w": 2,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "segmented",
+            "end"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "segmented.selected",
+          "slot": "ui.segmented",
+          "cells": {
+            "x": 4,
+            "y": 2,
+            "w": 2,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "segmented",
+            "selected"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "tab.background",
+          "slot": "ui.tab",
+          "cells": {
+            "x": 6,
+            "y": 2,
+            "w": 2,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "tab",
+            "background"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "tab.selected",
+          "slot": "ui.tab",
+          "cells": {
+            "x": 8,
+            "y": 2,
+            "w": 2,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "tab",
+            "selected"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "tab.underline",
+          "slot": "ui.tab",
+          "cells": {
+            "x": 10,
+            "y": 2,
+            "w": 2,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "tab",
+            "underline"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "progress.track",
+          "slot": "ui.progress",
+          "cells": {
+            "x": 12,
+            "y": 2,
+            "w": 3,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "progress",
+            "track"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "progress.fill",
+          "slot": "ui.progress",
+          "cells": {
+            "x": 15,
+            "y": 2,
+            "w": 3,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "progress",
+            "fill"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "progress.indeterminate",
+          "slot": "ui.progress",
+          "cells": {
+            "x": 18,
+            "y": 2,
+            "w": 3,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "progress",
+            "indeterminate"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "spinner.ring",
+          "slot": "ui.spinner",
+          "cells": {
+            "x": 23,
+            "y": 1,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "spinner",
+            "ring"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "spinner.segment",
+          "slot": "ui.spinner",
+          "cells": {
+            "x": 21,
+            "y": 2,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "spinner",
+            "segment"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "spinner.dots",
+          "slot": "ui.spinner",
+          "cells": {
+            "x": 22,
+            "y": 2,
+            "w": 2,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "spinner",
+            "dots"
+          ],
+          "tint_mode": "none"
+        }
+      ]
+    },
+    {
+      "id": "05-fields",
+      "image": "textures/05-fields.png",
+      "columns": 24,
+      "rows": 8,
+      "cell_px": 128,
+      "width_px": 3072,
+      "height_px": 1024,
+      "assets": [
+        {
+          "id": "field.text",
+          "slot": "ui.field",
+          "cells": {
+            "x": 0,
+            "y": 0,
+            "w": 3,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "field",
+            "text"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "field.text.focus",
+          "slot": "ui.field",
+          "cells": {
+            "x": 3,
+            "y": 0,
+            "w": 3,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "field",
+            "text",
+            "focus"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "field.text.error",
+          "slot": "ui.field",
+          "cells": {
+            "x": 6,
+            "y": 0,
+            "w": 3,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "field",
+            "text",
+            "error"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "field.multiline",
+          "slot": "ui.field",
+          "cells": {
+            "x": 9,
+            "y": 0,
+            "w": 4,
+            "h": 2
+          },
+          "states": [],
+          "tags": [
+            "field",
+            "multiline"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "field.number",
+          "slot": "ui.field",
+          "cells": {
+            "x": 13,
+            "y": 0,
+            "w": 3,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "field",
+            "number"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "field.search",
+          "slot": "ui.field",
+          "cells": {
+            "x": 16,
+            "y": 0,
+            "w": 3,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "field",
+            "search"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "field.combo",
+          "slot": "ui.field",
+          "cells": {
+            "x": 19,
+            "y": 0,
+            "w": 3,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "field",
+            "combo"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "field.dropdown",
+          "slot": "ui.field",
+          "cells": {
+            "x": 0,
+            "y": 1,
+            "w": 3,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "field",
+            "dropdown"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "field.dropdown.open",
+          "slot": "ui.field",
+          "cells": {
+            "x": 3,
+            "y": 1,
+            "w": 3,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "field",
+            "dropdown",
+            "open"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "field.color",
+          "slot": "ui.field",
+          "cells": {
+            "x": 22,
+            "y": 0,
+            "w": 2,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "field",
+            "color"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "field.resource",
+          "slot": "ui.field",
+          "cells": {
+            "x": 6,
+            "y": 1,
+            "w": 3,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "field",
+            "resource"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "field.keybinding",
+          "slot": "ui.field",
+          "cells": {
+            "x": 13,
+            "y": 1,
+            "w": 2,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "field",
+            "keybinding"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "field.code",
+          "slot": "ui.field",
+          "cells": {
+            "x": 15,
+            "y": 1,
+            "w": 4,
+            "h": 2
+          },
+          "states": [],
+          "tags": [
+            "field",
+            "code"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "field.drag-scrub",
+          "slot": "ui.field",
+          "cells": {
+            "x": 19,
+            "y": 1,
+            "w": 2,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "field",
+            "drag",
+            "scrub"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "field.badge",
+          "slot": "ui.field",
+          "cells": {
+            "x": 21,
+            "y": 1,
+            "w": 2,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "field",
+            "badge"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "field.input-addon-left",
+          "slot": "ui.field",
+          "cells": {
+            "x": 23,
+            "y": 1,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "field",
+            "input",
+            "addon",
+            "left"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "field.input-addon-right",
+          "slot": "ui.field",
+          "cells": {
+            "x": 0,
+            "y": 2,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "field",
+            "input",
+            "addon",
+            "right"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "slider.track",
+          "slot": "ui.slider",
+          "cells": {
+            "x": 1,
+            "y": 2,
+            "w": 4,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "slider",
+            "track"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "slider.fill",
+          "slot": "ui.slider",
+          "cells": {
+            "x": 5,
+            "y": 2,
+            "w": 4,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "slider",
+            "fill"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "slider.range-track",
+          "slot": "ui.slider",
+          "cells": {
+            "x": 9,
+            "y": 2,
+            "w": 4,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "slider",
+            "range",
+            "track"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "slider.handle",
+          "slot": "ui.slider",
+          "cells": {
+            "x": 13,
+            "y": 2,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "slider",
+            "handle"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "slider.handle.hover",
+          "slot": "ui.slider",
+          "cells": {
+            "x": 14,
+            "y": 2,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "slider",
+            "handle",
+            "hover"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "slider.handle.drag",
+          "slot": "ui.slider",
+          "cells": {
+            "x": 19,
+            "y": 2,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "slider",
+            "handle",
+            "drag"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "slider.mark.small",
+          "slot": "ui.slider",
+          "cells": {
+            "x": 20,
+            "y": 2,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "slider",
+            "mark",
+            "small"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "slider.mark.major",
+          "slot": "ui.slider",
+          "cells": {
+            "x": 21,
+            "y": 2,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "slider",
+            "mark",
+            "major"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "slider.handle.range-a",
+          "slot": "ui.slider",
+          "cells": {
+            "x": 22,
+            "y": 2,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "slider",
+            "handle",
+            "range",
+            "a"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "slider.handle.range-b",
+          "slot": "ui.slider",
+          "cells": {
+            "x": 23,
+            "y": 2,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "slider",
+            "handle",
+            "range",
+            "b"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "stepper.up",
+          "slot": "ui.stepper",
+          "cells": {
+            "x": 0,
+            "y": 3,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "stepper",
+            "up"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "stepper.down",
+          "slot": "ui.stepper",
+          "cells": {
+            "x": 1,
+            "y": 3,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "stepper",
+            "down"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "stepper.disabled",
+          "slot": "ui.stepper",
+          "cells": {
+            "x": 2,
+            "y": 3,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "stepper",
+            "disabled"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "dropdown.chevron",
+          "slot": "ui.dropdown",
+          "cells": {
+            "x": 3,
+            "y": 3,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "dropdown",
+            "chevron"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "dropdown.chevron.open",
+          "slot": "ui.dropdown",
+          "cells": {
+            "x": 4,
+            "y": 3,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "dropdown",
+            "chevron",
+            "open"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "dropdown.clear",
+          "slot": "ui.dropdown",
+          "cells": {
+            "x": 5,
+            "y": 3,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "dropdown",
+            "clear"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "dropdown.check",
+          "slot": "ui.dropdown",
+          "cells": {
+            "x": 6,
+            "y": 3,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "dropdown",
+            "check"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "menu.item",
+          "slot": "ui.menu",
+          "cells": {
+            "x": 7,
+            "y": 3,
+            "w": 3,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "menu",
+            "item"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "menu.item.hover",
+          "slot": "ui.menu",
+          "cells": {
+            "x": 10,
+            "y": 3,
+            "w": 3,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "menu",
+            "item",
+            "hover"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "menu.item.disabled",
+          "slot": "ui.menu",
+          "cells": {
+            "x": 13,
+            "y": 3,
+            "w": 3,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "menu",
+            "item",
+            "disabled"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "menu.separator",
+          "slot": "ui.menu",
+          "cells": {
+            "x": 16,
+            "y": 3,
+            "w": 3,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "menu",
+            "separator"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "menu.submenu-arrow",
+          "slot": "ui.menu",
+          "cells": {
+            "x": 19,
+            "y": 3,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "menu",
+            "submenu",
+            "arrow"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "value.swatch",
+          "slot": "ui.value",
+          "cells": {
+            "x": 20,
+            "y": 3,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "value",
+            "swatch"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "value.checkerboard",
+          "slot": "ui.value",
+          "cells": {
+            "x": 21,
+            "y": 3,
+            "w": 2,
+            "h": 2
+          },
+          "states": [],
+          "tags": [
+            "value",
+            "checkerboard"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "value.validation.badge",
+          "slot": "ui.value",
+          "cells": {
+            "x": 23,
+            "y": 3,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "value",
+            "validation",
+            "badge"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "field.scrollbar.track",
+          "slot": "ui.field",
+          "cells": {
+            "x": 0,
+            "y": 4,
+            "w": 1,
+            "h": 2
+          },
+          "states": [],
+          "tags": [
+            "field",
+            "scrollbar",
+            "track"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "field.scrollbar.thumb",
+          "slot": "ui.field",
+          "cells": {
+            "x": 1,
+            "y": 4,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "field",
+            "scrollbar",
+            "thumb"
+          ],
+          "tint_mode": "none"
+        }
+      ]
+    },
+    {
+      "id": "06-lists",
+      "image": "textures/06-lists.png",
+      "columns": 12,
+      "rows": 5,
+      "cell_px": 128,
+      "width_px": 1536,
+      "height_px": 640,
+      "assets": [
+        {
+          "id": "list.row",
+          "slot": "ui.list",
+          "cells": {
+            "x": 0,
+            "y": 0,
+            "w": 3,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "list",
+            "row"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "list.row.selected",
+          "slot": "ui.list",
+          "cells": {
+            "x": 3,
+            "y": 0,
+            "w": 3,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "list",
+            "row",
+            "selected"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "list.row.hover",
+          "slot": "ui.list",
+          "cells": {
+            "x": 6,
+            "y": 0,
+            "w": 3,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "list",
+            "row",
+            "hover"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "list.row.error",
+          "slot": "ui.list",
+          "cells": {
+            "x": 9,
+            "y": 0,
+            "w": 3,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "list",
+            "row",
+            "error"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "list.header",
+          "slot": "ui.list",
+          "cells": {
+            "x": 0,
+            "y": 1,
+            "w": 3,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "list",
+            "header"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "list.footer",
+          "slot": "ui.list",
+          "cells": {
+            "x": 3,
+            "y": 1,
+            "w": 3,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "list",
+            "footer"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "list.group",
+          "slot": "ui.list",
+          "cells": {
+            "x": 6,
+            "y": 1,
+            "w": 3,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "list",
+            "group"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "list.tree-branch",
+          "slot": "ui.list",
+          "cells": {
+            "x": 9,
+            "y": 1,
+            "w": 2,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "list",
+            "tree",
+            "branch"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "list.tree-line",
+          "slot": "ui.list",
+          "cells": {
+            "x": 0,
+            "y": 2,
+            "w": 2,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "list",
+            "tree",
+            "line"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "list.reorder-grip",
+          "slot": "ui.list",
+          "cells": {
+            "x": 11,
+            "y": 1,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "list",
+            "reorder",
+            "grip"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "list.filter-chip",
+          "slot": "ui.list",
+          "cells": {
+            "x": 2,
+            "y": 2,
+            "w": 2,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "list",
+            "filter",
+            "chip"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "list.tag-chip",
+          "slot": "ui.list",
+          "cells": {
+            "x": 4,
+            "y": 2,
+            "w": 2,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "list",
+            "tag",
+            "chip"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "list.tag-chip.close",
+          "slot": "ui.list",
+          "cells": {
+            "x": 6,
+            "y": 2,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "list",
+            "tag",
+            "chip",
+            "close"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "list.item-count",
+          "slot": "ui.list",
+          "cells": {
+            "x": 7,
+            "y": 2,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "list",
+            "item",
+            "count"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "list.empty-placeholder",
+          "slot": "ui.list",
+          "cells": {
+            "x": 8,
+            "y": 2,
+            "w": 2,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "list",
+            "empty",
+            "placeholder"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "list.loading-placeholder",
+          "slot": "ui.list",
+          "cells": {
+            "x": 10,
+            "y": 2,
+            "w": 2,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "list",
+            "loading",
+            "placeholder"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "list.pagination",
+          "slot": "ui.list",
+          "cells": {
+            "x": 0,
+            "y": 3,
+            "w": 3,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "list",
+            "pagination"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "list.grid-header",
+          "slot": "ui.list",
+          "cells": {
+            "x": 3,
+            "y": 3,
+            "w": 3,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "list",
+            "grid",
+            "header"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "list.cell",
+          "slot": "ui.list",
+          "cells": {
+            "x": 6,
+            "y": 3,
+            "w": 2,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "list",
+            "cell"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "list.table-divider",
+          "slot": "ui.list",
+          "cells": {
+            "x": 8,
+            "y": 3,
+            "w": 2,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "list",
+            "table",
+            "divider"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "list.scroll-hint",
+          "slot": "ui.list",
+          "cells": {
+            "x": 10,
+            "y": 3,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "list",
+            "scroll",
+            "hint"
+          ],
+          "tint_mode": "none"
+        }
+      ]
+    },
+    {
+      "id": "07-media",
+      "image": "textures/07-media.png",
+      "columns": 12,
+      "rows": 5,
+      "cell_px": 128,
+      "width_px": 1536,
+      "height_px": 640,
+      "assets": [
+        {
+          "id": "preview.image",
+          "slot": "ui.preview",
+          "cells": {
+            "x": 0,
+            "y": 0,
+            "w": 2,
+            "h": 2
+          },
+          "states": [],
+          "tags": [
+            "preview",
+            "image"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "preview.video",
+          "slot": "ui.preview",
+          "cells": {
+            "x": 2,
+            "y": 0,
+            "w": 2,
+            "h": 2
+          },
+          "states": [],
+          "tags": [
+            "preview",
+            "video"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "preview.waveform",
+          "slot": "ui.preview",
+          "cells": {
+            "x": 4,
+            "y": 0,
+            "w": 2,
+            "h": 2
+          },
+          "states": [],
+          "tags": [
+            "preview",
+            "waveform"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "preview.timeline",
+          "slot": "ui.preview",
+          "cells": {
+            "x": 6,
+            "y": 0,
+            "w": 2,
+            "h": 2
+          },
+          "states": [],
+          "tags": [
+            "preview",
+            "timeline"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "preview.texture",
+          "slot": "ui.preview",
+          "cells": {
+            "x": 8,
+            "y": 0,
+            "w": 2,
+            "h": 2
+          },
+          "states": [],
+          "tags": [
+            "preview",
+            "texture"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "preview.model3d",
+          "slot": "ui.preview",
+          "cells": {
+            "x": 10,
+            "y": 0,
+            "w": 2,
+            "h": 2
+          },
+          "states": [],
+          "tags": [
+            "preview",
+            "model3d"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "preview.chart",
+          "slot": "ui.preview",
+          "cells": {
+            "x": 0,
+            "y": 2,
+            "w": 2,
+            "h": 2
+          },
+          "states": [],
+          "tags": [
+            "preview",
+            "chart"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "preview.code",
+          "slot": "ui.preview",
+          "cells": {
+            "x": 2,
+            "y": 2,
+            "w": 2,
+            "h": 2
+          },
+          "states": [],
+          "tags": [
+            "preview",
+            "code"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "preview.table",
+          "slot": "ui.preview",
+          "cells": {
+            "x": 4,
+            "y": 2,
+            "w": 2,
+            "h": 2
+          },
+          "states": [],
+          "tags": [
+            "preview",
+            "table"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "preview.thumbnail",
+          "slot": "ui.preview",
+          "cells": {
+            "x": 6,
+            "y": 2,
+            "w": 2,
+            "h": 2
+          },
+          "states": [],
+          "tags": [
+            "preview",
+            "thumbnail"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "preview.placeholder",
+          "slot": "ui.preview",
+          "cells": {
+            "x": 8,
+            "y": 2,
+            "w": 2,
+            "h": 2
+          },
+          "states": [],
+          "tags": [
+            "preview",
+            "placeholder"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "preview.play-overlay",
+          "slot": "ui.preview",
+          "cells": {
+            "x": 10,
+            "y": 2,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "preview",
+            "play",
+            "overlay"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "preview.zoom-icon",
+          "slot": "ui.preview",
+          "cells": {
+            "x": 11,
+            "y": 2,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "preview",
+            "zoom",
+            "icon"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "preview.fullscreen-icon",
+          "slot": "ui.preview",
+          "cells": {
+            "x": 10,
+            "y": 3,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "preview",
+            "fullscreen",
+            "icon"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "preview.camera-icon",
+          "slot": "ui.preview",
+          "cells": {
+            "x": 11,
+            "y": 3,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "preview",
+            "camera",
+            "icon"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "preview.audio-speaker",
+          "slot": "ui.preview",
+          "cells": {
+            "x": 0,
+            "y": 4,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "preview",
+            "audio",
+            "speaker"
+          ],
+          "tint_mode": "none"
+        }
+      ]
+    },
+    {
+      "id": "08-states",
+      "image": "textures/08-states.png",
+      "columns": 12,
+      "rows": 4,
+      "cell_px": 128,
+      "width_px": 1536,
+      "height_px": 512,
+      "assets": [
+        {
+          "id": "state.selected",
+          "slot": "ui.state",
+          "cells": {
+            "x": 0,
+            "y": 0,
+            "w": 3,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "state",
+            "selected"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "state.focus",
+          "slot": "ui.state",
+          "cells": {
+            "x": 3,
+            "y": 0,
+            "w": 3,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "state",
+            "focus"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "state.hover",
+          "slot": "ui.state",
+          "cells": {
+            "x": 6,
+            "y": 0,
+            "w": 2,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "state",
+            "hover"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "state.drag-target",
+          "slot": "ui.state",
+          "cells": {
+            "x": 8,
+            "y": 0,
+            "w": 2,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "state",
+            "drag",
+            "target"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "state.error",
+          "slot": "ui.state",
+          "cells": {
+            "x": 10,
+            "y": 0,
+            "w": 2,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "state",
+            "error"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "state.warning",
+          "slot": "ui.state",
+          "cells": {
+            "x": 0,
+            "y": 1,
+            "w": 2,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "state",
+            "warning"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "state.running",
+          "slot": "ui.state",
+          "cells": {
+            "x": 2,
+            "y": 1,
+            "w": 2,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "state",
+            "running"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "state.ready",
+          "slot": "ui.state",
+          "cells": {
+            "x": 4,
+            "y": 1,
+            "w": 2,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "state",
+            "ready"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "state.disabled",
+          "slot": "ui.state",
+          "cells": {
+            "x": 6,
+            "y": 1,
+            "w": 2,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "state",
+            "disabled"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "state.locked",
+          "slot": "ui.state",
+          "cells": {
+            "x": 8,
+            "y": 1,
+            "w": 2,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "state",
+            "locked"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "state.queued",
+          "slot": "ui.state",
+          "cells": {
+            "x": 10,
+            "y": 1,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "state",
+            "queued"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "state.paused",
+          "slot": "ui.state",
+          "cells": {
+            "x": 11,
+            "y": 1,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "state",
+            "paused"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "state.cancelled",
+          "slot": "ui.state",
+          "cells": {
+            "x": 0,
+            "y": 2,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "state",
+            "cancelled"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "state.completed",
+          "slot": "ui.state",
+          "cells": {
+            "x": 1,
+            "y": 2,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "state",
+            "completed"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "state.stale",
+          "slot": "ui.state",
+          "cells": {
+            "x": 2,
+            "y": 2,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "state",
+            "stale"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "state.cached",
+          "slot": "ui.state",
+          "cells": {
+            "x": 3,
+            "y": 2,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "state",
+            "cached"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "state.breakpoint",
+          "slot": "ui.state",
+          "cells": {
+            "x": 4,
+            "y": 2,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "state",
+            "breakpoint"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "state.recording",
+          "slot": "ui.state",
+          "cells": {
+            "x": 5,
+            "y": 2,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "state",
+            "recording"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "state.loading",
+          "slot": "ui.state",
+          "cells": {
+            "x": 6,
+            "y": 2,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "state",
+            "loading"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "state.info",
+          "slot": "ui.state",
+          "cells": {
+            "x": 7,
+            "y": 2,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "state",
+            "info"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "state.unknown",
+          "slot": "ui.state",
+          "cells": {
+            "x": 8,
+            "y": 2,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "state",
+            "unknown"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "state.unavailable",
+          "slot": "ui.state",
+          "cells": {
+            "x": 9,
+            "y": 2,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "state",
+            "unavailable"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "state.connection-valid",
+          "slot": "ui.state",
+          "cells": {
+            "x": 10,
+            "y": 2,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "state",
+            "connection",
+            "valid"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "state.connection-invalid",
+          "slot": "ui.state",
+          "cells": {
+            "x": 11,
+            "y": 2,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "state",
+            "connection",
+            "invalid"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "state.pending",
+          "slot": "ui.state",
+          "cells": {
+            "x": 0,
+            "y": 3,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "state",
+            "pending"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "state.success",
+          "slot": "ui.state",
+          "cells": {
+            "x": 1,
+            "y": 3,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "state",
+            "success"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "status.dot.off",
+          "slot": "ui.status",
+          "cells": {
+            "x": 2,
+            "y": 3,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "status",
+            "dot",
+            "off"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "status.dot.on",
+          "slot": "ui.status",
+          "cells": {
+            "x": 3,
+            "y": 3,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "status",
+            "dot",
+            "on"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "status.dot.warning",
+          "slot": "ui.status",
+          "cells": {
+            "x": 4,
+            "y": 3,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "status",
+            "dot",
+            "warning"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "status.dot.error",
+          "slot": "ui.status",
+          "cells": {
+            "x": 5,
+            "y": 3,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "status",
+            "dot",
+            "error"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "status.dot.activity",
+          "slot": "ui.status",
+          "cells": {
+            "x": 6,
+            "y": 3,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "status",
+            "dot",
+            "activity"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "status.indicator.housing",
+          "slot": "ui.status",
+          "cells": {
+            "x": 7,
+            "y": 3,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "status",
+            "indicator",
+            "housing"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "status.badge.background",
+          "slot": "ui.status",
+          "cells": {
+            "x": 8,
+            "y": 3,
+            "w": 2,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "status",
+            "badge",
+            "background"
+          ],
+          "tint_mode": "none"
+        }
+      ]
+    },
+    {
+      "id": "09-icons",
+      "image": "textures/09-icons.png",
+      "columns": 24,
+      "rows": 8,
+      "cell_px": 128,
+      "width_px": 3072,
+      "height_px": 1024,
+      "assets": [
+        {
+          "id": "icon.ai",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 0,
+            "y": 0,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "ai"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.image",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 1,
+            "y": 0,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "image"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.video",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 2,
+            "y": 0,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "video"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.audio",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 3,
+            "y": 0,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "audio"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.text",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 4,
+            "y": 0,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "text"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.data",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 5,
+            "y": 0,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "data"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.database",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 6,
+            "y": 0,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "database"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.tensor",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 7,
+            "y": 0,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "tensor"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.matrix",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 8,
+            "y": 0,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "matrix"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.number",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 9,
+            "y": 0,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "number"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.boolean",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 10,
+            "y": 0,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "boolean"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.vector",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 11,
+            "y": 0,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "vector"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.file",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 12,
+            "y": 0,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "file"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.folder",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 13,
+            "y": 0,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "folder"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.directory",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 14,
+            "y": 0,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "directory"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.model",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 15,
+            "y": 0,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "model"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.model-loader",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 16,
+            "y": 0,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "model",
+            "loader"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.compute",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 17,
+            "y": 0,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "compute"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.cpu",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 18,
+            "y": 0,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "cpu"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.gpu",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 19,
+            "y": 0,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "gpu"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.memory",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 20,
+            "y": 0,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "memory"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.network",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 21,
+            "y": 0,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "network"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.router",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 22,
+            "y": 0,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "router"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.logic",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 23,
+            "y": 0,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "logic"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.math",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 0,
+            "y": 1,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "math"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.flow",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 1,
+            "y": 1,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "flow"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.trigger",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 2,
+            "y": 1,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "trigger"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.event",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 3,
+            "y": 1,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "event"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.timer",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 4,
+            "y": 1,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "timer"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.clock",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 5,
+            "y": 1,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "clock"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.camera",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 6,
+            "y": 1,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "camera"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.microphone",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 7,
+            "y": 1,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "microphone"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.speaker",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 8,
+            "y": 1,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "speaker"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.editor",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 9,
+            "y": 1,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "editor"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.code",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 10,
+            "y": 1,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "code"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.terminal",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 11,
+            "y": 1,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "terminal"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.console",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 12,
+            "y": 1,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "console"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.search",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 13,
+            "y": 1,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "search"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.filter",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 14,
+            "y": 1,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "filter"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.sort",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 15,
+            "y": 1,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "sort"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.tag",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 16,
+            "y": 1,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "tag"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.grid",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 17,
+            "y": 1,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "grid"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.list",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 18,
+            "y": 1,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "list"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.table",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 19,
+            "y": 1,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "table"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.chart",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 20,
+            "y": 1,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "chart"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.graph",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 21,
+            "y": 1,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "graph"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.tree",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 22,
+            "y": 1,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "tree"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.layers",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 23,
+            "y": 1,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "layers"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.add",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 0,
+            "y": 2,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "add"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.remove",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 1,
+            "y": 2,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "remove"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.duplicate",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 2,
+            "y": 2,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "duplicate"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.rename",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 3,
+            "y": 2,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "rename"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.move",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 4,
+            "y": 2,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "move"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.reorder",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 5,
+            "y": 2,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "reorder"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.undo",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 6,
+            "y": 2,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "undo"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.redo",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 7,
+            "y": 2,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "redo"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.refresh",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 8,
+            "y": 2,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "refresh"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.reset",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 9,
+            "y": 2,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "reset"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.save",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 10,
+            "y": 2,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "save"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.load",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 11,
+            "y": 2,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "load"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.export",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 12,
+            "y": 2,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "export"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.import",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 13,
+            "y": 2,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "import"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.copy",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 14,
+            "y": 2,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "copy"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.paste",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 15,
+            "y": 2,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "paste"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.cut",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 16,
+            "y": 2,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "cut"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.link",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 17,
+            "y": 2,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "link"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.unlink",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 18,
+            "y": 2,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "unlink"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.lock",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 19,
+            "y": 2,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "lock"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.unlock",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 20,
+            "y": 2,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "unlock"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.eye",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 21,
+            "y": 2,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "eye"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.eye-off",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 22,
+            "y": 2,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "eye",
+            "off"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.play",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 23,
+            "y": 2,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "play"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.pause",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 0,
+            "y": 3,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "pause"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.stop",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 1,
+            "y": 3,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "stop"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.record",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 2,
+            "y": 3,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "record"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.step",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 3,
+            "y": 3,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "step"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.warning",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 4,
+            "y": 3,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "warning"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.error",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 5,
+            "y": 3,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "error"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.info",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 6,
+            "y": 3,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "info"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.success",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 7,
+            "y": 3,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "success"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.help",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 8,
+            "y": 3,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "help"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.close",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 9,
+            "y": 3,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "close"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.menu",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 10,
+            "y": 3,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "menu"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.ellipsis",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 11,
+            "y": 3,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "ellipsis"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.chevron-up",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 12,
+            "y": 3,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "chevron",
+            "up"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.chevron-down",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 13,
+            "y": 3,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "chevron",
+            "down"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.chevron-left",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 14,
+            "y": 3,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "chevron",
+            "left"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.chevron-right",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 15,
+            "y": 3,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "chevron",
+            "right"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.arrow-up",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 16,
+            "y": 3,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "arrow",
+            "up"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.arrow-down",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 17,
+            "y": 3,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "arrow",
+            "down"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.arrow-left",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 18,
+            "y": 3,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "arrow",
+            "left"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.arrow-right",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 19,
+            "y": 3,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "arrow",
+            "right"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.plus-circle",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 20,
+            "y": 3,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "plus",
+            "circle"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.minus-circle",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 21,
+            "y": 3,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "minus",
+            "circle"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.expand",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 22,
+            "y": 3,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "expand"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.collapse",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 23,
+            "y": 3,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "collapse"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.maximize",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 0,
+            "y": 4,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "maximize"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.minimize",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 1,
+            "y": 4,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "minimize"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.pin",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 2,
+            "y": 4,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "pin"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.unpin",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 3,
+            "y": 4,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "unpin"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.settings",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 4,
+            "y": 4,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "settings"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.sliders",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 5,
+            "y": 4,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "sliders"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.palette",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 6,
+            "y": 4,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "palette"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.color-picker",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 7,
+            "y": 4,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "color",
+            "picker"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.paintbrush",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 8,
+            "y": 4,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "paintbrush"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.preview",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 9,
+            "y": 4,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "preview"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.zoom-in",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 10,
+            "y": 4,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "zoom",
+            "in"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.zoom-out",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 11,
+            "y": 4,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "zoom",
+            "out"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.fit-view",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 12,
+            "y": 4,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "fit",
+            "view"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.home",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 13,
+            "y": 4,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "home"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.star",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 14,
+            "y": 4,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "star"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.favorite",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 15,
+            "y": 4,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "favorite"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.bookmark",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 16,
+            "y": 4,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "bookmark"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.attachment",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 17,
+            "y": 4,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "attachment"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.download",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 18,
+            "y": 4,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "download"
+          ],
+          "tint_mode": "multiply_rgba"
+        },
+        {
+          "id": "icon.upload",
+          "slot": "ui.icon",
+          "cells": {
+            "x": 19,
+            "y": 4,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "icon",
+            "upload"
+          ],
+          "tint_mode": "multiply_rgba"
+        }
+      ]
+    },
+    {
+      "id": "10-graph",
+      "image": "textures/10-graph.png",
+      "columns": 16,
+      "rows": 5,
+      "cell_px": 128,
+      "width_px": 2048,
+      "height_px": 640,
+      "assets": [
+        {
+          "id": "graph.selection-handle",
+          "slot": "ui.graph",
+          "cells": {
+            "x": 0,
+            "y": 0,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "graph",
+            "selection",
+            "handle"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "graph.resize-handle",
+          "slot": "ui.graph",
+          "cells": {
+            "x": 1,
+            "y": 0,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "graph",
+            "resize",
+            "handle"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "graph.reroute-handle",
+          "slot": "ui.graph",
+          "cells": {
+            "x": 2,
+            "y": 0,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "graph",
+            "reroute",
+            "handle"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "graph.wire-end",
+          "slot": "ui.graph",
+          "cells": {
+            "x": 3,
+            "y": 0,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "graph",
+            "wire",
+            "end"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "graph.wire-junction",
+          "slot": "ui.graph",
+          "cells": {
+            "x": 4,
+            "y": 0,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "graph",
+            "wire",
+            "junction"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "graph.wire-cap",
+          "slot": "ui.graph",
+          "cells": {
+            "x": 5,
+            "y": 0,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "graph",
+            "wire",
+            "cap"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "graph.drag-preview",
+          "slot": "ui.graph",
+          "cells": {
+            "x": 6,
+            "y": 0,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "graph",
+            "drag",
+            "preview"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "graph.drop-target",
+          "slot": "ui.graph",
+          "cells": {
+            "x": 7,
+            "y": 0,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "graph",
+            "drop",
+            "target"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "graph.anchor",
+          "slot": "ui.graph",
+          "cells": {
+            "x": 8,
+            "y": 0,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "graph",
+            "anchor"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "graph.comment-corner",
+          "slot": "ui.graph",
+          "cells": {
+            "x": 9,
+            "y": 0,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "graph",
+            "comment",
+            "corner"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "graph.comment-header",
+          "slot": "ui.graph",
+          "cells": {
+            "x": 10,
+            "y": 0,
+            "w": 3,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "graph",
+            "comment",
+            "header"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "graph.group-corner",
+          "slot": "ui.graph",
+          "cells": {
+            "x": 13,
+            "y": 0,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "graph",
+            "group",
+            "corner"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "graph.group-header",
+          "slot": "ui.graph",
+          "cells": {
+            "x": 0,
+            "y": 1,
+            "w": 3,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "graph",
+            "group",
+            "header"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "graph.group-fill",
+          "slot": "ui.graph",
+          "cells": {
+            "x": 3,
+            "y": 1,
+            "w": 3,
+            "h": 2
+          },
+          "states": [],
+          "tags": [
+            "graph",
+            "group",
+            "fill"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "graph.mini-map-frame",
+          "slot": "ui.graph",
+          "cells": {
+            "x": 6,
+            "y": 1,
+            "w": 3,
+            "h": 2
+          },
+          "states": [],
+          "tags": [
+            "graph",
+            "mini",
+            "map",
+            "frame"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "graph.viewport-outline",
+          "slot": "ui.graph",
+          "cells": {
+            "x": 14,
+            "y": 0,
+            "w": 2,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "graph",
+            "viewport",
+            "outline"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "graph.bookmark",
+          "slot": "ui.graph",
+          "cells": {
+            "x": 9,
+            "y": 1,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "graph",
+            "bookmark"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "graph.breakpoint",
+          "slot": "ui.graph",
+          "cells": {
+            "x": 10,
+            "y": 1,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "graph",
+            "breakpoint"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "graph.execution-marker",
+          "slot": "ui.graph",
+          "cells": {
+            "x": 11,
+            "y": 1,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "graph",
+            "execution",
+            "marker"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "graph.link-valid",
+          "slot": "ui.graph",
+          "cells": {
+            "x": 12,
+            "y": 1,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "graph",
+            "link",
+            "valid"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "graph.link-invalid",
+          "slot": "ui.graph",
+          "cells": {
+            "x": 13,
+            "y": 1,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "graph",
+            "link",
+            "invalid"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "graph.link-pending",
+          "slot": "ui.graph",
+          "cells": {
+            "x": 14,
+            "y": 1,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "graph",
+            "link",
+            "pending"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "graph.connection-start",
+          "slot": "ui.graph",
+          "cells": {
+            "x": 15,
+            "y": 1,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "graph",
+            "connection",
+            "start"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "graph.connection-end",
+          "slot": "ui.graph",
+          "cells": {
+            "x": 0,
+            "y": 2,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "graph",
+            "connection",
+            "end"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "graph.search-result",
+          "slot": "ui.graph",
+          "cells": {
+            "x": 1,
+            "y": 2,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "graph",
+            "search",
+            "result"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "graph.selection-count",
+          "slot": "ui.graph",
+          "cells": {
+            "x": 2,
+            "y": 2,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "graph",
+            "selection",
+            "count"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "graph.zoom-button",
+          "slot": "ui.graph",
+          "cells": {
+            "x": 9,
+            "y": 2,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "graph",
+            "zoom",
+            "button"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "graph.pan-button",
+          "slot": "ui.graph",
+          "cells": {
+            "x": 10,
+            "y": 2,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "graph",
+            "pan",
+            "button"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "graph.snap-marker",
+          "slot": "ui.graph",
+          "cells": {
+            "x": 11,
+            "y": 2,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "graph",
+            "snap",
+            "marker"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "graph.row-connector",
+          "slot": "ui.graph",
+          "cells": {
+            "x": 12,
+            "y": 2,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "graph",
+            "row",
+            "connector"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "graph.port-reorder",
+          "slot": "ui.graph",
+          "cells": {
+            "x": 13,
+            "y": 2,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "graph",
+            "port",
+            "reorder"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "graph.missing-asset",
+          "slot": "ui.graph",
+          "cells": {
+            "x": 14,
+            "y": 2,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "graph",
+            "missing",
+            "asset"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "graph.missing-type",
+          "slot": "ui.graph",
+          "cells": {
+            "x": 15,
+            "y": 2,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "graph",
+            "missing",
+            "type"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "graph.warning-badge",
+          "slot": "ui.graph",
+          "cells": {
+            "x": 0,
+            "y": 3,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "graph",
+            "warning",
+            "badge"
+          ],
+          "tint_mode": "none"
+        },
+        {
+          "id": "graph.export-mark",
+          "slot": "ui.graph",
+          "cells": {
+            "x": 1,
+            "y": 3,
+            "w": 1,
+            "h": 1
+          },
+          "states": [],
+          "tags": [
+            "graph",
+            "export",
+            "mark"
+          ],
+          "tint_mode": "none"
+        }
+      ]
+    }
+  ]
+}
