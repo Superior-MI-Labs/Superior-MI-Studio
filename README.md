@@ -1,18 +1,30 @@
 # Superior MI Studio
 
+[**Explore the live website**](https://superior-mi-labs.github.io/Superior-MI-Studio/) · [Source](https://github.com/Superior-MI-Labs/Superior-MI-Studio) · [Roadmap](docs/PROJECT-ROADMAP.md) · [Contribute](CONTRIBUTING.md) · [Support](SUPPORT.md)
+
+![Superior MI Studio site identity with a real v2.120 application capture](site/assets/social-preview.png)
+
 **A visual + text IDE for exploring, building, and understanding software.**
 
 Superior MI Studio is a Python-first desktop IDE in development at [Superior MI Labs](https://github.com/Superior-MI-Labs). Our goal is one workbench where source code, editable node graphs, project files, and their relationships are connected, rather than separate tools with competing state.
 
 We take inspiration from **VS Code's development workflow** and **Unreal Engine Blueprints' visual programming**, while designing Studio's own architecture and interfaces. We are not affiliated with either project.
 
-**[Roadmap](docs/PROJECT-ROADMAP.md) · [Architecture](docs/architecture) · [Contribute](CONTRIBUTING.md) · [Support / paid work](SUPPORT.md) · [Development pipeline](docs/RELEASE-PIPELINE.md)**
+**[Architecture](docs/architecture) · [Wiki](https://github.com/Superior-MI-Labs/Superior-MI-Studio/wiki) · [Development pipeline](docs/RELEASE-PIPELINE.md) · [Issues](https://github.com/Superior-MI-Labs/Superior-MI-Studio/issues)**
 
-> **Current status: pre-alpha · v2.120 source candidate.** Python is the first supported language adapter. v2.120 has passed headless qualification but has not yet replaced the documented v2.115 native-Linux-qualified baseline. This is research software, not a stable IDE release.
+> **Current status: pre-alpha · v2.120 qualified development candidate.** The uploaded November 2, 2026 local Linux report records passing headless and native Qt checks. This is evidence for that host and test run, not a packaged stable release or broad cross-platform certification. Python remains the first language adapter.
 
-## Studio in action
+## The Studio workbench · v2.120 Linux preview
 
-**Actual interface screenshots are being prepared.** We will feature a large workbench image here, followed by smaller images of Python source and its graph, and unified project/resource navigation. These will be captures from the real, reviewed native application, not concept artwork or simulated UI. [Screenshot and review guide](docs/screenshots/README.md).
+The images below are **real captures of the running PyQt6 workbench**, taken from a passing local native qualification report. Personal machine paths were redacted before publication. The screenshots show a development build, not a polished product release.
+
+[![Studio's real source editor, node graph, file navigation and minimap](site/assets/studio-workbench.png)](site/assets/studio-workbench.png)
+
+| Typed graph connections | Connected Python project view |
+|:--:|:--:|
+| [![Studio Python graph with typed flow wires](site/assets/studio-python-graph.webp)](site/assets/studio-python-graph.webp) | [![Studio connected Python resource view](site/assets/studio-project-view.webp)](site/assets/studio-project-view.webp) |
+
+[**Open the interactive presentation website**](https://superior-mi-labs.github.io/Superior-MI-Studio/) · [Screenshot provenance and review process](docs/screenshots/README.md)
 
 ## What makes Studio different
 

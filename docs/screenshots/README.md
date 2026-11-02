@@ -33,3 +33,7 @@ Optional: a brief **real screen recording** demonstrating one qualified operatio
 If sending captures to another maintainer for publication, send the full qualification report archive as well, so its screenshots can be checked against the build evidence.
 
 **Implementation boundary:** Use the existing `studio_native/qt_smoke.py` and `RUN-ALL.sh` capture path. Do not add another screenshot renderer, fake a visual result, or weaken CI qualification to obtain marketing images.
+
+## Current published image set (November 2, 2026)
+
+The uploaded `qualification-20261102-140104-73870.tar.gz` records `doctor_status=0`, `qt_status=0`, `verdict=CHECKS_PASS`, and `NATIVE_QT_SMOKE_PASS`. The published web images in `site/assets/` are redacted, optimized derivatives of the actual Qt captures. `site/assets/studio-workbench.png` is the canonical README hero; the website uses an optimized WebP variant. Social-preview artwork is a promotional composite containing a real, redacted screenshot, not itself an unaltered UI screenshot. Do not put the original report archive into the public repository.

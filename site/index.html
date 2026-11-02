@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#071421">
+  <meta name="description" content="Superior MI Studio is an experimental visual and text-based IDE connecting source code, typed node graphs, and project resources. Follow development, contribute, or support the project.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Superior MI Studio | Code as text. See it as systems.">
+  <meta property="og:description" content="An experimental visual and text-based developer workbench from Superior MI Labs. Follow our progress and help build it.">
+  <meta property="og:image" content="https://superior-mi-labs.github.io/Superior-MI-Studio/assets/social-preview.png">
+  <meta property="og:url" content="https://superior-mi-labs.github.io/Superior-MI-Studio/">
+  <meta name="color-scheme" content="dark">
+  <title>Superior MI Studio | Visual &amp; Text IDE</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <script src="main.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <canvas id="neural-background" aria-hidden="true"></canvas>
+  <header class="site-header">
+    <nav class="nav-shell wrap" aria-label="Primary navigation">
+      <a class="brand" href="#top" aria-label="Superior MI Studio home">
+        <svg viewBox="0 0 40 40" role="img" aria-label="Connected graph mark"><path d="M8 10 20 6 32 15 27 30 13 34 8 10 27 30 20 6M8 10l24 5-19 19" fill="none" stroke="currentColor" stroke-width="1.4" opacity=".7"/><circle cx="8" cy="10" r="3.2"/><circle cx="20" cy="6" r="3.2"/><circle cx="32" cy="15" r="3.2"/><circle cx="27" cy="30" r="3.2"/><circle cx="13" cy="34" r="3.2"/></svg>
+        <span><strong>SUPERIOR MI <em>STUDIO</em></strong><small>BY SUPERIOR MI LABS</small></span>
+      </a>
+      <div class="nav-links"><a href="#showcase">Showcase</a><a href="#capabilities">Capabilities</a><a href="#roadmap">Roadmap</a><a href="#contribute">Contribute</a><a href="https://github.com/Superior-MI-Labs/Superior-MI-Studio/wiki">Wiki</a></div>
+      <a class="nav-github" href="https://github.com/Superior-MI-Labs/Superior-MI-Studio" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="hero wrap" id="top" aria-labelledby="hero-title">
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow"><span class="signal" aria-hidden="true"></span> SUPERIOR MI LABS <span class="slash">/</span> DEVELOPMENT PROJECT</p>
+          <h1 id="hero-title">Code as text.<br><span class="gradient-text">See it as systems.</span></h1>
+          <p class="hero-intro">A new kind of developer workbench where source code, typed node graphs, and project resources belong to the same connected workspace.</p>
+          <p class="hero-sub">Python-first today. Designed for an extensible, multi-language future.</p>
+          <div class="hero-actions"><a class="button primary" href="#showcase">Explore the workbench <span aria-hidden="true">↘</span></a><a class="button secondary" href="https://github.com/Superior-MI-Labs/Superior-MI-Studio" target="_blank" rel="noopener noreferrer">View source <span aria-hidden="true">↗</span></a></div>
+          <div class="status-row" aria-label="Development status"><span class="status-tag"><span class="status-dot"></span> Pre-alpha</span><span>v2.120 native test passed</span><span class="status-divider" aria-hidden="true"></span><span>Research &amp; development</span></div>
+        </div>
+        <div class="hero-visual" aria-hidden="true"><div class="halo halo-one"></div><div class="halo halo-two"></div><div class="orbit orbit-a"></div><div class="orbit orbit-b"></div><div class="visual-center"><div class="core-node"></div><div class="core-ring"></div></div><span class="orbit-label label-a">SOURCE</span><span class="orbit-label label-b">GRAPH</span><span class="orbit-label label-c">SYSTEM</span><div class="hero-hairline"></div></div>
+      </div>
+      <div class="hero-bottom"><span>01 <span class="muted">/</span> SEE THE WORKBENCH</span><a href="#showcase" aria-label="Scroll to showcase">↓</a><span class="hero-bottom-right">BUILT TO MAKE COMPLEXITY VISIBLE</span></div>
+    </section>
+
+    <section class="showcase section-pad" id="showcase" aria-labelledby="showcase-title">
+      <div class="wrap">
+        <div class="section-heading"><div><p class="section-index">01 / THE WORKBENCH</p><h2 id="showcase-title">Real software. <span>Visible structure.</span></h2></div><p class="section-side">Actual Qt application captures from the v2.120 native qualification. Sensitive local paths have been redacted.</p></div>
+        <div class="capture-main"><div class="window-bar"><span class="window-lights" aria-hidden="true"><i></i><i></i><i></i></span><span>SUPERIOR MI STUDIO / WORKSPACE</span><span>CAPTURE 01 / 04</span></div><a href="assets/studio-workbench.png" target="_blank" rel="noopener noreferrer" aria-label="Open full resolution Studio workbench screenshot"><img src="assets/studio-workbench.webp" width="1510" height="920" alt="Actual Studio Qt workbench showing node library, interconnected Python code graph, minimap, and source editor" decoding="async" fetchpriority="high"></a></div>
+        <div class="capture-footer"><span><strong>Unified workspace</strong> <span class="muted">Graph canvas, source editor, symbol explorer and navigation.</span></span><a href="assets/studio-workbench.png" target="_blank" rel="noopener noreferrer">View original resolution ↗</a></div>
+        <div class="capture-grid">
+          <article class="capture-tile"><a href="assets/studio-python-graph.webp" target="_blank" rel="noopener noreferrer"><img src="assets/studio-python-graph.webp" width="1510" height="920" loading="lazy" decoding="async" alt="Studio code graph with typed data connections and keyword expression wiring"></a><div class="capture-tile-body"><span class="kicker">02 / SOURCE + GRAPH</span><h3>Connections with meaning.</h3><p>Typed data and execution paths expressed as a navigable graph.</p></div></article>
+          <article class="capture-tile"><a href="assets/studio-project-view.webp" target="_blank" rel="noopener noreferrer"><img src="assets/studio-project-view.webp" width="1510" height="920" loading="lazy" decoding="async" alt="Studio resource view showing embedded Python graph and connected code source panel"></a><div class="capture-tile-body"><span class="kicker">03 / PROJECT CONTEXT</span><h3>Navigate the bigger picture.</h3><p>Project resources and source structures share one visual presentation language.</p></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="principles section-pad" id="capabilities" aria-labelledby="capabilities-title">
+      <div class="wrap"><div class="section-heading"><div><p class="section-index">02 / DESIGN PRINCIPLES</p><h2 id="capabilities-title">One workspace.<br><span>Clear ownership.</span></h2></div><p class="section-side">We are building for maintainability as much as visual expression. Unproven transformations are refused, not guessed.</p></div>
+        <div class="feature-grid">
+          <article class="feature-card"><div class="feature-symbol">{ }</div><span class="feature-number">01</span><h3>Text and nodes, together.</h3><p>Read Python as code and as supported graph structures. Edit qualified native graph programs without silently rewriting source.</p><div class="feature-meta">EXPERIMENTAL · PYTHON FIRST</div></article>
+          <article class="feature-card"><div class="feature-symbol nodes-symbol"><span></span><span></span><span></span></div><span class="feature-number">02</span><h3>A connected project view.</h3><p>Inspect supported files, relationships and previews through shared graph descriptors and navigation.</p><div class="feature-meta">EXPERIMENTAL · RESOURCE GRAPHS</div></article>
+          <article class="feature-card"><div class="feature-symbol">◎</div><span class="feature-number">03</span><h3>Trust before automation.</h3><p>Document revisions, explicit diagnostics, guarded writes and regression tests protect developers' work.</p><div class="feature-meta">ACTIVE · QUALIFICATION GATES</div></article>
+        </div>
+        <div class="honest-status"><div><span class="tiny-label">DEVELOPMENT STATUS</span><h3>Working foundations. Ambitious destination.</h3></div><p>Studio is pre-alpha. Arbitrary Python round-tripping, general compilers and debuggers, cross-language editing, and a public extension API are <strong>not released capabilities</strong>. We publish this distinction intentionally.</p><a href="https://github.com/Superior-MI-Labs/Superior-MI-Studio/blob/main/docs/PROJECT-ROADMAP.md">Read the full roadmap ↗</a></div>
+      </div>
+    </section>
+
+    <section class="roadmap section-pad" id="roadmap" aria-labelledby="roadmap-title"><div class="wrap"><div class="section-heading"><div><p class="section-index">03 / DIRECTION OF TRAVEL</p><h2 id="roadmap-title">Building an IDE.<br><span>Not another isolated tool.</span></h2></div><p class="section-side">The current refactor is an architectural investment. The roadmap reflects intent, not promised dates or release commitments.</p></div>
+      <div class="milestone-line">
+        <div class="milestone current"><div class="milestone-step">01 <span class="node-pill">CURRENT</span></div><h3>Establish the foundation</h3><p>Consolidate document/graph ownership, Python compiler proof, UI navigation and native qualification.</p></div>
+        <div class="milestone"><div class="milestone-step">02</div><h3>Complete the development loop</h3><p>More visual authoring, safe code reconciliation, diagnostics, tasks, test running and debugger hooks.</p></div>
+        <div class="milestone"><div class="milestone-step">03</div><h3>Open the platform</h3><p>Language adapters, file capabilities, manifest-driven extension contracts and tooling integration.</p></div>
+        <div class="milestone"><div class="milestone-step">04</div><h3>Ship for developers</h3><p>Qualified desktop builds, packaging, documentation, stable updates and a contributor ecosystem.</p></div>
+      </div>
+      <div class="pipeline"><span>ENGINEERING PIPELINE</span><strong>Design <em>→</em> Implement <em>→</em> Test <em>→</em> Native qualify <em>→</em> Review <em>→</em> Release</strong><a href="https://github.com/Superior-MI-Labs/Superior-MI-Studio/blob/main/docs/RELEASE-PIPELINE.md">Review process ↗</a></div>
+    </div></section>
+
+    <section class="support section-pad" id="contribute" aria-labelledby="support-title"><div class="wrap support-wrap"><div class="support-heading"><p class="section-index">04 / BUILD WITH US</p><h2 id="support-title">Make something<br><span>worth building.</span></h2><p>Superior MI Studio is an independent development effort. We welcome engineers, testers, designers, documentation contributors, potential maintainers, and organizations interested in supporting the work.</p></div><div class="support-actions">
+      <a class="support-link" href="https://github.com/Superior-MI-Labs/Superior-MI-Studio/issues/3"><span><small>CONTRIBUTE</small><strong>Help move Studio forward</strong><span>Engineering, design, testing, documentation</span></span><b aria-hidden="true">↗</b></a>
+      <a class="support-link" href="https://github.com/Superior-MI-Labs/Superior-MI-Studio/blob/main/SUPPORT.md"><span><small>SUPPORT THE RESEARCH</small><strong>Equipment &amp; financial backing</strong><span>Sponsorship or practical hardware assistance</span></span><b aria-hidden="true">↗</b></a>
+      <a class="support-link" href="mailto:superior.mi.labs@gmail.com?subject=Studio%20collaboration%20or%20contract%20inquiry"><span><small>PROFESSIONAL OPPORTUNITIES</small><strong>Offer paid development work</strong><span>Python, automation, AI integration, tooling</span></span><b aria-hidden="true">↗</b></a>
+      <p class="support-note">No donation checkout is offered. Sponsorship and contracting inquiries are handled directly; no tax-deductible donation status is claimed.</p>
+    </div></div></section>
+  </main>
+  <footer class="site-footer"><div class="wrap footer-wrap"><div><strong>SUPERIOR MI <span>STUDIO</span></strong><p>An independent R&amp;D project from Superior MI Labs.</p></div><nav aria-label="Footer navigation"><a href="https://github.com/Superior-MI-Labs/Superior-MI-Studio">Source</a><a href="https://github.com/Superior-MI-Labs/Superior-MI-Studio/wiki">Wiki</a><a href="https://github.com/Superior-MI-Labs/Superior-MI-Studio/blob/main/CONTRIBUTING.md">Contribute</a><a href="https://github.com/Superior-MI-Labs/Superior-MI-Studio/blob/main/SECURITY.md">Security</a></nav><span>PRE-ALPHA · BUILT IN MICHIGAN</span></div></footer>
+</body>
+</html>
