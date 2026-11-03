@@ -1,6 +1,6 @@
 # Superior MI Studio — canonical implementation queue
 
-**Source candidate:** v2.120 (native pending). **Latest host-qualified:** v2.115 (`qualification-20261102-104724-64648.tar.gz`: doctor PASS, complete native Qt PASS through integration shutdown, `NATIVE_QT_SMOKE_PASS`, no Python callback traceback). Historical v2.82/v2.83/v2.84/v2.86 failures are retained below for root-cause context. Do not repeat outdated v2.81-only baseline claims. The installer cleans managed previous builds and auto-launches only after native qualification.
+**Source candidate:** v2.120 (host headless + native Qt PASS; public release not yet promoted). **Latest host qualification evidence:** v2.120 (`qualification-20261102-140104-73870.tar.gz`: `doctor_status=0`, `qt_status=0`, `verdict=CHECKS_PASS`, full `NATIVE_QT_SMOKE_PASS`). **Previous rollback baseline:** v2.115 (`qualification-20261102-104724-64648.tar.gz`). Historical v2.82/v2.83/v2.84/v2.86 failures are retained below for root-cause context. Do not repeat outdated v2.81-only baseline claims. The installer cleans managed previous builds and auto-launches only after native qualification.
 
 **Product direction:** One VS Code-style workspace and navigable graph, Blueprint-grade visual interactions, interchangeable source and visual programming where semantics can be proven, a growing set of file/asset previewers and relationship providers. Python is the first language, **not** the only target. Source, graph and binary resources keep specialized authoritative owners; shared presentation/tabs do not imply a universal writable AST.
 
@@ -8,8 +8,8 @@
 
 | Priority | Work | Required proof / no-go |
 |---|---|---|
-| 0 | **Qualify v2.120 on Linux host** | Full doctor, all native Qt subprocess/stage markers, no Python callback exception, and correct install/launch/log/rollback behavior. Last independently qualified baseline is v2.115. |
-| 1 | **Source/graph reconciliation** | Extend explicit function-region proof and conflict explanations, using only the current compiler and document owners. v2.95 added atomic multi-function selection; v2.97 completes all six conventional typed integer comparisons with shared compiler mapping and improves independent-source parse diagnostics. Refuse unsupported AST, fuzzy renames and partial imports. |
+| 0 | **Restore portable public CI / release-test contracts** | Host v2.120 native PASS is recorded; public GitHub source-checkout CI still fails three pre-existing naming/README assumptions. Fix tests to use authoritative version/package metadata rather than checkout directory or marketing copy; retain actual packaged-install and native safety gates. See [issue #4](https://github.com/Superior-MI-Labs/Superior-MI-Studio/issues/4). Do not disguise failures through legacy strings, renamed checkout directories or skipped tests. |
+| 1 | **Compiler-proof consolidation and source/graph reconciliation** | Characterize and reduce repeated independent-source proof/diagnostic logic inside the existing `python_lowering.py` authority before adding syntax. Extend explicit function-region proof and conflict explanations using only existing compiler and document owners. v2.95 added atomic multi-function selection; v2.97 completes all six conventional typed integer comparisons with shared compiler mapping and improves independent-source parse diagnostics. Refuse unsupported AST, fuzzy renames and partial imports. |
 | 2 | **Unified tab, route and root compatibility cleanup** | Characterize remaining root/secondary duplication with existing graph sessions. Delete obsolete branches only after a native parity test proves source revision, history, camera and tab preservation. Never reintroduce a second tab/graph authority. |
 | 3 | **Conservative resource capabilities** | Existing previews, imports, literal-reference evidence, relationship inspection, precise source jumps and visible-hop search are implemented. Prefer usability/diagnostics over a recursive filesystem index; static edges are not proven runtime dependencies. |
 | 4 | **Future IDE/language support** | Run/debug/LSP/DAP, other languages and an extension host require stable adapter and execution contracts. Do not build speculative infrastructure before core Python round-trip milestones qualify. |
@@ -373,7 +373,7 @@ The existing `.github/workflows/headless.yml` now adds a separate `native-qt` jo
 - `RUN-ALL.sh` writes `qualification-verdict.txt` into the archive before finishing, and `install_linux.run_qualification` supervises the entire private process group with a configurable bounded timeout (default 520 seconds). Timed-out child trees are terminated; native promotion, old-version pruning and launch remain forbidden. An archived verdict improves diagnosis but does not override a nonzero exit code.
 - Tests `test_v2119_source_constant_proof.py`, `test_v2119_release_supervision.py`, historical v2.118 constant proof suites, native/installer regression suites, full headless and WolfCat-Studio Qt gates. Next: host qualification, then broader *compiler-proven* function correspondence and evidence-based root-tab retirement, not syntax-only exception accumulation.
 
-## v2.120 — source-only local annotation and no-op guard proof (native pending)
+## v2.120 — source-only local annotation and no-op guard proof (host native PASS)
 
 - A pre-existing assigned local or function parameter may have a bare
   built-in annotation (`int`, `bool`, `str`) in the independently authored
@@ -385,4 +385,4 @@ The existing `.github/workflows/headless.yml` now adds a separate `native-qt` jo
 - Existing graph trial-lowering, source revision/digest, atomic import, undo
   and generated-source strictness are unchanged. Tests cover combined
   keyword-call rewires, readable locals, branch-local cases and refusals.
-- Host qualification remains pending; v2.115 is the last verified baseline.
+- Host v2.120 native qualification: uploaded report `qualification-20261102-140104-73870.tar.gz` records `doctor_status=0`, `qt_status=0`, `CHECKS_PASS` and `NATIVE_QT_SMOKE_PASS`, including shutdown. This qualifies that host test run, not the public GitHub checkout or a stable packaged release. Public GitHub Actions [run 41509340420](https://github.com/Superior-MI-Labs/Superior-MI-Studio/actions/runs/41509340420) fails the legacy folder-name/README release metadata assertions. `docs/agents/NEXT-TASKS.md` remains the single active work queue; [issue #4](https://github.com/Superior-MI-Labs/Superior-MI-Studio/issues/4) tracks the specific CI portability defect.
