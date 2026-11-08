@@ -1,24 +1,28 @@
-# Codex start here — Superior MI Studio v2.121
+# Codex start here — Superior MI Studio v2.122
 
-## v2.121 — portable checkout release contracts and consolidated proof
+## v2.122 — qualified root navigation before Qt tab selection
 
-GitHub checkout names and public README wording are not release-version authorities.
-The existing `scripts/build_release.py` now accepts an arbitrarily named source
-folder only when its `install_linux.py` declares the authoritative version.
-It still emits the exact versioned archive root, validates hashes, refuses
-overwrite, and requires the existing qualification pipeline. Do not weaken
-`install_linux.validate_archive`.
+Previously, a route opened from the original filesystem tab into an already
+initialized source root could switch the selected Qt tab before the Python
+owner validated a requested scope. Rejected routes must now leave the source
+and resource histories, tab selection and active aliases intact. The existing
+`_navigate_source_document_in_tab` owns both selected-source and root-anchor
+routes; no extra parser or view session was introduced. Cross-provider
+transitions also check Qt page membership before committing registry changes.
+Tests: `tests/test_v2122_root_route_atomicity.py`, existing v2.84–v2.86
+route tests, and native Qt `protected-root-source-refusal-atomicity` stage.
+The candidate is not host-qualified until its full native report is reviewed;
+v2.121 GitHub CI passed, and v2.120 has the last uploaded Linux host PASS.
 
-Independent source-only syntax normalization and pure-expression matching were
-lifted from per-function/per-loop nested helpers into reusable private helpers
-inside `python_lowering.py`. No additional importer, semantic acceptance,
-source mutation, or graph owner was introduced. Direct refusal/non-mutation
-tests supplement the existing compiler-proof regressions.
+## v2.121 — portable source checkout release proof
 
-Local v2.121: **1,338 headless tests PASS** and release ZIP integrity PASS.
-A fresh native Linux Qt report and public GitHub CI confirmation are still
-required before v2.121 promotion. Last uploaded native-qualified evidence:
-v2.120 (Nov 2, 2026). Previous fallback: v2.115.
+The release builder accepts an arbitrarily named source checkout while validating
+the source installer version against the authoritative installer module. It
+still emits the exact versioned archive root required by the installer,
+rejects mismatched source versions, maintains manifest hashes, and refuses
+overwriting an existing archive. Public README prose is not release metadata;
+CI checks installer, GUI and release-pipeline contracts instead. The v2.121
+candidate requires fresh host native qualification before promotion.
 
 ## v2.120 — no-op annotation and static guard proof
 
@@ -73,8 +77,8 @@ Source-owned keyword calls may normalize only into temporary AST candidates when
 
 ## Current evidence and qualification
 
-- **Working source candidate:** v2.121. The restricted compiler can reconcile explicitly selected functions from independently authored Python through full graph re-lowering proof, one undoable transaction and no implicit source writes. Integer comparisons `<`, `==`, `>`, `>=`, `<=`, `!=` and integer arithmetic `+`, `-`, `*`, `//`, `%` each use a single AST mapping per family. Negative integer literals are reversible without evaluating arbitrary unary expressions; malformed source reports source-owner line/column. No arbitrary source import, implied rename matching or partial commit. v2.100 rejects explicit shadow bindings of selected top-level functions and reports source-owner statement spans; both are read-only AST evidence, not persistent ownership. **v2.101** additionally reconciles selected arithmetic/comparison operand wires to existing same-function values through ProgramGraph.replace_input and whole-graph re-lowering; no topology guesses or second mappings. **v2.102** extends that same proof to existing Boolean Not/Select, pure call arguments, and Return/Return Flow wires, with no node creation or structural control imports.
-- **Last confirmed native Linux/Qt host PASS:** v2.120, uploaded report `qualification-20261102-140104-73870.tar.gz` (`doctor_status=0`, `qt_status=0`, `CHECKS_PASS`, `NATIVE_QT_SMOKE_PASS` through shutdown). v2.115 remains the preceding verified rollback baseline. A passing host report does not certify a public release or substitute for independent GitHub CI; prior public CI failed legacy folder/README assertions; v2.121 is intended to correct those with portable release contracts (issue #4), pending new CI evidence. Historical root-tab and fixture defects remain in milestone records.
+- **Working source candidate:** v2.120. The restricted compiler can reconcile explicitly selected functions from independently authored Python through full graph re-lowering proof, one undoable transaction and no implicit source writes. Integer comparisons `<`, `==`, `>`, `>=`, `<=`, `!=` and integer arithmetic `+`, `-`, `*`, `//`, `%` each use a single AST mapping per family. Negative integer literals are reversible without evaluating arbitrary unary expressions; malformed source reports source-owner line/column. No arbitrary source import, implied rename matching or partial commit. v2.100 rejects explicit shadow bindings of selected top-level functions and reports source-owner statement spans; both are read-only AST evidence, not persistent ownership. **v2.101** additionally reconciles selected arithmetic/comparison operand wires to existing same-function values through ProgramGraph.replace_input and whole-graph re-lowering; no topology guesses or second mappings. **v2.102** extends that same proof to existing Boolean Not/Select, pure call arguments, and Return/Return Flow wires, with no node creation or structural control imports.
+- **Last confirmed native Linux/Qt PASS:** v2.115, report `qualification-20261102-104724-64648.tar.gz` (doctor and `NATIVE_QT_SMOKE_PASS`, including complete integration shutdown). Neither headless checks nor CI substitute for WolfCat-Studio native qualification. v2.120 is a candidate; v2.115 has full native host proof. Historical root-tab and fixture defects are documented in the milestone records.
 - **Architecture:** `SourceDocumentSession` owns authoritative Python text and revision/recovery; `ProgramGraph` owns native visual program state, commands and undo; `python_lowering.py` owns only compiler proof/publication/reconciliation; `GraphDescriptor` and resource/source projections are read-only; `GraphViewSessions` owns tab history/camera; Qt owns presentation. There is **no universal mutable graph owner** for all file types.
 - **Source safety:** Unsupported/ambiguous Python remains source-owned and cannot be silently compiled, discarded, or overwritten. Reviews are informational; import must check current source revision/digest, graph revision, exact function identity, and full graph proof again before commit.
 
@@ -93,8 +97,8 @@ For each release: prefer `python3 scripts/build_release.py --qualify-headless --
 
 ## Next planned work
 
-1. Verify v2.121 public CI portability and native host qualification: the revised tests use real release/version/archive invariants, not the checkout name or README marketing copy (issue #4).
-2. Consolidate the existing independent-source compiler proof and diagnostics **before** deepening typed source/graph reconciliation. Use one trial compiler, stable function anchors, explicit conflicts, and new operations only where compiler equivalence is proven; no second AST graph importer.
+1. Native qualification of v2.120; v2.115 is the verified host rollback baseline.
+2. Deepen typed source/graph reconciliation with qualified input rewires, stable function anchors, explicit conflicts, and more supported operations **only where compiler equivalence is proven**. Avoid a second AST graph importer.
 3. Continue unified workbench/root-compatibility cleanup after the existing navigation and Qt contract regressions pass.
 4. More language adapters and extensions come **after** the Python/source/workspace contracts stabilize, not to meet a superficial feature count.
 

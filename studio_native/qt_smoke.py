@@ -2066,6 +2066,25 @@ def main():
         history_snapshot=(root_session.route,root_session.peek(-1))
         assert not w._open_navigation_route(Route('source',str(bad)))
         assert (root_session.route,root_session.peek(-1))==history_snapshot
+        print('QT_STAGE protected-root-source-refusal-atomicity',flush=True)
+        # Opening source from the original resource root must prove the live
+        # scope before switching the selected Qt tab or active source aliases.
+        resource_root_page=w._resource_tabs['resource'].page
+        w.tabs.setCurrentWidget(resource_root_page);app.processEvents()
+        source_alias_before=w._active_source_tab_id
+        resource_history_before=w._view_sessions.get('resource').route
+        absent_scope=Route('source',str(second_target),'missing-scope','focus')
+        assert not w._open_navigation_route(absent_scope)
+        assert w.tabs.currentWidget() is resource_root_page
+        assert w._active_source_tab_id==source_alias_before
+        assert (root_session.route,root_session.peek(-1))==history_snapshot
+        assert w._view_sessions.get('resource').route==resource_history_before
+        assert not w._open_navigation_route(Route('source',str(bad)))
+        assert w.tabs.currentWidget() is resource_root_page
+        assert (root_session.route,root_session.peek(-1))==history_snapshot
+        assert w._open_navigation_route(Route('source',str(second_target)))
+        assert w.tabs.currentWidget() is root_page
+        assert (root_session.route,root_session.peek(-1))==history_snapshot
         assert w._open_navigation_route(previous_route)
         assert root_session.route==previous_route
         assert w.tabs.currentWidget() is root_page

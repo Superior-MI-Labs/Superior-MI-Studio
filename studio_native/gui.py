@@ -26,7 +26,7 @@ from . import model as m
 from .boundary_edit import parameter_source, terminal_return_target, BoundaryEditError
 from .exit_routes import project_exit_routes, project_folded_exit_connections
 
-APP_TITLE = 'Superior MI Studio · Visual Programming Lab 2.121'
+APP_TITLE = 'Superior MI Studio · Visual Programming Lab 2.122'
 from .semantic_contract import describe_graph, ContractError, canvas_graph_source, port_presentation_role, validated_port_payloads, validated_edge_payloads
 from .assets import AssetIndex
 from .external_icons import ExternalIconAtlas, default_icon_atlas_directory, icon_id_for_resource, icon_id_for_source
@@ -5312,6 +5312,13 @@ class NativeLab(QMainWindow):
         if history_direction is not None and session.peek(history_direction)!=resolved.route:
             self.report('Universal history refused: resolved destination changed')
             return False
+        # A route can qualify while its selected Qt page is being retired.
+        # Confirm actual membership before touching any source/view registry,
+        # camera, alias or history. Failed navigation must leave them intact.
+        index=self.tabs.indexOf(old.page)
+        if index<0:
+            self.report('Graph navigation refused: selected tab is no longer present')
+            return False
         # All potentially failing source/provider validation happened above.
         # Register the source owner only after a successful provider resolution;
         # the new tab and the source editor now consult that same revision.
@@ -5328,8 +5335,6 @@ class NativeLab(QMainWindow):
             self._store_active_resource_view()
             self._activate_resource_view(self._resource_tabs['resource'])
             del self._resource_tabs[old.session_id]
-        index=self.tabs.indexOf(old.page)
-        if index<0:raise RuntimeError('Graph tab disappeared during navigation')
         canvas=GraphCanvas(self,source_view=route.kind=='source',
                            resource_view=route.kind=='resource')
         canvas.session_id=old.session_id
@@ -5379,15 +5384,20 @@ class NativeLab(QMainWindow):
         self.report('Graph tab navigated: '+resolved.route.path)
         return True
 
-    def _navigate_source_document_in_tab(self,route,*,history_direction=None):
-        """Navigate a different Python file in the selected source tab.
+    def _navigate_source_document_in_tab(self,route,*,history_direction=None,root_anchor=False):
+        """Resolve and commit one source route without a premature tab switch.
 
-        A source-document session owns revisions, not the tab. Resolve the
-        live revision and complete graph before changing the selected view or
-        committing its history. No second editor or source cache is created.
+        A source-document session owns revisions, not the tab. Both a selected
+        source view and an already-loaded protected root source view qualify
+        the same live text and scope before changing Qt selection or history.
+        No second editor, source cache or source-route compiler is created.
         """
-        view=self._graph_tab_for_page(self.tabs.currentWidget())
+        view=(self._source_tabs['source'] if root_anchor else
+              self._graph_tab_for_page(self.tabs.currentWidget()))
         if not isinstance(view,SourceTabView):return False
+        if self.tabs.indexOf(view.page)<0:
+            self.report('Python navigation refused: target tab is no longer present')
+            return False
         if self._source_analysis_timer.isActive():
             self._source_analysis_timer.stop()
             self._refresh_live_source()
@@ -5404,6 +5414,16 @@ class NativeLab(QMainWindow):
             self.report('Python navigation refused: '+str(exc))
             return False
         self._source_documents[str(requested)]=owner
+        if root_anchor:
+            # Original resource-root opens a source in the protected source
+            # root. This selection happens only AFTER source/scope preflight;
+            # an invalid or deleted focus must leave the resource page and
+            # both histories untouched. The tab-change handler binds aliases.
+            if self._active_source_tab_id!=view.session_id:
+                self._store_active_source_view()
+            self.tabs.setCurrentWidget(view.page)
+            if self._active_source_tab_id!=view.session_id:
+                self._activate_source_view(view)
         self._store_active_source_view()
         self._remember_document_view()
         view.canvas._save_root_view()
@@ -5468,12 +5488,13 @@ class NativeLab(QMainWindow):
             # root still activates the original source root. Resolve its alias
             # explicitly; a previously selected secondary source is not root.
             root=self._source_tabs['source']
+            if self._view_sessions.get('source') is not None:
+                return self._navigate_source_document_in_tab(route,root_anchor=True)
+            # Only the never-opened source root needs the original file-open
+            # adapter, which also supports invalid Python for text diagnostics.
             if self._active_source_tab_id!='source':
                 self._store_active_source_view()
                 self._activate_source_view(root)
-            if self._view_sessions.get('source') is not None:
-                self.tabs.setCurrentWidget(root.page)
-                return self._navigate_source_document_in_tab(route)
             if not self._open_python_source_path(route.path):return False
             return (self.navigate_source(route.scope) if route.mode=='focus' else True)
         except (OSError,ValueError,SourceError,ResourceError) as exc:

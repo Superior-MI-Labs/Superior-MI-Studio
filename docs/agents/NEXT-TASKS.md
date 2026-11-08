@@ -1,22 +1,16 @@
 # Superior MI Studio — canonical implementation queue
 
-**Source candidate:** v2.121 (1,338 local headless tests PASS; native host and new GitHub CI pending). **Latest host qualification evidence:** v2.120 (`qualification-20261102-140104-73870.tar.gz`: `doctor_status=0`, `qt_status=0`, `verdict=CHECKS_PASS`, full `NATIVE_QT_SMOKE_PASS`). **Previous rollback baseline:** v2.115 (`qualification-20261102-104724-64648.tar.gz`). Historical v2.82/v2.83/v2.84/v2.86 failures are retained below for root-cause context. Do not repeat outdated v2.81-only baseline claims. The installer cleans managed previous builds and auto-launches only after native qualification.
+**Source candidate:** v2.122 (root-route transaction candidate, native host pending). **Latest uploaded Linux host qualified:** v2.120 (`qualification-20261102-140104-73870.tar.gz`: `doctor_status=0`, `qt_status=0`, `CHECKS_PASS`, `NATIVE_QT_SMOKE_PASS`). **v2.121 GitHub CI:** both headless and native Qt jobs PASS on commit `67e8760` (GitHub CI is not a Linux Mint host report). **Previous host rollback baseline:** v2.115 (`qualification-20261102-104724-64648.tar.gz`). Historical v2.82/v2.83/v2.84/v2.86 failures are retained below for root-cause context. Do not repeat outdated v2.81-only baseline claims. The installer cleans managed previous builds and auto-launches only after native qualification.
 
 **Product direction:** One VS Code-style workspace and navigable graph, Blueprint-grade visual interactions, interchangeable source and visual programming where semantics can be proven, a growing set of file/asset previewers and relationship providers. Python is the first language, **not** the only target. Source, graph and binary resources keep specialized authoritative owners; shared presentation/tabs do not imply a universal writable AST.
-
-## v2.121 candidate evidence and remaining gates
-
-- The release builder now packages an arbitrary checkout path under the strict `BASENAME` versioned ZIP root, validates the source installer VERSION without executing its source, and refuses mismatches and existing output paths. The public README is presentation, not version metadata; installer, GUI title, script and documented release pipeline remain checked.
-- `python_lowering.py` retains exclusive proof ownership. A transient local-syntax transformer and pure-expression identity witness have been consolidated within it, with shared parameter-name extraction. Existing fail-closed compiler re-lowering and atomic imports remain unchanged.
-- Local regression evidence: **1,338 tests PASS** plus Python-first and ProgramGraph gates. The candidate ZIP was generated with manifest and archive integrity checks; **native Linux Qt not run for v2.121 in the build environment**. Do not infer host promotion. The v2.120 uploaded host report is still valid independently.
 
 ## Active sequence
 
 | Priority | Work | Required proof / no-go |
 |---|---|---|
-| 0 | **Qualify v2.121 release contracts on public CI and Linux host** | v2.121 replaces checkout-name/README assertions with authoritative installer, archive, and pipeline contracts. Confirm both public GitHub CI lanes and obtain a fresh native Linux report before promotion or closing [issue #4](https://github.com/Superior-MI-Labs/Superior-MI-Studio/issues/4). v2.120 remains the last uploaded host-qualified evidence. |
-| 1 | **Compiler-proof consolidation and source/graph reconciliation** | Characterize and reduce repeated independent-source proof/diagnostic logic inside the existing `python_lowering.py` authority before adding syntax. Extend explicit function-region proof and conflict explanations using only existing compiler and document owners. v2.95 added atomic multi-function selection; v2.97 completes all six conventional typed integer comparisons with shared compiler mapping and improves independent-source parse diagnostics. Refuse unsupported AST, fuzzy renames and partial imports. |
-| 2 | **Unified tab, route and root compatibility cleanup** | Characterize remaining root/secondary duplication with existing graph sessions. Delete obsolete branches only after a native parity test proves source revision, history, camera and tab preservation. Never reintroduce a second tab/graph authority. |
+| 0 | **Qualify v2.120 on Linux host** | Full doctor, all native Qt subprocess/stage markers, no Python callback exception, and correct install/launch/log/rollback behavior. Last independently qualified baseline is v2.115. |
+| 1 | **Source/graph reconciliation** | Extend explicit function-region proof and conflict explanations, using only the current compiler and document owners. v2.95 added atomic multi-function selection; v2.97 completes all six conventional typed integer comparisons with shared compiler mapping and improves independent-source parse diagnostics. Refuse unsupported AST, fuzzy renames and partial imports. |
+| 2 | **Unified tab, route and root compatibility cleanup** | v2.122 makes already-loaded protected root source navigation qualify before switching from a resource tab and preflights cross-provider page membership before registry mutation. Run native `protected-root-source-refusal-atomicity` and complete Qt host qualification before retiring more compatibility branches. Retain root anchors while still required by original file-open semantics. |
 | 3 | **Conservative resource capabilities** | Existing previews, imports, literal-reference evidence, relationship inspection, precise source jumps and visible-hop search are implemented. Prefer usability/diagnostics over a recursive filesystem index; static edges are not proven runtime dependencies. |
 | 4 | **Future IDE/language support** | Run/debug/LSP/DAP, other languages and an extension host require stable adapter and execution contracts. Do not build speculative infrastructure before core Python round-trip milestones qualify. |
 
@@ -379,7 +373,7 @@ The existing `.github/workflows/headless.yml` now adds a separate `native-qt` jo
 - `RUN-ALL.sh` writes `qualification-verdict.txt` into the archive before finishing, and `install_linux.run_qualification` supervises the entire private process group with a configurable bounded timeout (default 520 seconds). Timed-out child trees are terminated; native promotion, old-version pruning and launch remain forbidden. An archived verdict improves diagnosis but does not override a nonzero exit code.
 - Tests `test_v2119_source_constant_proof.py`, `test_v2119_release_supervision.py`, historical v2.118 constant proof suites, native/installer regression suites, full headless and WolfCat-Studio Qt gates. Next: host qualification, then broader *compiler-proven* function correspondence and evidence-based root-tab retirement, not syntax-only exception accumulation.
 
-## v2.120 — source-only local annotation and no-op guard proof (host native PASS)
+## v2.120 — source-only local annotation and no-op guard proof (native pending)
 
 - A pre-existing assigned local or function parameter may have a bare
   built-in annotation (`int`, `bool`, `str`) in the independently authored
@@ -391,4 +385,11 @@ The existing `.github/workflows/headless.yml` now adds a separate `native-qt` jo
 - Existing graph trial-lowering, source revision/digest, atomic import, undo
   and generated-source strictness are unchanged. Tests cover combined
   keyword-call rewires, readable locals, branch-local cases and refusals.
-- Host v2.120 native qualification: uploaded report `qualification-20261102-140104-73870.tar.gz` records `doctor_status=0`, `qt_status=0`, `CHECKS_PASS` and `NATIVE_QT_SMOKE_PASS`, including shutdown. This qualifies that host test run, not the public GitHub checkout or a stable packaged release. Public GitHub Actions [run 41509340420](https://github.com/Superior-MI-Labs/Superior-MI-Studio/actions/runs/41509340420) fails the legacy folder-name/README release metadata assertions. `docs/agents/NEXT-TASKS.md` remains the single active work queue; [issue #4](https://github.com/Superior-MI-Labs/Superior-MI-Studio/issues/4) tracks the specific CI portability defect.
+- v2.120 later passed host headless and native Qt checks; v2.121 requires a fresh native qualification.
+
+## v2.122 — root-source navigation refusal is one transaction (native pending)
+
+- The **existing** source-tab navigation path accepts a private `root_anchor` target for the already-open protected source root. It runs the same source-session, live-revision, and scope proof while the filesystem root remains selected, committing the Qt page switch only after proof. Failed invalid/deleted focus stays on the resource tab and never advances either view history. The never-opened root still uses the existing source opening adapter so invalid Python remains inspectable in the text editor.
+- `_transition_graph_tab` now verifies selected Qt page membership before changing tab registries, aliases, cameras, or history. No new route session, parser, graph owner or compatibility storage was added.
+- Tests: four new headless regressions and existing route/history tests; native Qt stage `protected-root-source-refusal-atomicity` covers real page identity, aliases, refusal and success. v2.121 CI passed, v2.120 is last uploaded native Linux Mint report. **Do not claim v2.122 host PASS until a report is received.**
+- Next: after native success, characterize and prune the remaining duplicated root/secondary dispatch and camera handling. Avoid deleting root anchors while the original file picker or persisted view modes require them.
