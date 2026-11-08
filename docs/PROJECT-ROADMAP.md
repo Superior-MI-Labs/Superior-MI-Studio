@@ -4,7 +4,7 @@ This is a product-direction overview, **not** a parallel engineering task queue.
 
 ## Current phase: trust and consolidation
 
-- The uploaded v2.120 Linux qualification report passes headless and native Qt checks. Maintain v2.115 as the previous documented rollback baseline until normal candidate review and promotion are completed; this evidence does not itself publish a stable release.
+- The uploaded v2.120 Linux qualification report passes headless and native Qt checks. v2.121 is a new release-portability and compiler-proof cleanup candidate with 1,338 local headless tests passing, but its native Qt and public CI evidence remain pending. This does not publish a stable release.
 - Consolidate existing Python compiler-proof implementation, remove redundant passes, improve conflict evidence and keep source immutable until explicit publication.
 - Finish graph view, navigation, tab and legacy-root cleanup without splitting document ownership, camera/session identity or source revisions.
 - Maintain positive/refusal regression coverage and real Qt interaction checks.

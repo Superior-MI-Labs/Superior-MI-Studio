@@ -8,6 +8,7 @@ No project source outside the release manifest is installed or executed.
 from __future__ import annotations
 
 import argparse
+import ast
 import hashlib
 import os
 from pathlib import Path
@@ -19,7 +20,7 @@ import zipfile
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
-from install_linux import BASENAME, validate_archive  # noqa: E402
+from install_linux import BASENAME, VERSION, validate_archive  # noqa: E402
 
 OMIT_DIRS={'.git','.agent-artifacts','__pycache__','.mypy_cache','.pytest_cache','.venv'}
 OMIT_NAMES={'REPOSITORY-SHA256SUMS.txt'}
@@ -44,8 +45,23 @@ def build(target: Path, root: Path = ROOT) -> tuple[int, str]:
     target=target.expanduser().absolute()
     if target.exists() or target.is_symlink():
         raise FileExistsError('Refusing to replace an existing release: '+str(target))
-    if root.name != BASENAME:
-        raise ValueError('Source root and authoritative installer version differ')
+    # A Git checkout may be named `Superior-MI-Studio` or anything else.
+    # Only the archive's *internal root* is versioned, never the source folder.
+    # Read the candidate's own installer declaration without executing it,
+    # and compare against the version imported from the canonical installer.
+    if root.is_symlink() or not root.is_dir():
+        raise ValueError('Release source must be a real directory')
+    try:
+        source_tree=ast.parse((root/'install_linux.py').read_text(encoding='utf-8'))
+    except (OSError,UnicodeError,SyntaxError) as exc:
+        raise ValueError('Release source has no readable installer declaration') from exc
+    declared=[node.value.value for node in source_tree.body
+              if isinstance(node,ast.Assign) and len(node.targets)==1
+              and isinstance(node.targets[0],ast.Name)
+              and node.targets[0].id=='VERSION' and isinstance(node.value,ast.Constant)
+              and type(node.value.value) is str]
+    if declared != [VERSION]:
+        raise ValueError('Release source installer version differs from authoritative version')
     files=source_files(root)
     manifest=''.join(hashlib.sha256(p.read_bytes()).hexdigest()+'  '+
                      p.relative_to(root).as_posix()+'\n' for p in files).encode('utf-8')

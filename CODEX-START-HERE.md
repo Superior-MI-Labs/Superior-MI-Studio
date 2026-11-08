@@ -1,4 +1,24 @@
-# Codex start here — Superior MI Studio v2.120
+# Codex start here — Superior MI Studio v2.121
+
+## v2.121 — portable checkout release contracts and consolidated proof
+
+GitHub checkout names and public README wording are not release-version authorities.
+The existing `scripts/build_release.py` now accepts an arbitrarily named source
+folder only when its `install_linux.py` declares the authoritative version.
+It still emits the exact versioned archive root, validates hashes, refuses
+overwrite, and requires the existing qualification pipeline. Do not weaken
+`install_linux.validate_archive`.
+
+Independent source-only syntax normalization and pure-expression matching were
+lifted from per-function/per-loop nested helpers into reusable private helpers
+inside `python_lowering.py`. No additional importer, semantic acceptance,
+source mutation, or graph owner was introduced. Direct refusal/non-mutation
+tests supplement the existing compiler-proof regressions.
+
+Local v2.121: **1,338 headless tests PASS** and release ZIP integrity PASS.
+A fresh native Linux Qt report and public GitHub CI confirmation are still
+required before v2.121 promotion. Last uploaded native-qualified evidence:
+v2.120 (Nov 2, 2026). Previous fallback: v2.115.
 
 ## v2.120 — no-op annotation and static guard proof
 
@@ -53,8 +73,8 @@ Source-owned keyword calls may normalize only into temporary AST candidates when
 
 ## Current evidence and qualification
 
-- **Working source candidate:** v2.120. The restricted compiler can reconcile explicitly selected functions from independently authored Python through full graph re-lowering proof, one undoable transaction and no implicit source writes. Integer comparisons `<`, `==`, `>`, `>=`, `<=`, `!=` and integer arithmetic `+`, `-`, `*`, `//`, `%` each use a single AST mapping per family. Negative integer literals are reversible without evaluating arbitrary unary expressions; malformed source reports source-owner line/column. No arbitrary source import, implied rename matching or partial commit. v2.100 rejects explicit shadow bindings of selected top-level functions and reports source-owner statement spans; both are read-only AST evidence, not persistent ownership. **v2.101** additionally reconciles selected arithmetic/comparison operand wires to existing same-function values through ProgramGraph.replace_input and whole-graph re-lowering; no topology guesses or second mappings. **v2.102** extends that same proof to existing Boolean Not/Select, pure call arguments, and Return/Return Flow wires, with no node creation or structural control imports.
-- **Last confirmed native Linux/Qt host PASS:** v2.120, uploaded report `qualification-20261102-140104-73870.tar.gz` (`doctor_status=0`, `qt_status=0`, `CHECKS_PASS`, `NATIVE_QT_SMOKE_PASS` through shutdown). v2.115 remains the preceding verified rollback baseline. A passing host report does not certify a public release or substitute for independent GitHub CI; the latter currently fails legacy versioned-folder and README-copy assumptions, tracked in issue #4. Historical root-tab and fixture defects remain in milestone records.
+- **Working source candidate:** v2.121. The restricted compiler can reconcile explicitly selected functions from independently authored Python through full graph re-lowering proof, one undoable transaction and no implicit source writes. Integer comparisons `<`, `==`, `>`, `>=`, `<=`, `!=` and integer arithmetic `+`, `-`, `*`, `//`, `%` each use a single AST mapping per family. Negative integer literals are reversible without evaluating arbitrary unary expressions; malformed source reports source-owner line/column. No arbitrary source import, implied rename matching or partial commit. v2.100 rejects explicit shadow bindings of selected top-level functions and reports source-owner statement spans; both are read-only AST evidence, not persistent ownership. **v2.101** additionally reconciles selected arithmetic/comparison operand wires to existing same-function values through ProgramGraph.replace_input and whole-graph re-lowering; no topology guesses or second mappings. **v2.102** extends that same proof to existing Boolean Not/Select, pure call arguments, and Return/Return Flow wires, with no node creation or structural control imports.
+- **Last confirmed native Linux/Qt host PASS:** v2.120, uploaded report `qualification-20261102-140104-73870.tar.gz` (`doctor_status=0`, `qt_status=0`, `CHECKS_PASS`, `NATIVE_QT_SMOKE_PASS` through shutdown). v2.115 remains the preceding verified rollback baseline. A passing host report does not certify a public release or substitute for independent GitHub CI; prior public CI failed legacy folder/README assertions; v2.121 is intended to correct those with portable release contracts (issue #4), pending new CI evidence. Historical root-tab and fixture defects remain in milestone records.
 - **Architecture:** `SourceDocumentSession` owns authoritative Python text and revision/recovery; `ProgramGraph` owns native visual program state, commands and undo; `python_lowering.py` owns only compiler proof/publication/reconciliation; `GraphDescriptor` and resource/source projections are read-only; `GraphViewSessions` owns tab history/camera; Qt owns presentation. There is **no universal mutable graph owner** for all file types.
 - **Source safety:** Unsupported/ambiguous Python remains source-owned and cannot be silently compiled, discarded, or overwritten. Reviews are informational; import must check current source revision/digest, graph revision, exact function identity, and full graph proof again before commit.
 
@@ -73,7 +93,7 @@ For each release: prefer `python3 scripts/build_release.py --qualify-headless --
 
 ## Next planned work
 
-1. Restore public CI portability: test actual release/version/archive invariants, not the name of the GitHub checkout or marketing README copy (issue #4). Host v2.120 passes native, but public CI does not.
+1. Verify v2.121 public CI portability and native host qualification: the revised tests use real release/version/archive invariants, not the checkout name or README marketing copy (issue #4).
 2. Consolidate the existing independent-source compiler proof and diagnostics **before** deepening typed source/graph reconciliation. Use one trial compiler, stable function anchors, explicit conflicts, and new operations only where compiler equivalence is proven; no second AST graph importer.
 3. Continue unified workbench/root-compatibility cleanup after the existing navigation and Qt contract regressions pass.
 4. More language adapters and extensions come **after** the Python/source/workspace contracts stabilize, not to meet a superficial feature count.

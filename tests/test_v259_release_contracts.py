@@ -16,9 +16,13 @@ class ReleaseContracts(unittest.TestCase):
         version=match.group(1)
         readme=(ROOT/'README.md').read_text()
         gui=(ROOT/'studio_native/gui.py').read_text()
-        self.assertIn('Lab '+version,readme)
+        pipeline=(ROOT/'docs/RELEASE-PIPELINE.md').read_text()
+        self.assertIn('Superior MI Studio',readme)
+        self.assertIn(version,readme)
+        self.assertIn('docs/RELEASE-PIPELINE.md',readme)
+        self.assertIn('install_linux.py',pipeline)
+        self.assertIn('scripts/build_release.py',pipeline)
         self.assertIn('Visual Programming Lab '+version.removeprefix('v'),gui)
-        self.assertIn('$NAME-$VERSION/install_linux.py',readme)
 
     def test_release_script_uses_exact_installer_version_and_native_gate(self):
         installer=(ROOT/'install_linux.py').read_text()

@@ -16,7 +16,7 @@ Studio already has one authoritative set of source, install and qualification sc
 
 ## Candidate archive and local install
 
-- `python3 scripts/build_release.py --output <new-versioned-path>.zip --qualify-headless` writes a deterministic source ZIP with hashes and verifies its manifest. It refuses to overwrite an existing release.
+- `python3 scripts/build_release.py --output <new-versioned-path>.zip --qualify-headless` writes a deterministic source ZIP with hashes and verifies its manifest. It refuses to overwrite an existing release. The source checkout may be named `Superior-MI-Studio`; the builder verifies its installer's VERSION without executing it and always packages under the strict versioned `BASENAME` root expected by `install_linux.validate_archive`. Tests must not use README marketing copy or checkout folder name as release metadata.
 - `install_linux.py` validates the expected versioned archive and supervises qualification before replacing a managed install. The installed version must not be promoted on failure.
 - `RUN-ALL.sh` captures doctor and native Qt logs, a machine-readable verdict, and an uploadable compressed report. Only `--launch` explicitly launches after both gates pass.
 - Distribution to users should be a **single ZIP plus an inline Bash command**, not a separately downloaded installer script. Source-control setup and installation remain separate tasks.

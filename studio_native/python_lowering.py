@@ -10,6 +10,7 @@ Arbitrary CFGs, back-edges, nested loops, execution joins and unqualified effect
 from __future__ import annotations
 
 import ast
+import copy
 from dataclasses import dataclass
 import heapq
 
@@ -1875,6 +1876,204 @@ def _independent_change_lines(external_functions, canonical_tree, baseline, chan
                           end_line,end_col))
     return tuple(evidence),tuple(spans)
 
+def _function_parameter_names(arguments: ast.arguments) -> set[str]:
+    names = {arg.arg for arg in (*arguments.posonlyargs, *arguments.args,
+                                 *arguments.kwonlyargs)}
+    if arguments.vararg:
+        names.add(arguments.vararg.arg)
+    if arguments.kwarg:
+        names.add(arguments.kwarg.arg)
+    return names
+
+
+class _IndependentCandidateSyntax(ast.NodeTransformer):
+    """Normalize a temporary source AST for existing compiler proof only.
+
+    This never modifies SourceDocumentSession text or produces graph edits.
+    The whole-graph trial compiler remains the acceptance authority.
+    """
+
+    def __init__(self, bound_locals: set[str]):
+        self.bound_locals = bound_locals
+
+    def strip_noops(self, statements):
+        kept=[]
+        for item in statements:
+            if isinstance(item,ast.Pass):
+                continue
+            normalized=self.visit(item)
+            if normalized is not None:
+                kept.append(normalized)
+        # Never erase an entire control suite as an incidental side
+        # effect of stripping no-ops. Its structure remains subject
+        # to the authoritative compiler proof.
+        return kept if kept else statements
+
+    def visit_If(self, statement):
+        statement.test=self.visit(statement.test)
+        # An if whose condition is a *proven* Boolean constant and
+        # whose only bodies are pass has no observable effect. Do not
+        # generalize this to truthy integers or dynamic conditions:
+        # those could evaluate arbitrary user code.
+        if (isinstance(statement.test,ast.Constant) and
+                type(statement.test.value) is bool and
+                all(isinstance(item,ast.Pass) for item in statement.body) and
+                all(isinstance(item,ast.Pass) for item in statement.orelse)):
+            return None
+        statement.body=self.strip_noops(statement.body)
+        statement.orelse=self.strip_noops(statement.orelse)
+        return statement
+
+    def visit_For(self, statement):
+        statement.target=self.visit(statement.target)
+        statement.iter=self.visit(statement.iter)
+        statement.body=self.strip_noops(statement.body)
+        statement.orelse=self.strip_noops(statement.orelse)
+        return statement
+
+    def visit_While(self, statement):
+        statement.test=self.visit(statement.test)
+        statement.body=self.strip_noops(statement.body)
+        statement.orelse=self.strip_noops(statement.orelse)
+        return statement
+
+    # Source-only constant expressions can describe existing graph
+    # literals without taking ownership of their authored spelling.
+    # Fold only exact bounded integer arithmetic/comparisons and
+    # fixed Boolean expressions in this temporary proof candidate:
+    # no eval(), calls, powers, shifts, float or bool/int coercion.
+    # The complete compiler still has to reproduce the result.
+    def visit_Compare(self, expression):
+        self.generic_visit(expression)
+        if len(expression.ops)!=1 or len(expression.comparators)!=1:
+            return expression
+        right=expression.comparators[0]
+        left=expression.left
+        if (not isinstance(left,ast.Constant) or
+                not isinstance(right,ast.Constant) or
+                type(left.value) is not int or type(right.value) is not int or
+                abs(left.value)>2**63-1 or abs(right.value)>2**63-1):
+            return expression
+        a,b=left.value,right.value
+        operation=expression.ops[0]
+        if isinstance(operation,ast.Lt): result=a<b
+        elif isinstance(operation,ast.LtE): result=a<=b
+        elif isinstance(operation,ast.Gt): result=a>b
+        elif isinstance(operation,ast.GtE): result=a>=b
+        elif isinstance(operation,ast.Eq): result=a==b
+        elif isinstance(operation,ast.NotEq): result=a!=b
+        else: return expression
+        return ast.copy_location(ast.Constant(value=result),expression)
+
+    def visit_BoolOp(self, expression):
+        self.generic_visit(expression)
+        if not all(isinstance(value,ast.Constant) and
+                   type(value.value) is bool for value in expression.values):
+            return expression
+        if isinstance(expression.op,ast.And):
+            result=all(value.value for value in expression.values)
+        elif isinstance(expression.op,ast.Or):
+            result=any(value.value for value in expression.values)
+        else:
+            return expression
+        return ast.copy_location(ast.Constant(value=result),expression)
+
+    def visit_UnaryOp(self, expression):
+        self.generic_visit(expression)
+        operand=expression.operand
+        if (isinstance(expression.op,ast.Not) and
+                isinstance(operand,ast.Constant) and type(operand.value) is bool):
+            return ast.copy_location(ast.Constant(value=not operand.value),expression)
+        if (isinstance(expression.op,(ast.UAdd,ast.USub)) and
+                isinstance(operand,ast.Constant) and
+                type(operand.value) is int and abs(operand.value)<=2**63-1):
+            number=(operand.value if isinstance(expression.op,ast.UAdd)
+                    else -operand.value)
+            if abs(number)<=2**63-1:
+                return ast.copy_location(ast.Constant(value=number),expression)
+        return expression
+
+    def visit_BinOp(self, expression):
+        self.generic_visit(expression)
+        left,right=expression.left,expression.right
+        if (not isinstance(left,ast.Constant) or
+                not isinstance(right,ast.Constant) or
+                type(left.value) is not int or type(right.value) is not int or
+                abs(left.value)>2**63-1 or abs(right.value)>2**63-1):
+            return expression
+        a,b=left.value,right.value
+        operation=expression.op
+        if isinstance(operation,ast.Add):
+            result=a+b
+        elif isinstance(operation,ast.Sub):
+            result=a-b
+        elif isinstance(operation,ast.Mult):
+            result=a*b
+        elif isinstance(operation,ast.FloorDiv) and b!=0:
+            result=a//b
+        elif isinstance(operation,ast.Mod) and b!=0:
+            result=a%b
+        else:
+            return expression
+        if abs(result)>2**63-1:
+            return expression
+        return ast.copy_location(ast.Constant(value=result),expression)
+
+    def visit_IfExp(self, expression):
+        # An authored conditional *expression* is source-only spelling
+        # for a literal only when the condition and BOTH alternatives
+        # are already proven fixed literals of the same exact type.
+        # Never evaluate or discard an unknown/effectful branch, even
+        # if Python would short-circuit it at runtime.
+        self.generic_visit(expression)
+        test,yes,no=expression.test,expression.body,expression.orelse
+        if not all(isinstance(item,ast.Constant) for item in (test,yes,no)):
+            return expression
+        if type(test.value) is not bool or type(yes.value) is not type(no.value):
+            return expression
+        chosen=yes.value if test.value else no.value
+        if type(chosen) is int:
+            if any(type(item.value) is not int or abs(item.value)>2**63-1
+                   for item in (yes,no)):
+                return expression
+        elif type(chosen) is not bool:
+            return expression
+        return ast.copy_location(ast.Constant(value=chosen),expression)
+
+    def visit_AnnAssign(self, statement):
+        if (isinstance(statement.target,ast.Name) and statement.simple==1
+            and isinstance(statement.annotation,ast.Name) and
+            statement.annotation.id in ('int','bool','str')):
+            if statement.value is not None:
+                return ast.copy_location(ast.Assign(
+                    targets=[statement.target],value=self.visit(statement.value),
+                    type_comment=None),statement)
+            if statement.target.id in self.bound_locals:
+                return None
+        return statement
+
+
+def _pure_expression_witness(expression: ast.AST, rename: dict[str,str],
+                             unknown: set[str]) -> str | None:
+    """Exact pure AST witness; never infer a producer from unresolved names."""
+    if not _pure_reorderable_value(expression):
+        return None
+
+    class CanonicalNames(ast.NodeTransformer):
+        def visit_Name(self, node):
+            if node.id in unknown:
+                raise ValueError('Unresolved source value')
+            if node.id in rename:
+                node.id=rename[node.id]
+            return node
+
+    try:
+        normalized=CanonicalNames().visit(copy.deepcopy(expression))
+    except ValueError:
+        return None
+    return ast.dump(normalized,include_attributes=False)
+
+
 def _independent_functions_plan(graph, session, functions, *, expected_graph_revision: int):
     """Qualify named independent regions with the existing whole-graph compiler.
 
@@ -2010,7 +2209,6 @@ def _independent_functions_plan(graph, session, functions, *, expected_graph_rev
         for name,fn in candidate_callees.items() if not conflicts_by_name[name]}
 
     def proof_function(name):
-        import copy
         from collections import Counter
         owned=copy.deepcopy(selected[name])
         reference=owned_functions[name][0]
@@ -2035,175 +2233,14 @@ def _independent_functions_plan(graph, session, functions, *, expected_graph_rev
         # owned by this selected function, never for a new source-only local.
         # Compile proof will reject any unsupported binding and preserve the
         # authored annotation in SourceDocumentSession.
-        bound_locals={arg.arg for arg in (*owned.args.posonlyargs,*owned.args.args,
-                                          *owned.args.kwonlyargs)}
-        if owned.args.vararg:
-            bound_locals.add(owned.args.vararg.arg)
-        if owned.args.kwarg:
-            bound_locals.add(owned.args.kwarg.arg)
+        parameter_names=_function_parameter_names(owned.args)
+        bound_locals=set(parameter_names)
         for statement in ast.walk(owned):
             if isinstance(statement,ast.Assign):
                 bound_locals.update(target.id for target in statement.targets
                                     if isinstance(target,ast.Name))
             elif isinstance(statement,ast.For) and isinstance(statement.target,ast.Name):
                 bound_locals.add(statement.target.id)
-
-        class CanonicalLocalSyntax(ast.NodeTransformer):
-            def strip_noops(self, statements):
-                kept=[]
-                for item in statements:
-                    if isinstance(item,ast.Pass):
-                        continue
-                    normalized=self.visit(item)
-                    if normalized is not None:
-                        kept.append(normalized)
-                # Never erase an entire control suite as an incidental side
-                # effect of stripping no-ops. Its structure remains subject
-                # to the authoritative compiler proof.
-                return kept if kept else statements
-
-            def visit_If(self, statement):
-                statement.test=self.visit(statement.test)
-                # An if whose condition is a *proven* Boolean constant and
-                # whose only bodies are pass has no observable effect. Do not
-                # generalize this to truthy integers or dynamic conditions:
-                # those could evaluate arbitrary user code.
-                if (isinstance(statement.test,ast.Constant) and
-                        type(statement.test.value) is bool and
-                        all(isinstance(item,ast.Pass) for item in statement.body) and
-                        all(isinstance(item,ast.Pass) for item in statement.orelse)):
-                    return None
-                statement.body=self.strip_noops(statement.body)
-                statement.orelse=self.strip_noops(statement.orelse)
-                return statement
-
-            def visit_For(self, statement):
-                statement.target=self.visit(statement.target)
-                statement.iter=self.visit(statement.iter)
-                statement.body=self.strip_noops(statement.body)
-                statement.orelse=self.strip_noops(statement.orelse)
-                return statement
-
-            def visit_While(self, statement):
-                statement.test=self.visit(statement.test)
-                statement.body=self.strip_noops(statement.body)
-                statement.orelse=self.strip_noops(statement.orelse)
-                return statement
-
-            # Source-only constant expressions can describe existing graph
-            # literals without taking ownership of their authored spelling.
-            # Fold only exact bounded integer arithmetic/comparisons and
-            # fixed Boolean expressions in this temporary proof candidate:
-            # no eval(), calls, powers, shifts, float or bool/int coercion.
-            # The complete compiler still has to reproduce the result.
-            def visit_Compare(self, expression):
-                self.generic_visit(expression)
-                if len(expression.ops)!=1 or len(expression.comparators)!=1:
-                    return expression
-                right=expression.comparators[0]
-                left=expression.left
-                if (not isinstance(left,ast.Constant) or
-                        not isinstance(right,ast.Constant) or
-                        type(left.value) is not int or type(right.value) is not int or
-                        abs(left.value)>2**63-1 or abs(right.value)>2**63-1):
-                    return expression
-                a,b=left.value,right.value
-                operation=expression.ops[0]
-                if isinstance(operation,ast.Lt): result=a<b
-                elif isinstance(operation,ast.LtE): result=a<=b
-                elif isinstance(operation,ast.Gt): result=a>b
-                elif isinstance(operation,ast.GtE): result=a>=b
-                elif isinstance(operation,ast.Eq): result=a==b
-                elif isinstance(operation,ast.NotEq): result=a!=b
-                else: return expression
-                return ast.copy_location(ast.Constant(value=result),expression)
-
-            def visit_BoolOp(self, expression):
-                self.generic_visit(expression)
-                if not all(isinstance(value,ast.Constant) and
-                           type(value.value) is bool for value in expression.values):
-                    return expression
-                if isinstance(expression.op,ast.And):
-                    result=all(value.value for value in expression.values)
-                elif isinstance(expression.op,ast.Or):
-                    result=any(value.value for value in expression.values)
-                else:
-                    return expression
-                return ast.copy_location(ast.Constant(value=result),expression)
-
-            def visit_UnaryOp(self, expression):
-                self.generic_visit(expression)
-                operand=expression.operand
-                if (isinstance(expression.op,ast.Not) and
-                        isinstance(operand,ast.Constant) and type(operand.value) is bool):
-                    return ast.copy_location(ast.Constant(value=not operand.value),expression)
-                if (isinstance(expression.op,(ast.UAdd,ast.USub)) and
-                        isinstance(operand,ast.Constant) and
-                        type(operand.value) is int and abs(operand.value)<=2**63-1):
-                    number=(operand.value if isinstance(expression.op,ast.UAdd)
-                            else -operand.value)
-                    if abs(number)<=2**63-1:
-                        return ast.copy_location(ast.Constant(value=number),expression)
-                return expression
-
-            def visit_BinOp(self, expression):
-                self.generic_visit(expression)
-                left,right=expression.left,expression.right
-                if (not isinstance(left,ast.Constant) or
-                        not isinstance(right,ast.Constant) or
-                        type(left.value) is not int or type(right.value) is not int or
-                        abs(left.value)>2**63-1 or abs(right.value)>2**63-1):
-                    return expression
-                a,b=left.value,right.value
-                operation=expression.op
-                if isinstance(operation,ast.Add):
-                    result=a+b
-                elif isinstance(operation,ast.Sub):
-                    result=a-b
-                elif isinstance(operation,ast.Mult):
-                    result=a*b
-                elif isinstance(operation,ast.FloorDiv) and b!=0:
-                    result=a//b
-                elif isinstance(operation,ast.Mod) and b!=0:
-                    result=a%b
-                else:
-                    return expression
-                if abs(result)>2**63-1:
-                    return expression
-                return ast.copy_location(ast.Constant(value=result),expression)
-
-            def visit_IfExp(self, expression):
-                # An authored conditional *expression* is source-only spelling
-                # for a literal only when the condition and BOTH alternatives
-                # are already proven fixed literals of the same exact type.
-                # Never evaluate or discard an unknown/effectful branch, even
-                # if Python would short-circuit it at runtime.
-                self.generic_visit(expression)
-                test,yes,no=expression.test,expression.body,expression.orelse
-                if not all(isinstance(item,ast.Constant) for item in (test,yes,no)):
-                    return expression
-                if type(test.value) is not bool or type(yes.value) is not type(no.value):
-                    return expression
-                chosen=yes.value if test.value else no.value
-                if type(chosen) is int:
-                    if any(type(item.value) is not int or abs(item.value)>2**63-1
-                           for item in (yes,no)):
-                        return expression
-                elif type(chosen) is not bool:
-                    return expression
-                return ast.copy_location(ast.Constant(value=chosen),expression)
-
-            def visit_AnnAssign(self, statement):
-                if (isinstance(statement.target,ast.Name) and statement.simple==1
-                    and isinstance(statement.annotation,ast.Name) and
-                    statement.annotation.id in ('int','bool','str')):
-                    if statement.value is not None:
-                        return ast.copy_location(ast.Assign(
-                            targets=[statement.target],value=self.visit(statement.value),
-                            type_comment=None),statement)
-                    if statement.target.id in bound_locals:
-                        return None
-                return statement
 
         # Bound the transient source-owned syntax before walking it multiple
         # times for normalization, local correspondence and trial proof. This
@@ -2212,7 +2249,7 @@ def _independent_functions_plan(graph, session, functions, *, expected_graph_rev
             raise ProgramGraphError(
                 f'Function {name!r}: independently authored AST exceeds '
                 f'{MAX_INDEPENDENT_AST_NODES} nodes; reconciliation refused')
-        normalizer=CanonicalLocalSyntax()
+        normalizer=_IndependentCandidateSyntax(bound_locals)
         owned.body=normalizer.strip_noops(owned.body)
 
         # Readable source locals are normalized only when their graph-owned
@@ -2235,12 +2272,7 @@ def _independent_functions_plan(graph, session, functions, *, expected_graph_rev
             new_counts=Counter(new_names)
             old_set=set(old_names)
             new_set=set(new_names)
-            param_names={arg.arg for arg in (*owned.args.posonlyargs,*owned.args.args,
-                         *owned.args.kwonlyargs)}
-            if owned.args.vararg:
-                param_names.add(owned.args.vararg.arg)
-            if owned.args.kwarg:
-                param_names.add(owned.args.kwarg.arg)
+            param_names=parameter_names
             aliases={}
             valid=True
             # A uniquely identified renamed temporary may move within a pure
@@ -2266,24 +2298,9 @@ def _independent_functions_plan(graph, session, functions, *, expected_graph_rev
                 # independently proven input aliases have been resolved.
                 # Never try to infer producer identity from ambiguous shapes.
                 while unresolved_old and unresolved_new:
-                    def key(expression, rename, unknown):
-                        if not _pure_reorderable_value(expression):
-                            return None
-                        class Names(ast.NodeTransformer):
-                            def visit_Name(self, node):
-                                if node.id in unknown:
-                                    raise ValueError('Unresolved source value')
-                                if node.id in rename:
-                                    node.id=rename[node.id]
-                                return node
-                        try:
-                            normalized=Names().visit(copy.deepcopy(expression))
-                        except ValueError:
-                            return None
-                        return ast.dump(normalized,include_attributes=False)
-                    old_keys={name:key(old_defs[name],{},set()) for name in unresolved_old
+                    old_keys={name:_pure_expression_witness(old_defs[name],{},set()) for name in unresolved_old
                               if name in old_defs}
-                    new_keys={name:key(new_defs[name],known,unresolved_new) for name in unresolved_new
+                    new_keys={name:_pure_expression_witness(new_defs[name],known,unresolved_new) for name in unresolved_new
                               if name in new_defs}
                     candidates=[]
                     for original,old_key in old_keys.items():

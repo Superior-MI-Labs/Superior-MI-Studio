@@ -12,7 +12,7 @@ We take inspiration from **VS Code's development workflow** and **Unreal Engine 
 
 **[Architecture](docs/architecture) · [Wiki](https://github.com/Superior-MI-Labs/Superior-MI-Studio/wiki) · [Development pipeline](docs/RELEASE-PIPELINE.md) · [Issues](https://github.com/Superior-MI-Labs/Superior-MI-Studio/issues)**
 
-> **Current status: pre-alpha · v2.120 qualified development candidate.** The uploaded November 2, 2026 local Linux report records passing headless and native Qt checks. This is evidence for that host and test run, not a packaged stable release or broad cross-platform certification. Python remains the first language adapter.
+> **Current status: pre-alpha · v2.121 development candidate (host native pending).** The v2.121 checkout and compiler-refactor changes passed 1,338 local headless tests and verified archive construction. v2.120 remains the last uploaded host-qualified Linux build. Neither is a stable public release or broad cross-platform certification. Python remains the first language adapter.
 
 ## The Studio workbench · v2.120 Linux preview
 
