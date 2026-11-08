@@ -1,4 +1,19 @@
-# Codex start here — Superior MI Studio v2.126
+# Codex start here — Superior MI Studio v2.127
+
+## v2.127 — linked-source proof-to-commit receipt guard
+
+`LinkedPythonSource` now snapshots one live `SourceDocumentSession` revision,
+text and saved preimage; reviews and imports reject subsequent source/disk
+or linked graph-identity changes even if they occur *during* compiler proof.
+For imports, the same `_qualified_source_edit_plan()` remains the only Python
+admission authority, but the final owner checks run before the single
+`ProgramGraph.edit_many()` transaction. No-op imports are checked too.
+Unencodable drafts fail through `ProgramGraphError`. The linked owner does not
+publish source text, hold a second mutable document or add a lock. Ten
+adversarial tests live in `tests/test_v2127_linked_source_snapshot.py`;
+architecture note: `PHASE4-LINKED-SOURCE-PREFLIGHT-INTEGRITY-v2.127.md`.
+The most recent uploaded Linux Mint host PASS remains v2.124; v2.126 passed
+headless/native GitHub CI, and v2.127 needs its own host report.
 
 ## v2.126 — independent-source conflict receipts and captured revision integrity
 

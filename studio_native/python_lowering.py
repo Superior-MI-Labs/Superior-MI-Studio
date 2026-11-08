@@ -1024,7 +1024,11 @@ def _qualified_source_edit_plan(graph, base_source: str, edited_source: str, *,
         raise GraphConflict('Generated source base no longer matches this graph')
     if not isinstance(edited_source, str):
         raise TypeError('Edited source must be text')
-    if len(edited_source.encode('utf-8')) > MAX_PREVIEW_BYTES:
+    try:
+        edited_bytes = edited_source.encode('utf-8')
+    except UnicodeError as exc:
+        raise ProgramGraphError('Edited Python source cannot be encoded as UTF-8') from exc
+    if len(edited_bytes) > MAX_PREVIEW_BYTES:
         raise ProgramGraphError('Edited Python exceeds preview size limit')
     if edited_source == base_source:
         return SourceEditReview(expected_revision, ()), ()
@@ -2638,30 +2642,73 @@ class LinkedPythonSource:
             raise GraphConflict('Source changed without a document revision')
         return current_disk_hash
 
+    def _assert_current_source(self, revision: int, text: str, saved_raw: bytes) -> str:
+        """Revalidate the exact source-owner snapshot after compiler proof.
+
+        The link is not an independent text owner. Both reviews and imports
+        refuse if a reentrant editor change or disk write invalidates the
+        previously checked source; the existing link gate also verifies graph
+        identity. The final source/disk check precedes ProgramGraph.edit_many.
+        """
+        from .program_graph import GraphConflict
+        if (self.session.revision != revision or self.session.text != text or
+                self.session.saved_raw != saved_raw):
+            raise GraphConflict('Source changed during linked Python qualification')
+        current_disk_hash = self._qualify_receipt()
+        if (self.session.revision != revision or self.session.text != text or
+                self.session.saved_raw != saved_raw):
+            raise GraphConflict('Source changed during linked Python qualification')
+        return current_disk_hash
+
     def review_edits(self) -> SourceEditReview:
-        """Describe compiler-proven per-function edits; never commits anything."""
+        """Read-only compiler review of one current source-owner revision."""
+        from .program_graph import ProgramGraphError, GraphConflict
         self._qualify_receipt()
-        if self.session.revision == self.source_revision:
-            return SourceEditReview(self.graph.revision, ())
-        return review_generated_source_edit(self.graph,self.base_source,self.session.text,
-            expected_revision=self.graph.revision,allow_source_trivia=True)
+        revision, text, saved_raw = (self.session.revision, self.session.text,
+                                     self.session.saved_raw)
+        try:
+            if revision == self.source_revision:
+                review = SourceEditReview(self.graph.revision, ())
+            else:
+                review = review_generated_source_edit(
+                    self.graph, self.base_source, text,
+                    expected_revision=self.graph.revision, allow_source_trivia=True)
+        except (ProgramGraphError, GraphConflict):
+            # A concurrent source change takes priority over a stale compiler
+            # diagnostic; neither issue may yield a review receipt.
+            self._assert_current_source(revision, text, saved_raw)
+            raise
+        self._assert_current_source(revision, text, saved_raw)
+        return review
 
     def import_edits(self) -> bool:
-        """Revalidate before committing; preserve text and graph on refusal."""
-        current_disk_hash=self._qualify_receipt()
-        if self.session.revision == self.source_revision:
-            self.graph_revision=self.graph.revision
-            self.disk_sha256=current_disk_hash
+        """Prove then commit against one source snapshot, or refuse unchanged."""
+        from .program_graph import ProgramGraphError, GraphConflict
+        self._qualify_receipt()
+        revision, text, saved_raw = (self.session.revision, self.session.text,
+                                     self.session.saved_raw)
+        if revision == self.source_revision:
+            self.disk_sha256 = self._assert_current_source(revision, text, saved_raw)
+            self.graph_revision = self.graph.revision
             return False
-        changed=import_generated_source_edit(
-            self.graph,self.base_source,self.session.text,
-            expected_revision=self.graph.revision,allow_source_trivia=True)
-        self.graph_revision=self.graph.revision
-        self.graph_fingerprint=self._graph_fingerprint(self.graph)
-        self.source_revision=self.session.revision
-        self.base_source=preview_python(self.graph.state).source
-        self.source_text=self.session.text
-        self.disk_sha256=current_disk_hash
+        try:
+            # Use exactly the existing generated-source compiler planner.
+            # Unlike import_generated_source_edit, it does not commit before
+            # we can recheck the live source and the disk preimage.
+            review, commands = _qualified_source_edit_plan(
+                self.graph, self.base_source, text,
+                expected_revision=self.graph.revision, allow_source_trivia=True)
+        except (ProgramGraphError, GraphConflict):
+            self._assert_current_source(revision, text, saved_raw)
+            raise
+        current_disk_hash = self._assert_current_source(revision, text, saved_raw)
+        changed = self.graph.edit_many(review.graph_revision, commands) if commands else False
+        self.graph_revision = self.graph.revision
+        self.graph_fingerprint = self._graph_fingerprint(self.graph)
+        self.source_revision = revision
+        self.base_source = preview_python(self.graph.state).source
+        self.source_text = text
+        self.disk_sha256 = current_disk_hash
         return changed
 
 @dataclass(frozen=True)
