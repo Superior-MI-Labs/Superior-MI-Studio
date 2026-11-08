@@ -1,6 +1,6 @@
 # Superior MI Studio — canonical implementation queue
 
-**Source candidate:** v2.123 (compiler proof-stage consolidation, headless candidate; native host pending). **Latest uploaded Linux host qualified:** v2.120 (`qualification-20261102-140104-73870.tar.gz`: `doctor_status=0`, `qt_status=0`, `CHECKS_PASS`, `NATIVE_QT_SMOKE_PASS`). **v2.122 GitHub CI:** both headless and native Qt jobs PASS on commit `f25523d` (GitHub CI is not a Linux Mint host report). **Previous host rollback baseline:** v2.115 (`qualification-20261102-104724-64648.tar.gz`). Historical v2.82/v2.83/v2.84/v2.86 failures are retained below for root-cause context. Do not repeat outdated v2.81-only baseline claims. The installer cleans managed previous builds and auto-launches only after native qualification.
+**Source candidate:** v2.124 (independent-function diagnostic retry consolidation; local headless candidate, native host pending). **Latest uploaded Linux host qualified:** v2.121 (`qualification-20261108-125446-79635.tar.gz`: doctor 1,338 tests PASS, `doctor_status=0`, `qt_status=0`, `CHECKS_PASS`, `NATIVE_QT_SMOKE_PASS`). **v2.123 GitHub CI:** headless and native Qt jobs PASS on commit `e36ee9b` (CI is not a Linux Mint host report). **Earlier verified host baselines:** v2.120 and v2.115. Historical v2.82/v2.83/v2.84/v2.86 failures are retained below for root-cause context. Do not repeat outdated v2.81-only baseline claims. The installer cleans managed previous builds and auto-launches only after native qualification.
 
 **Product direction:** One VS Code-style workspace and navigable graph, Blueprint-grade visual interactions, interchangeable source and visual programming where semantics can be proven, a growing set of file/asset previewers and relationship providers. Python is the first language, **not** the only target. Source, graph and binary resources keep specialized authoritative owners; shared presentation/tabs do not imply a universal writable AST.
 
@@ -8,8 +8,8 @@
 
 | Priority | Work | Required proof / no-go |
 |---|---|---|
-| 0 | **Obtain v2.122/v2.123 Linux Mint host qualification** | v2.120 host doctor and native Qt passed; v2.122 GitHub native CI passed. Await the actual host report for later releases before promoting them. Keep the existing installer verdict and rollback gates; a GitHub green job is not local-install evidence. |
-| 1 | **Source/graph reconciliation and compiler proof consolidation** | v2.123 separates three existing transient proof stages inside `python_lowering.py`; next inspect conflict explanation and admission paths for redundant work using focused characterization before modifying existing owners. v2.95 added atomic multi-function selection; v2.97 completes all six conventional typed integer comparisons with shared compiler mapping and improves independent-source parse diagnostics. Refuse unsupported AST, fuzzy renames and partial imports. |
+| 0 | **Obtain v2.122+ Linux Mint host qualification** | The uploaded v2.121 report passed doctor and native Qt. Newer versions passed their respective GitHub CI jobs but have no host report. Keep the existing installer verdict and rollback gates; GitHub success is not local-install evidence. |
+| 1 | **Source/graph reconciliation and compiler proof consolidation** | v2.123 separates three transient proof stages in `python_lowering.py`; v2.124 skips proof-identical source-only regions during failed-batch diagnostics. Next inspect deeper conflict explanation and source/graph admission paths with characterization before refactoring. v2.95 added atomic multi-function selection; v2.97 completes all six conventional typed integer comparisons with shared compiler mapping and improves independent-source parse diagnostics. Refuse unsupported AST, fuzzy renames and partial imports. |
 | 2 | **Unified tab, route and root compatibility cleanup** | v2.122 makes already-loaded protected root source navigation qualify before switching from a resource tab and preflights cross-provider page membership before registry mutation. Run native `protected-root-source-refusal-atomicity` and complete Qt host qualification before retiring more compatibility branches. Retain root anchors while still required by original file-open semantics. |
 | 3 | **Conservative resource capabilities** | Existing previews, imports, literal-reference evidence, relationship inspection, precise source jumps and visible-hop search are implemented. Prefer usability/diagnostics over a recursive filesystem index; static edges are not proven runtime dependencies. |
 | 4 | **Future IDE/language support** | Run/debug/LSP/DAP, other languages and an extension host require stable adapter and execution contracts. Do not build speculative infrastructure before core Python round-trip milestones qualify. |
@@ -409,3 +409,20 @@ The existing `.github/workflows/headless.yml` now adds a separate `native-qt` jo
 - Host v2.122 is not yet separately qualified despite GitHub's two passing
   jobs. v2.123 has no native host evidence; **do not** promote until its full
   report passes. Next Qt cleanup remains gated on root-route native parity.
+
+## v2.124 — independent batch diagnostic retry gate (host native pending)
+
+- In `_independent_functions_plan`, failed full-batch proof attribution now skips
+  functions whose **transient normalized candidate** matches the already-indexed
+  graph-generated baseline. The previous check compared *authored source AST*
+  and retried docstrings, `pass`, annotations and keyword-call spelling that
+  cannot independently explain a compiler refusal. No additional compiler
+  authority, source rewrite, persisted map or graph edit is introduced.
+- Real semantic changes still get an isolated retry against the same baseline
+  and original source-region span. Combined failures are still atomic refusals.
+- Three adversarial regression tests count full-proof and changed-region retries,
+  confirm original document/graph revisions remain unchanged and keep failed
+  region attribution precise. No Qt production behavior was altered.
+- The new upload `qualification-20261108-125446-79635.tar.gz` is a verified
+  **v2.121** host report (1,338 headless tests, native Qt PASS); do not mistake
+  it for v2.122 or v2.123. v2.124 host qualification remains pending.

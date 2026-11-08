@@ -2425,14 +2425,14 @@ def _independent_functions_plan(graph, session, functions, *, expected_graph_rev
         # Isolate each selected function against the same canonical baseline;
         # this diagnostic reuses the compiler rather than independently
         # interpreting Python or approving any subset of an invalid batch.
-        canonical_functions={node.name: node for node in canonical.body
-                             if isinstance(node, ast.FunctionDef)}
         for name in names:
-            # Unchanged regions cannot explain the failure. A batch with 32
-            # selected functions should not recompile the same complete graph
-            # 32 times just to identify one changed or invalid region.
-            if ast.dump(selected[name], include_attributes=False) == ast.dump(
-                    canonical_functions[name], include_attributes=False):
+            # Compare the *proved* transient candidate with the already
+            # indexed graph baseline. Authored docstrings, pass, annotations,
+            # aliases and keywords may differ while the normalized function
+            # is identical; retrying those regions cannot explain the batch
+            # refusal. Leave the original source AST for evidence locations.
+            if ast.dump(proved[name], include_attributes=False) == ast.dump(
+                    owned_functions[name][0], include_attributes=False):
                 continue
             only_one=ast.Module(body=[proved[name] if isinstance(node,ast.FunctionDef)
                 and node.name==name else node for node in canonical.body],type_ignores=[])

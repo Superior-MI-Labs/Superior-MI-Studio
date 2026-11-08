@@ -1,4 +1,19 @@
-# Codex start here — Superior MI Studio v2.123
+# Codex start here — Superior MI Studio v2.124
+
+## v2.124 — bounded independent-function diagnostic retries
+
+When a selected authored function contains only source-owned trivia or syntax
+that normalizes to the exact graph-generated baseline, it cannot explain a
+failed full-batch compiler proof. The existing failure-isolation loop now
+compares the *ephemeral normalized candidate* to the already-indexed graph
+function before retrying a trial compilation. It never compares unnormalized
+source trivia or reindexes the baseline. Changed candidates still get isolated
+with the original source line-span for diagnostics, and no partial graph edit
+is committed. `tests/test_v2124_independent_diagnostic_efficiency.py` verifies
+compiler call counts and non-mutation for both skipped and genuinely changed
+regions. The v2.121 host report `qualification-20261108-125446-79635.tar.gz`
+records passing doctor and native Qt smoke; v2.122 and later versions still
+need their own Linux Mint host evidence.
 
 ## v2.123 — ephemeral independent-source compiler candidate consolidation
 
