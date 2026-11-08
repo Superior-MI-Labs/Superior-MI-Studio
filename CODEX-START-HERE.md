@@ -1,4 +1,19 @@
-# Codex start here — Superior MI Studio v2.128
+# Codex start here — Superior MI Studio v2.129
+
+## v2.129 — correct destination-provider view registration
+
+The v2.128 native CI failed deterministically because the staging refactor
+registered a replacement view in the **outgoing** provider's registry instead
+of the incoming route's provider. This produced a selected `SourceTabView` with
+no registered source owner, detected by the existing relationship-evidence
+native smoke. v2.129 keeps the staging-first design, but uses `old_kind` only
+for retirement and `route.kind` for registration. Its new test covers both
+provider directions; the existing Qt smoke enforces actual source-owner,
+history and camera parity, and retains diagnostic context if evidence jumps
+fail again. Architecture note: `PHASE5-SECONDARY-PROVIDER-REGISTRY-v2.129.md`.
+The v2.124 Mint host baseline remains the last uploaded native PASS; v2.129
+needs CI and a fresh local host report before promotion. Do not resume the
+independent tab-close cleanup until the failing native test is green.
 
 ## v2.128 — staged cross-provider Qt replacement before route publication
 

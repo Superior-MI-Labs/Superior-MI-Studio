@@ -12,7 +12,7 @@ We take inspiration from **VS Code's development workflow** and **Unreal Engine 
 
 **[Architecture](docs/architecture) · [Wiki](https://github.com/Superior-MI-Labs/Superior-MI-Studio/wiki) · [Development pipeline](docs/RELEASE-PIPELINE.md) · [Issues](https://github.com/Superior-MI-Labs/Superior-MI-Studio/issues)**
 
-> **Current status: pre-alpha · v2.128 development candidate (Linux Mint native pending).** The v2.128 source passed 1,375 local headless tests, and its ZIP passed release integrity checks. The patch stages secondary-provider Qt replacements before changing tab ownership. v2.127 passed GitHub headless/native Qt CI; v2.124 is the latest uploaded Linux Mint host-qualified baseline. Studio is not a stable release.
+> **Current status: pre-alpha · v2.129 development candidate (Linux Mint native pending).** v2.129 corrects the destination-provider registration regression discovered by v2.128 native CI. Its local headless suite passed 1,377 tests and the versioned archive passed integrity checks. v2.128 native CI failed; v2.124 remains the latest uploaded Linux Mint host-qualified baseline. Studio is not a stable release.
 
 ## The Studio workbench · v2.120 Linux preview
 

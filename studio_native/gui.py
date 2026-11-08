@@ -26,7 +26,7 @@ from . import model as m
 from .boundary_edit import parameter_source, terminal_return_target, BoundaryEditError
 from .exit_routes import project_exit_routes, project_folded_exit_connections
 
-APP_TITLE = 'Superior MI Studio · Visual Programming Lab 2.128'
+APP_TITLE = 'Superior MI Studio · Visual Programming Lab 2.129'
 from .semantic_contract import describe_graph, ContractError, canvas_graph_source, port_presentation_role, validated_port_payloads, validated_edge_payloads
 from .assets import AssetIndex
 from .external_icons import ExternalIconAtlas, default_icon_atlas_directory, icon_id_for_resource, icon_id_for_source
@@ -5353,11 +5353,17 @@ class NativeLab(QMainWindow):
             self._remember_document_view()
             self._activate_source_view(self._source_tabs['source'])
             del self._source_tabs[old.session_id]
-            self._source_tabs[old.session_id]=view
         else:
             self._store_active_resource_view()
             self._activate_resource_view(self._resource_tabs['resource'])
             del self._resource_tabs[old.session_id]
+        # Outgoing provider decides what to RETIRE; the destination provider
+        # independently decides which existing registry receives the new view.
+        # These differ on every cross-provider route. Never register the new
+        # SourceTabView in _resource_tabs (or the reverse).
+        if route.kind=='source':
+            self._source_tabs[old.session_id]=view
+        else:
             self._resource_tabs[old.session_id]=view
         session.activate(resolved.route,record_history=history_direction is None,
                          history_direction=history_direction)
