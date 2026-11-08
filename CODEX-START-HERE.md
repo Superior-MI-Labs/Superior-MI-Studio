@@ -1,4 +1,17 @@
-# Codex start here — Superior MI Studio v2.124
+# Codex start here — Superior MI Studio v2.125
+
+## v2.125 — bounded source admission and indexing consolidation
+
+The independent-function planner now uses two private helpers *inside the existing
+Python adapter*: a transient top-level function index and a preflight of
+existing graph-owned keyword-call targets plus module-level identity/shadow
+checks. Both consume the current parsed source module and generated compiler
+baseline, not a new document representation, parser, or mutable registry.
+The full graph trial remains the only edit admission authority. Source bytes,
+graph revision, atomic import and refusal semantics are unchanged. Tests:
+`test_v2125_independent_preflight_contract.py`. The uploaded v2.124 Linux
+Mint qualification report passed all 1,350 tests and native Qt smoke;
+v2.125 remains host-pending.
 
 ## v2.124 — bounded independent-function diagnostic retries
 

@@ -12,7 +12,7 @@ We take inspiration from **VS Code's development workflow** and **Unreal Engine 
 
 **[Architecture](docs/architecture) · [Wiki](https://github.com/Superior-MI-Labs/Superior-MI-Studio/wiki) · [Development pipeline](docs/RELEASE-PIPELINE.md) · [Issues](https://github.com/Superior-MI-Labs/Superior-MI-Studio/issues)**
 
-> **Current status: pre-alpha · v2.124 development candidate (Linux Mint native pending).** The v2.124 source passed 1,350 local headless tests and archive integrity verification. v2.123 passed both GitHub CI jobs; the most recent uploaded passing Linux Mint host report is v2.121. Studio is not a stable product release.
+> **Current status: pre-alpha · v2.125 development candidate (Linux Mint native pending).** v2.125 passed 1,356 local headless tests and its ZIP integrity checks. v2.124 passed headless and native Qt on the Linux Mint host (report `qualification-20261108-141148-82252.tar.gz`). v2.125 has not yet been host-qualified or released as a stable IDE.
 
 ## The Studio workbench · v2.120 Linux preview
 

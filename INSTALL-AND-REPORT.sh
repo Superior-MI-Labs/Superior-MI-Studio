@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Superior MI Studio v2.124: install, qualify, collect logs, then launch on native PASS.
 set -uo pipefail
-VERSION=v2.124
+VERSION=v2.125
 NAME=Superior-MI-Python-Visual-Programming-Lab
 ZIP="$HOME/Downloads/$NAME-$VERSION.zip"
 if [[ ! -f "$ZIP" ]]; then

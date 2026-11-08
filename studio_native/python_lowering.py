@@ -2272,6 +2272,73 @@ def _independent_proof_function(source: ast.FunctionDef, reference: ast.Function
     return _independent_keyword_calls(owned,keyword_parameters)
 
 
+def _top_level_function_index(module, *, include_async):
+    index = {}
+    kinds = ((ast.FunctionDef, ast.AsyncFunctionDef) if include_async
+             else (ast.FunctionDef,))
+    for node in module.body:
+        if isinstance(node, kinds):
+            index.setdefault(node.name, []).append(node)
+    return index
+
+
+def _independent_keyword_parameter_contract(module: ast.Module, selected: dict,
+                                            source_functions: dict,
+                                            owned_functions: dict) -> dict:
+    """Preflight keyword-call signatures and exact module binding identity.
+
+    This inspects the *current* source module once, not its generated trial or
+    a workspace index. A rejected selected function always fails before any
+    graph edit; an unqualified callee stays unnormalized for compiler refusal.
+    The returned parameter names are transient proof data, not bindings stored
+    on a document or graph.
+    """
+    from .program_graph import ProgramGraphError
+    # Keyword calls in independently authored functions can name existing
+    # graph-owned parameters without changing the callable or graph identity.
+    # Qualify any additional target *against this source module* before
+    # temporarily converting its keyword names to canonical positional args.
+    # A non-selected target must be byte-independent AST-equivalent to the
+    # graph-owned function. Selected targets still require the full trial proof.
+    keyword_targets={call.func.id for function in selected.values()
+        for call in ast.walk(function) if isinstance(call,ast.Call)
+        and isinstance(call.func,ast.Name) and call.keywords}
+    candidate_callees={}
+    for name in keyword_targets:
+        source=source_functions.get(name,())
+        owned=owned_functions.get(name,())
+        if len(source)!=1 or len(owned)!=1 or not isinstance(source[0],ast.FunctionDef):
+            continue
+        if name not in selected and ast.dump(source[0],include_attributes=False) != \
+                ast.dump(owned[0],include_attributes=False):
+            continue
+        if (source[0].decorator_list or source[0].args.posonlyargs or
+                source[0].args.kwonlyargs or source[0].args.vararg or
+                source[0].args.kwarg or source[0].args.defaults or
+                any(default is not None for default in source[0].args.kw_defaults)):
+            continue
+        candidate_callees[name]=source[0]
+    # The source AST is shared by the entire selection. One module binding
+    # traversal checks all identities (including keyword-call targets) rather
+    # than re-walking it for each chosen function.
+    conflicts_by_name=_module_function_binding_conflicts(
+        module,{**candidate_callees,**selected})
+    for name in selected:
+        conflicts=conflicts_by_name[name]
+        if conflicts:
+            raise ProgramGraphError(
+                f'Function {name!r} (source line {selected[name].lineno}): '
+                'module-scope binding shadows selected function at line(s) '+
+                ', '.join(map(str,conflicts))+ '; reconciliation refused')
+    # A keyword call is source-owned syntax, not a new graph operation. Only
+    # existing, unshadowed graph functions with exact signatures qualify; all
+    # explicit operands must be pure local-name reads. No keyword unpacking,
+    # starred arguments, defaults, or expression evaluation reordering.
+    keyword_parameters={name:tuple(arg.arg for arg in fn.args.args)
+        for name,fn in candidate_callees.items() if not conflicts_by_name[name]}
+    return keyword_parameters
+
+
 def _independent_functions_plan(graph, session, functions, *, expected_graph_revision: int):
     """Qualify named independent regions with the existing whole-graph compiler.
 
@@ -2310,19 +2377,10 @@ def _independent_functions_plan(graph, session, functions, *, expected_graph_rev
             f'column {exc.offset}: {exc.msg}') from exc
     except (UnicodeError, ValueError, RecursionError) as exc:
         raise ProgramGraphError('Independent Python source must parse before function review') from exc
-    # Index each module exactly once for the entire selected batch. These
-    # are transient AST references, not fuzzy identities or a source map.
-    def top_level_functions(module, *, include_async):
-        index = {}
-        kinds = ((ast.FunctionDef, ast.AsyncFunctionDef) if include_async
-                 else (ast.FunctionDef,))
-        for node in module.body:
-            if isinstance(node, kinds):
-                index.setdefault(node.name, []).append(node)
-        return index
-
-    source_functions = top_level_functions(external, include_async=True)
-    owned_functions = top_level_functions(canonical, include_async=False)
+    # One bounded per-batch index of the actual source and the compiler baseline.
+    # Neither index becomes a persistent source map or runtime dependency scan.
+    source_functions = _top_level_function_index(external, include_async=True)
+    owned_functions = _top_level_function_index(canonical, include_async=False)
     selected={}
     for name in names:
         found=source_functions.get(name, ())
@@ -2363,48 +2421,10 @@ def _independent_functions_plan(graph, session, functions, *, expected_graph_rev
                 'signature differs from graph-owned function; rename, parameters, '
                 'defaults, annotations and return contract are not imported')
         selected[name]=found[0]
-    # Keyword calls in independently authored functions can name existing
-    # graph-owned parameters without changing the callable or graph identity.
-    # Qualify any additional target *against this source module* before
-    # temporarily converting its keyword names to canonical positional args.
-    # A non-selected target must be byte-independent AST-equivalent to the
-    # graph-owned function. Selected targets still require the full trial proof.
-    keyword_targets={call.func.id for function in selected.values()
-        for call in ast.walk(function) if isinstance(call,ast.Call)
-        and isinstance(call.func,ast.Name) and call.keywords}
-    candidate_callees={}
-    for name in keyword_targets:
-        source=source_functions.get(name,())
-        owned=owned_functions.get(name,())
-        if len(source)!=1 or len(owned)!=1 or not isinstance(source[0],ast.FunctionDef):
-            continue
-        if name not in selected and ast.dump(source[0],include_attributes=False) != \
-                ast.dump(owned[0],include_attributes=False):
-            continue
-        if (source[0].decorator_list or source[0].args.posonlyargs or
-                source[0].args.kwonlyargs or source[0].args.vararg or
-                source[0].args.kwarg or source[0].args.defaults or
-                any(default is not None for default in source[0].args.kw_defaults)):
-            continue
-        candidate_callees[name]=source[0]
-    # The source AST is shared by the entire selection. One module binding
-    # traversal checks all identities (including keyword-call targets) rather
-    # than re-walking it for each chosen function.
-    conflicts_by_name=_module_function_binding_conflicts(
-        external,{**candidate_callees,**selected})
-    for name in names:
-        conflicts=conflicts_by_name[name]
-        if conflicts:
-            raise ProgramGraphError(
-                f'Function {name!r} (source line {selected[name].lineno}): '
-                'module-scope binding shadows selected function at line(s) '+
-                ', '.join(map(str,conflicts))+ '; reconciliation refused')
-    # A keyword call is source-owned syntax, not a new graph operation. Only
-    # existing, unshadowed graph functions with exact signatures qualify; all
-    # explicit operands must be pure local-name reads. No keyword unpacking,
-    # starred arguments, defaults, or expression evaluation reordering.
-    keyword_parameters={name:tuple(arg.arg for arg in fn.args.args)
-        for name,fn in candidate_callees.items() if not conflicts_by_name[name]}
+    # Existing graph-owned callee signature and module-scope shadow preflight.
+    # The helper uses this exact source AST and the indexed graph baseline.
+    keyword_parameters = _independent_keyword_parameter_contract(
+        external, selected, source_functions, owned_functions)
 
     # Replace only explicitly selected functions in the synthetic trial. The
     # original source AST still owns exact evidence spans and the text remains
