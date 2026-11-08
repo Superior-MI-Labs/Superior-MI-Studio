@@ -2201,7 +2201,20 @@ def main():
         assert w.browse_resource(root,activate=False)
         resource_canvas=w.resource_canvas
         edge=next(e for e in resource_canvas.graph_contract.edges if e.relation=='reference')
-        assert w.open_resource_relationship_evidence(resource_canvas,edge.id,0)
+        jumped=w.open_resource_relationship_evidence(resource_canvas,edge.id,0)
+        if not jumped:
+            selected=w._graph_tab_for_page(w.tabs.currentWidget())
+            active=w._active_source_document()
+            print('QT_DIAG resource evidence refusal',
+                  'message=',w.statusBar().currentMessage(),
+                  'selected=',type(selected).__name__ if selected else None,
+                  'source_id=',w._active_source_tab_id,
+                  'owner=',str(active.path) if active else None,
+                  'loaded=',w._loaded_editor_identity,
+                  'expected=',str(source),
+                  'history=',w._view_sessions.get(selected.session_id).route if selected else None,
+                  flush=True)
+        assert jumped
         owner=w._active_source_document()
         assert owner is not None and owner.path==source
         assert w._loaded_editor_identity==(str(source),owner.revision)
