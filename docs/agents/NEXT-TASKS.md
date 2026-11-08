@@ -1,6 +1,6 @@
 # Superior MI Studio — canonical implementation queue
 
-**Source candidate:** v2.129 (staged provider replacement registered by destination kind; native CI/host pending). **Latest uploaded Linux Mint host PASS:** v2.124 (`qualification-20261108-141148-82252.tar.gz`: doctor 1,350 tests PASS, `doctor_status=0`, `qt_status=0`, `CHECKS_PASS`, `NATIVE_QT_SMOKE_PASS`). **v2.128 native CI:** FAILED at a relationship-evidence line jump because new source views were registered in the outgoing resource registry; v2.129 corrects that specific regression and must prove native parity. The existing installer owns cleanup and launch only after native qualification.
+**Source candidate:** v2.130 (closing graph tabs now uses the existing `_graph_tab_for_page` lookup; native CI and Linux Mint host pending). **Latest uploaded Linux Mint host PASS:** v2.124 (`qualification-20261108-141148-82252.tar.gz`: 1,350 doctor regressions, native Qt `NATIVE_QT_SMOKE_PASS`). **v2.129 GitHub CI:** headless and native Qt PASS after correcting outgoing/destination provider registry separation. The installer still owns managed cleanup only after native host qualification.
 
 **Product direction:** One VS Code-style workspace and navigable graph, Blueprint-grade visual interactions, interchangeable source and visual programming where semantics can be proven, a growing set of file/asset previewers and relationship providers. Python is the first language, **not** the only target. Source, graph and binary resources keep specialized authoritative owners; shared presentation/tabs do not imply a universal writable AST.
 
@@ -8,11 +8,17 @@
 
 | Priority | Work | Required proof / no-go |
 |---|---|---|
-| 0 | **Qualify v2.129 native CI and then Linux Mint** | v2.128's native CI failed twice plus a diagnostic run; v2.129 must recover the original resource→source relationship-evidence stage, both provider directions, staging refusal, then complete every Qt stage. Latest uploaded Mint PASS remains v2.124. |
+| 0 | **Qualify v2.130 GitHub native CI and Linux Mint** | v2.129 fixed the staged provider registry and passed both GitHub CI lanes. v2.130 changes close dispatch, so its native smoke must verify inactive source/resource closure, protected root anchors, program close confirmation, route and camera continuity. Mint host evidence remains independent. |
 | 1 | **Source/graph reconciliation and compiler proof consolidation** | v2.123 separates three transient proof stages in `python_lowering.py`; v2.124 skips proof-identical source-only regions during failed-batch diagnostics. v2.125 consolidates current-source function indexing and keyword-call/module-shadow admission within the same compiler module, without new state. v2.126 now captures a single live source snapshot for review hash/spans and rechecks source plus disk at review/import boundaries. v2.127 closes the parallel linked-source proof-to-commit receipt gap without another owner. Next inventory the protected root/secondary navigation branch call sites and retire only proven duplicates with native parity evidence. v2.95 added atomic multi-function selection; v2.97 completes all six conventional typed integer comparisons with shared compiler mapping and improves independent-source parse diagnostics. Refuse unsupported AST, fuzzy renames and partial imports. |
-| 2 | **Unified tab, route and root compatibility cleanup** | v2.128 prepares replacement pages before mutating registries; v2.129 fixes the destination-provider registration error exposed by native CI. **Do not remove further root/secondary compatibility paths before native green.** Then consolidate closing through existing `_graph_tab_for_page` with real inactive-view close parity. |
+| 2 | **Unified tab, route and root compatibility cleanup** | v2.129 corrected staged provider registry identity; v2.130 routes close dispatch through existing `_graph_tab_for_page`. Next inventory duplicate activation/active alias paths and remove only proven overlap after full Qt parity. Root compatibility anchors remain required. |
 | 3 | **Conservative resource capabilities** | Existing previews, imports, literal-reference evidence, relationship inspection, precise source jumps and visible-hop search are implemented. Prefer usability/diagnostics over a recursive filesystem index; static edges are not proven runtime dependencies. |
 | 4 | **Future IDE/language support** | Run/debug/LSP/DAP, other languages and an extension host require stable adapter and execution contracts. Do not build speculative infrastructure before core Python round-trip milestones qualify. |
+
+## v2.130 — single Qt tab-close lookup (host pending)
+
+- `_close_graph_tab` now uses the same `_graph_tab_for_page(page)` reader as activation and navigation. Program, resource and source close branches preserve their prior owner-specific behavior and root safeguards; no new registry or closure service.
+- Three headless tests and `QT_STAGE inactive-resource-view-close-preserves-root` characterize closing an inactive secondary page while the original resource root is selected. GitHub CI and Mint qualification are required; last uploaded Mint PASS v2.124.
+- Architecture note: `docs/architecture/PHASE5-SINGLE-QT-TAB-CLOSE-DISPATCH-v2.130.md`.
 
 ## v2.129 — destination-provider registry correction (native CI and host pending)
 

@@ -2400,8 +2400,19 @@ def main():
     assert w.resource_path==directory
     assert w.current_canvas() is extra_resource.canvas
     assert w._graph_tab_for_page(extra_resource.page) is extra_resource
+    print('QT_STAGE inactive-resource-view-close-preserves-root',flush=True)
+    # Close an inactive secondary resource page. Selected root, view registry,
+    # route/history and camera must stay with the actual Qt-selected root.
+    w.tabs.setCurrentWidget(root_resource_page);app.processEvents()
+    root_route_before=w._view_sessions.get('resource').route
+    root_camera_before=w._view_sessions.get('resource').camera_slot()
     index=w.tabs.indexOf(extra_resource.page)
+    assert index>=0
     w._close_graph_tab(index);app.processEvents()
+    assert w.tabs.currentWidget() is root_resource_page
+    assert w._resource_tabs['resource'] is root_resource
+    assert w._view_sessions.get('resource').route==root_route_before
+    assert w._view_sessions.get('resource').camera_slot()==root_camera_before
     assert w.tabs.count()==resource_tab_count
     assert w._view_sessions.get(extra_resource_id) is None
     assert len(w._resource_tabs)==1

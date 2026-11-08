@@ -1,4 +1,19 @@
-# Codex start here — Superior MI Studio v2.129
+# Codex start here — Superior MI Studio v2.130
+
+## v2.130 — consolidate Qt tab-close page lookup
+
+The existing `_graph_tab_for_page` remains the only Qt page-to-view registry
+reader for activation, navigation and now **closure**. `_close_graph_tab`
+removes repeated source/resource `.values()` scans but retains the existing
+program close confirmation, protected root guards, GraphViewSessions closure,
+view-only source semantics and active alias restoration. Native smoke closes
+an inactive secondary resource page while the root is selected, and checks
+root identity, route and camera preservation. See
+`docs/architecture/PHASE5-SINGLE-QT-TAB-CLOSE-DISPATCH-v2.130.md` and
+`tests/test_v2130_single_tab_close_lookup.py`. v2.129 fixed the staging
+registry regression and passed both GitHub CI jobs; v2.130 needs independent
+native CI and Mint host evidence before promotion. The next cleanup target is
+remaining root/secondary activation duplication, **not** removing root anchors.
 
 ## v2.129 — correct destination-provider view registration
 

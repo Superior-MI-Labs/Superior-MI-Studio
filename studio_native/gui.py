@@ -26,7 +26,7 @@ from . import model as m
 from .boundary_edit import parameter_source, terminal_return_target, BoundaryEditError
 from .exit_routes import project_exit_routes, project_folded_exit_connections
 
-APP_TITLE = 'Superior MI Studio · Visual Programming Lab 2.129'
+APP_TITLE = 'Superior MI Studio · Visual Programming Lab 2.130'
 from .semantic_contract import describe_graph, ContractError, canvas_graph_source, port_presentation_role, validated_port_payloads, validated_edge_payloads
 from .assets import AssetIndex
 from .external_icons import ExternalIconAtlas, default_icon_atlas_directory, icon_id_for_resource, icon_id_for_source
@@ -3502,17 +3502,18 @@ class NativeLab(QMainWindow):
     def _close_graph_tab(self,index):
         if index<0 or index>=self.tabs.count():return
         page=self.tabs.widget(index)
-        view=next((v for v in self._source_tabs.values() if v.page is page),None)
-        if view is None:
-            program=self._program_tabs.get(page)
-            if program is not None:
-                if not program.confirm_close():return
-                del self._program_tabs[page]
-                self.tabs.removeTab(index)
-                program.deleteLater()
-                return
-            resource=next((v for v in self._resource_tabs.values() if v.page is page),None)
-            if resource is None:return # Legacy development views are not regular tabs.
+        # The same Qt page-to-view lookup used by tab activation and routing
+        # owns close dispatch too. Never re-scan provider maps independently:
+        # active window aliases can refer to a different selected provider.
+        view=self._graph_tab_for_page(page)
+        if isinstance(view,ProgramWorkspace):
+            if not view.confirm_close():return
+            del self._program_tabs[page]
+            self.tabs.removeTab(index)
+            view.deleteLater()
+            return
+        if isinstance(view,ResourceTabView):
+            resource=view
             if resource.session_id=='resource' or len(self._resource_tabs)==1:
                 self.report('The original filesystem graph tab is a protected compatibility anchor')
                 return
@@ -3530,6 +3531,8 @@ class NativeLab(QMainWindow):
                 self.tabs.setCurrentWidget(target.page)
             self._queue_presentation_save()
             return
+        if not isinstance(view,SourceTabView):
+            return  # Legacy development view, not an ordinary graph tab.
         if view.session_id=='source' or len(self._source_tabs)==1:
             self.report('The original Python graph tab is a protected compatibility anchor')
             return
