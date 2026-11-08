@@ -1,4 +1,19 @@
-# Codex start here — Superior MI Studio v2.125
+# Codex start here — Superior MI Studio v2.126
+
+## v2.126 — independent-source conflict receipts and captured revision integrity
+
+The existing independent-source compiler planner captures the live `SourceDocumentSession`
+revision and text once. Its AST, source hash, line evidence and review receipt
+must all represent those exact bytes. It rechecks the session revision/text and
+`inspect_external()` after proof (including failure diagnostics) and the import
+path performs a final external-file check before `ProgramGraph.edit_many`.
+A reentrant source edit or external write during qualification now refuses with
+`GraphConflict` and leaves graph state unchanged; a non-UTF-8-encodable draft
+is a clean `ProgramGraphError`, never an unhandled encoder exception. No locks,
+new mutable source snapshots, second source map, extra parser or Qt changes.
+Regression tests: `tests/test_v2126_independent_source_snapshot.py` (6).
+The v2.125 GitHub headless and native Qt CI jobs passed; v2.124 remains the
+latest uploaded Linux Mint native host PASS pending a newer report.
 
 ## v2.125 — bounded source admission and indexing consolidation
 

@@ -2358,16 +2358,23 @@ def _independent_functions_plan(graph, session, functions, *, expected_graph_rev
             len(set(functions)) != len(functions)):
         raise ProgramGraphError('Select 1 to 32 distinct named top-level functions')
     names=tuple(functions)
+    # Keep one authoritative source-owner snapshot for the whole compiler
+    # proof. Never mix AST, source spans and hash from different revisions.
+    source_revision=session.revision
+    source_text=session.text
     if session.inspect_external() != 'current':
         raise GraphConflict('Source changed on disk; independent function review refused')
-    raw=session.text.encode('utf-8')
+    try:
+        raw=source_text.encode('utf-8')
+    except UnicodeError as exc:
+        raise ProgramGraphError('Independent Python source cannot be encoded as UTF-8') from exc
     if len(raw) > MAX_PREVIEW_BYTES:
         raise ProgramGraphError('Independent Python review exceeds compiler size limit')
     baseline=preview_python(graph.state)
     if baseline.source is None:
         raise ProgramGraphError('Graph is not qualified for Python: '+'; '.join(baseline.issues))
     try:
-        external=ast.parse(session.text)
+        external=ast.parse(source_text)
         canonical=ast.parse(baseline.source)
     except SyntaxError as exc:
         # A failed parse has no safe function-region mapping. Report the
@@ -2441,6 +2448,12 @@ def _independent_functions_plan(graph, session, functions, *, expected_graph_rev
             allow_pure_reordering=True, _baseline_preview=baseline,
             _baseline_tree=canonical)
     except ProgramGraphError as exc:
+        # Reentrant source/disk updates invalidate even a failed proof's
+        # attribution: report the owner conflict, not a misleading function.
+        if session.revision != source_revision or session.text != source_text:
+            raise GraphConflict('Source revision changed during independent function review') from exc
+        if session.inspect_external() != 'current':
+            raise GraphConflict('Source changed on disk during independent function review') from exc
         # A failed multi-region proof must name the offending source region.
         # Isolate each selected function against the same canonical baseline;
         # this diagnostic reuses the compiler rather than independently
@@ -2471,9 +2484,16 @@ def _independent_functions_plan(graph, session, functions, *, expected_graph_rev
         raise ProgramGraphError('Combined function review refused: '+str(exc)) from exc
     if any(change.function not in selected for change in review.changes):
         raise ProgramGraphError('Proposed edits escaped the selected functions')
+    # The compiler is synchronous, but source and disk can still change
+    # through reentrant host callbacks. A review receipt must describe the
+    # exact revision/bytes used for the initial proof, not a later revision.
+    if session.revision != source_revision or session.text != source_text:
+        raise GraphConflict('Source revision changed during independent function review')
+    if session.inspect_external() != 'current':
+        raise GraphConflict('Source changed on disk during independent function review')
     lines,spans=_independent_change_lines(selected,canonical,baseline,review.changes,
-                                         session.text)
-    receipt=IndependentFunctionsReview(graph.revision,session.revision,
+                                         source_text)
+    receipt=IndependentFunctionsReview(graph.revision,source_revision,
         hashlib.sha256(raw).hexdigest(),names,
         tuple((name,selected[name].lineno,selected[name].end_lineno) for name in names),
         review.changes,len(external.body)-len(names),lines,spans)
@@ -2515,6 +2535,10 @@ def import_independent_source_functions(graph, session, functions, *,
     if (receipt.source_revision != expected_source_revision or
             receipt.source_sha256 != expected_source_sha256):
         raise GraphConflict('Independent source changed during qualification')
+    # Verify disk state again at the import boundary. A valid earlier review
+    # must never authorize a graph edit after an external source write.
+    if session.inspect_external() != 'current':
+        raise GraphConflict('Source changed on disk before graph import')
     return graph.edit_many(receipt.graph_revision,commands) if commands else False
 
 
