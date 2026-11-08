@@ -26,7 +26,7 @@ from . import model as m
 from .boundary_edit import parameter_source, terminal_return_target, BoundaryEditError
 from .exit_routes import project_exit_routes, project_folded_exit_connections
 
-APP_TITLE = 'Superior MI Studio · Visual Programming Lab 2.127'
+APP_TITLE = 'Superior MI Studio · Visual Programming Lab 2.128'
 from .semantic_contract import describe_graph, ContractError, canvas_graph_source, port_presentation_role, validated_port_payloads, validated_edge_payloads
 from .assets import AssetIndex
 from .external_icons import ExternalIconAtlas, default_icon_atlas_directory, icon_id_for_resource, icon_id_for_source
@@ -5319,38 +5319,46 @@ class NativeLab(QMainWindow):
         if index<0:
             self.report('Graph navigation refused: selected tab is no longer present')
             return False
-        # All potentially failing source/provider validation happened above.
-        # Register the source owner only after a successful provider resolution;
-        # the new tab and the source editor now consult that same revision.
+        # Prepare the replacement Qt page BEFORE mutating the outgoing view,
+        # graph registry, source-owner map, camera or history. A failed widget
+        # construction must leave the selected tab entirely intact. This uses
+        # the existing provider-specific view types, not a second tab owner.
+        page=None
+        try:
+            canvas=GraphCanvas(self,source_view=route.kind=='source',
+                               resource_view=route.kind=='resource')
+            canvas.session_id=old.session_id
+            page=self._graph_page(canvas)
+            if route.kind=='source':
+                view=SourceTabView(old.session_id,page,canvas,document=resolved.document,
+                                   graph=resolved.graph,expanded=expanded,collapsed=collapsed)
+                view.toolbar=self._create_navigation_bar(page,'PythonNavigationBar')
+                label=self._source_tab_title(resolved.route)
+            else:
+                view=ResourceTabView(old.session_id,page,canvas,
+                                     path=Path(resolved.route.path),graph=resolved.graph)
+                view.toolbar=self._create_navigation_bar(page,'ResourceNavigationBar')
+                label=self._resource_tab_title(resolved.route)
+        except (RuntimeError,ValueError) as exc:
+            if page is not None:page.deleteLater()
+            self.report('Graph navigation refused: replacement view unavailable: '+str(exc))
+            return False
+        # The staged view is complete. Only now may the established
+        # transaction publish source identity, outgoing camera and new route.
         if source_session is not None:
             self._source_documents[str(source_session.path)]=source_session
-        # Save the outgoing view, then replace only its Qt presentation.
         old.canvas._save_root_view()
         if old_kind=='source':
             self._store_active_source_view()
             self._remember_document_view()
             self._activate_source_view(self._source_tabs['source'])
             del self._source_tabs[old.session_id]
+            self._source_tabs[old.session_id]=view
         else:
             self._store_active_resource_view()
             self._activate_resource_view(self._resource_tabs['resource'])
             del self._resource_tabs[old.session_id]
-        canvas=GraphCanvas(self,source_view=route.kind=='source',
-                           resource_view=route.kind=='resource')
-        canvas.session_id=old.session_id
-        page=self._graph_page(canvas)
-        if route.kind=='source':
-            view=SourceTabView(old.session_id,page,canvas,document=resolved.document,
-                               graph=resolved.graph,expanded=expanded,collapsed=collapsed)
-            self._source_tabs[old.session_id]=view
-            view.toolbar=self._create_navigation_bar(page,'PythonNavigationBar')
-            label=self._source_tab_title(resolved.route)
-        else:
-            view=ResourceTabView(old.session_id,page,canvas,
-                                 path=Path(resolved.route.path),graph=resolved.graph)
             self._resource_tabs[old.session_id]=view
-            view.toolbar=self._create_navigation_bar(page,'ResourceNavigationBar')
-            label=self._resource_tab_title(resolved.route)
         session.activate(resolved.route,record_history=history_direction is None,
                          history_direction=history_direction)
         self._switching_source_tab=True

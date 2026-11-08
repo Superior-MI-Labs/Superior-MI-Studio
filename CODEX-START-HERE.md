@@ -1,4 +1,21 @@
-# Codex start here — Superior MI Studio v2.127
+# Codex start here — Superior MI Studio v2.128
+
+## v2.128 — staged cross-provider Qt replacement before route publication
+
+The selected secondary graph tab keeps its existing provider view until a
+replacement canvas, page, toolbar and title have been constructed successfully.
+The original `_transition_graph_tab` remains the single route/session
+transaction; it now performs all fallible **preparation** before writing the
+source document map, old-view registries, active aliases, camera or history.
+Qt `RuntimeError` / `ValueError` while constructing a replacement refuses the
+route and discards only the staged page. Native smoke injects toolbar failure
+and checks that the original page, source map, route, history and camera survive;
+the same route then succeeds after the injected failure is removed. Root
+anchors remain protected; no new coordinator, tab registry or state owner.
+See `docs/architecture/PHASE5-SECONDARY-PROVIDER-STAGING-v2.128.md` and
+`tests/test_v2128_provider_transition_staging.py`. This is not a claim of
+full exception atomicity after a Qt replacement commits. The previous uploaded
+Linux Mint native PASS is v2.124; v2.128 is host-pending.
 
 ## v2.127 — linked-source proof-to-commit receipt guard
 

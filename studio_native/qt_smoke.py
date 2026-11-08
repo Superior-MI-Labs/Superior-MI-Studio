@@ -2433,6 +2433,36 @@ def main():
     mixed_id=w._active_resource_tab_id
     mixed_session=w._view_sessions.get(mixed_id)
     mixed_resource_route=mixed_session.route
+    print('QT_STAGE cross-provider-replacement-staging-refusal',flush=True)
+    # A staging failure must not retire the old Qt page or mutate any view,
+    # document, camera or navigation history authority. This would fail the
+    # previous implementation, which deleted the old registry before building
+    # the replacement toolbar.
+    from unittest.mock import patch
+    original_page=w.tabs.currentWidget()
+    original_view=w._resource_tabs[mixed_id]
+    original_history=(tuple(mixed_session.history._entries),
+                      mixed_session.history._position)
+    original_source_documents=dict(w._source_documents)
+    original_aliases=(w._active_resource_tab_id,w.resource_page,w.resource_canvas)
+    original_camera=mixed_session.camera_slot()
+    with patch.object(w,'_create_navigation_bar',
+                      side_effect=RuntimeError('fixture: toolbar construction failed')):
+        assert not w._open_navigation_route(Route('source',str(fixture)))
+    app.processEvents()
+    assert w.tabs.currentWidget() is original_page
+    assert w._resource_tabs[mixed_id] is original_view
+    assert mixed_id not in w._source_tabs
+    assert w._view_sessions.get(mixed_id) is mixed_session
+    assert mixed_session.route==mixed_resource_route
+    assert (tuple(mixed_session.history._entries),mixed_session.history._position)==original_history
+    assert mixed_session.camera_slot()==original_camera
+    assert (w._active_resource_tab_id,w.resource_page,w.resource_canvas)==original_aliases
+    assert w._source_documents==original_source_documents
+    assert w.tabs.indexOf(original_page)>=0
+    assert 'replacement view unavailable' in w.statusBar().currentMessage()
+    # The same route must succeed after a rejected attempt. Failed staging
+    # must not poison subsequent source-owned navigation.
     assert w.open_resource_node({'resource_path':str(fixture),'resource_kind':'file'})
     app.processEvents()
     assert w.tabs.count()==before+1
