@@ -12,7 +12,7 @@ We take inspiration from **VS Code's development workflow** and **Unreal Engine 
 
 **[Architecture](docs/architecture) · [Wiki](https://github.com/Superior-MI-Labs/Superior-MI-Studio/wiki) · [Development pipeline](docs/RELEASE-PIPELINE.md) · [Issues](https://github.com/Superior-MI-Labs/Superior-MI-Studio/issues)**
 
-> **Current status: pre-alpha · v2.122 development candidate.** The local headless qualification passed 1,342 tests; native Qt on Linux Mint has not yet been qualified for v2.122. GitHub CI passed for v2.121 and the last uploaded passing Linux Mint native report is v2.120. This is not a stable product release.
+> **Current status: pre-alpha · v2.123 development candidate (host native pending).** The v2.123 local headless suite passed 1,347 tests and its integrity-verified archive is built. v2.122 passed GitHub headless and native Qt CI; v2.120 is the latest uploaded passing Linux Mint host report. This is not a stable product release.
 
 ## The Studio workbench · v2.120 Linux preview
 

@@ -1,4 +1,24 @@
-# Codex start here — Superior MI Studio v2.122
+# Codex start here — Superior MI Studio v2.123
+
+## v2.123 — ephemeral independent-source compiler candidate consolidation
+
+The accepted v3.1 refactor roadmap keeps Python parsing, source correspondence
+and compiler admission in one language adapter, while source documents and
+ProgramGraph remain independent authoritative owners. The v2.123 source
+candidate has separated the existing temporary proof-function preparation
+into three narrow helpers **inside** `python_lowering.py`: safe syntax/trivia
+normalization, unambiguous generated-local correspondence, and existing
+keyword-call canonicalization. The original AST is deep-copied before any
+candidate transformation. The selected-function module indexes, revision /
+digest conflict gates, complete graph lowering, all-or-nothing import and
+unsupported-source refusals are unchanged. No second source mapping, parser,
+operation vocabulary, graph store or persistent state was introduced.
+
+Tests: `tests/test_v2123_independent_candidate_boundaries.py` and the existing
+v2.103–v2.121 source reconciliation suites. Native Linux host promotion still
+requires its own report. v2.122 GitHub CI passed; latest uploaded Linux Mint
+host PASS remains v2.120. Continue comparing headless and native gates
+independently, and do not retire root-tab anchors before v2.122 host evidence.
 
 ## v2.122 — qualified root navigation before Qt tab selection
 

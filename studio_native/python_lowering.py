@@ -2074,6 +2074,204 @@ def _pure_expression_witness(expression: ast.AST, rename: dict[str,str],
     return ast.dump(normalized,include_attributes=False)
 
 
+def _independent_local_correspondence(owned: ast.FunctionDef, reference: ast.FunctionDef,
+                                      parameter_names: set[str], source_functions: dict) -> ast.FunctionDef:
+    """Rename only compiler-proven generated bindings on an ephemeral function AST.
+
+    Never creates a source map or mutates SourceDocumentSession. A name inferred
+    here is only a candidate for the unchanged full-graph compiler proof.
+    """
+    from collections import Counter
+    generated=[item for item in ast.walk(reference)
+               if isinstance(item,ast.Assign) and len(item.targets)==1
+               and isinstance(item.targets[0],ast.Name)]
+    authored=[item for item in ast.walk(owned)
+              if isinstance(item,ast.Assign) and len(item.targets)==1
+              and isinstance(item.targets[0],ast.Name)]
+    if len(generated)==len(authored):
+        old_names=[item.targets[0].id for item in generated]
+        new_names=[item.targets[0].id for item in authored]
+        old_counts=Counter(old_names)
+        new_counts=Counter(new_names)
+        old_set=set(old_names)
+        new_set=set(new_names)
+        param_names=parameter_names
+        aliases={}
+        valid=True
+        # A uniquely identified renamed temporary may move within a pure
+        # execution suite. Multiple renamed values need independent
+        # structural witnesses; position alone is not evidence after
+        # a reorder. Infer those witnesses iteratively (dependencies first)
+        # and reject any ambiguity. This only normalizes a *candidate*;
+        # the full graph compiler remains the import authority.
+        missing=[original for original in old_names if original not in new_set]
+        introduced=[current for current in new_names if current not in old_set]
+        pairs=[]
+        if len(missing)==len(introduced)==1:
+            pairs=[(missing[0],introduced[0])]
+        elif len(missing)==len(introduced)>1:
+            unresolved_old=set(missing)
+            unresolved_new=set(introduced)
+            known={}
+            old_defs={item.targets[0].id:item.value for item in generated
+                      if old_counts[item.targets[0].id]==1}
+            new_defs={item.targets[0].id:item.value for item in authored
+                      if new_counts[item.targets[0].id]==1}
+            # Match only uniquely shared pure expression ASTs after any
+            # independently proven input aliases have been resolved.
+            # Never try to infer producer identity from ambiguous shapes.
+            while unresolved_old and unresolved_new:
+                old_keys={name:_pure_expression_witness(old_defs[name],{},set()) for name in unresolved_old
+                          if name in old_defs}
+                new_keys={name:_pure_expression_witness(new_defs[name],known,unresolved_new) for name in unresolved_new
+                          if name in new_defs}
+                candidates=[]
+                for original,old_key in old_keys.items():
+                    if old_key is None:continue
+                    compatible=[current for current,value in new_keys.items()
+                                if value is not None and value==old_key]
+                    reverse=[name for name,value in old_keys.items() if value==old_key]
+                    if len(compatible)==len(reverse)==1:
+                        candidates.append((original,compatible[0]))
+                if not candidates:
+                    break
+                for original,current in candidates:
+                    pairs.append((original,current))
+                    known[current]=original
+                    unresolved_old.discard(original)
+                    unresolved_new.discard(current)
+            valid=not unresolved_old and not unresolved_new
+        else:
+            # A positional mapping remains acceptable only for a pure
+            # rename with unchanged surviving generated-value order.
+            stable_old=[name for name in old_names if name in new_set]
+            stable_new=[name for name in new_names if name in old_set]
+            valid=stable_old==stable_new
+            pairs=[(original,current) for original,current in zip(old_names,new_names)
+                   if original != current] if valid else []
+        for original,current in pairs:
+            if (not original.startswith('_smi_value_') or
+                    not original[len('_smi_value_'):].isdigit() or
+                    current.startswith('_smi_') or current in old_set or
+                    current in param_names or current in source_functions or
+                    old_counts[original]!=1 or new_counts[current]!=1 or
+                    original in aliases or current in aliases.values()):
+                valid=False
+                break
+            aliases[current]=original
+        if aliases and valid:
+            # Refuse scope-sensitive syntax rather than rename through a
+            # closure, comprehension, global/nonlocal, or deletion. Those
+            # constructs are outside this bounded identity proof.
+            forbidden=(ast.FunctionDef,ast.AsyncFunctionDef,ast.ClassDef,
+                       ast.Lambda,ast.ListComp,ast.SetComp,ast.DictComp,
+                       ast.GeneratorExp,ast.Global,ast.Nonlocal,
+                       ast.Delete,ast.NamedExpr)
+            if not any(isinstance(item,forbidden) for statement in owned.body
+                       for item in ast.walk(statement)):
+                # An old generated binding left in the source after its
+                # declaration was renamed would be unbound or ambiguous.
+                removed={old for new,old in aliases.items()}
+                if not any(isinstance(item,ast.Name) and item.id in removed
+                           for statement in owned.body for item in ast.walk(statement)):
+                    class CanonicalLocals(ast.NodeTransformer):
+                        def visit_Name(self, item):
+                            if item.id in aliases:
+                                item.id=aliases[item.id]
+                            return item
+                    owned=CanonicalLocals().visit(owned)
+
+    return owned
+
+
+def _independent_keyword_calls(owned: ast.FunctionDef, keyword_parameters: dict) -> ast.FunctionDef:
+    """Use graph-owned parameter signatures to canonicalize local-name keyword calls.
+
+    Unsupported, reordered or effectful operands are left unchanged so that
+    the single full-graph trial compiler can reject them without guessing.
+    """
+    class CanonicalCalls(ast.NodeTransformer):
+        def visit_Call(self, call):
+            self.generic_visit(call)
+            if not isinstance(call.func,ast.Name) or not call.keywords:
+                return call
+            parameters=keyword_parameters.get(call.func.id)
+            if parameters is None or len(call.args)+len(call.keywords)!=len(parameters):
+                return call
+            if (any(not isinstance(arg,ast.Name) for arg in call.args) or
+                    any(keyword.arg is None or not isinstance(keyword.value,ast.Name)
+                        for keyword in call.keywords)):
+                return call
+            # Explicit positional arguments must be a prefix. Every
+            # remaining parameter must appear once by exact name.
+            names=[keyword.arg for keyword in call.keywords]
+            remaining=parameters[len(call.args):]
+            if len(names)!=len(set(names)) or set(names)!=set(remaining):
+                return call
+            by_name={keyword.arg:keyword.value for keyword in call.keywords}
+            call.args.extend(by_name[param] for param in remaining)
+            call.keywords=[]
+            return call
+
+    return CanonicalCalls().visit(owned)
+
+
+def _independent_proof_function(source: ast.FunctionDef, reference: ast.FunctionDef,
+                                keyword_parameters: dict, source_functions: dict,
+                                name: str) -> ast.FunctionDef:
+    """Build one temporary proof candidate without changing the source AST."""
+    from .program_graph import ProgramGraphError
+    owned=copy.deepcopy(source)
+    # A function docstring and direct-body `pass` are source-owned trivia.
+    # They are never published to the graph or removed from the actual
+    # source buffer. Only the ephemeral compiler candidate omits them.
+    # A string expression in any other position remains substantive AST
+    # and is refused by the complete compiler proof.
+    if (owned.body and isinstance(owned.body[0], ast.Expr) and
+            isinstance(owned.body[0].value, ast.Constant) and
+            isinstance(owned.body[0].value.value, str)):
+        owned.body.pop(0)
+    # Normalize source-only, non-executing syntax solely in the ephemeral
+    # compiler candidate. Local Name annotations are not evaluated by
+    # Python in function bodies, but do not generalize this to attribute
+    # annotations, subscript targets, arbitrary annotation expressions or
+    # empty control suites. The graph proof still must reproduce the
+    # *entire* remaining function exactly.
+    # A bare local annotation has no runtime value, but it can still
+    # declare a Python-local name. Ignore it only for a binding already
+    # owned by this selected function, never for a new source-only local.
+    # Compile proof will reject any unsupported binding and preserve the
+    # authored annotation in SourceDocumentSession.
+    parameter_names=_function_parameter_names(owned.args)
+    bound_locals=set(parameter_names)
+    for statement in ast.walk(owned):
+        if isinstance(statement,ast.Assign):
+            bound_locals.update(target.id for target in statement.targets
+                                if isinstance(target,ast.Name))
+        elif isinstance(statement,ast.For) and isinstance(statement.target,ast.Name):
+            bound_locals.add(statement.target.id)
+
+    # Bound the transient source-owned syntax before walking it multiple
+    # times for normalization, local correspondence and trial proof. This
+    # is independent of the 256-node executable graph size limit.
+    if sum(1 for _ in ast.walk(owned)) > MAX_INDEPENDENT_AST_NODES:
+        raise ProgramGraphError(
+            f'Function {name!r}: independently authored AST exceeds '
+            f'{MAX_INDEPENDENT_AST_NODES} nodes; reconciliation refused')
+    normalizer=_IndependentCandidateSyntax(bound_locals)
+    owned.body=normalizer.strip_noops(owned.body)
+
+    # Readable source locals are normalized only when their graph-owned
+    # assignments have unique positional or pure-expression witnesses.
+    # Repeated targets, speculative scope moves, and parameter renames
+    # are never admitted. Full compiler re-lowering proves every edit.
+    # The subsequent full graph re-lowering must still reproduce every
+    # operation and connection. This is a transient alpha-renaming proof,
+    # not a source map, graph command or persistent binding.
+    owned=_independent_local_correspondence(owned,reference,parameter_names,source_functions)
+    return _independent_keyword_calls(owned,keyword_parameters)
+
+
 def _independent_functions_plan(graph, session, functions, *, expected_graph_revision: int):
     """Qualify named independent regions with the existing whole-graph compiler.
 
@@ -2208,185 +2406,12 @@ def _independent_functions_plan(graph, session, functions, *, expected_graph_rev
     keyword_parameters={name:tuple(arg.arg for arg in fn.args.args)
         for name,fn in candidate_callees.items() if not conflicts_by_name[name]}
 
-    def proof_function(name):
-        from collections import Counter
-        owned=copy.deepcopy(selected[name])
-        reference=owned_functions[name][0]
-
-        # A function docstring and direct-body `pass` are source-owned trivia.
-        # They are never published to the graph or removed from the actual
-        # source buffer. Only the ephemeral compiler candidate omits them.
-        # A string expression in any other position remains substantive AST
-        # and is refused by the complete compiler proof.
-        if (owned.body and isinstance(owned.body[0], ast.Expr) and
-                isinstance(owned.body[0].value, ast.Constant) and
-                isinstance(owned.body[0].value.value, str)):
-            owned.body.pop(0)
-        # Normalize source-only, non-executing syntax solely in the ephemeral
-        # compiler candidate. Local Name annotations are not evaluated by
-        # Python in function bodies, but do not generalize this to attribute
-        # annotations, subscript targets, arbitrary annotation expressions or
-        # empty control suites. The graph proof still must reproduce the
-        # *entire* remaining function exactly.
-        # A bare local annotation has no runtime value, but it can still
-        # declare a Python-local name. Ignore it only for a binding already
-        # owned by this selected function, never for a new source-only local.
-        # Compile proof will reject any unsupported binding and preserve the
-        # authored annotation in SourceDocumentSession.
-        parameter_names=_function_parameter_names(owned.args)
-        bound_locals=set(parameter_names)
-        for statement in ast.walk(owned):
-            if isinstance(statement,ast.Assign):
-                bound_locals.update(target.id for target in statement.targets
-                                    if isinstance(target,ast.Name))
-            elif isinstance(statement,ast.For) and isinstance(statement.target,ast.Name):
-                bound_locals.add(statement.target.id)
-
-        # Bound the transient source-owned syntax before walking it multiple
-        # times for normalization, local correspondence and trial proof. This
-        # is independent of the 256-node executable graph size limit.
-        if sum(1 for _ in ast.walk(owned)) > MAX_INDEPENDENT_AST_NODES:
-            raise ProgramGraphError(
-                f'Function {name!r}: independently authored AST exceeds '
-                f'{MAX_INDEPENDENT_AST_NODES} nodes; reconciliation refused')
-        normalizer=_IndependentCandidateSyntax(bound_locals)
-        owned.body=normalizer.strip_noops(owned.body)
-
-        # Readable source locals are normalized only when their graph-owned
-        # assignments have unique positional or pure-expression witnesses.
-        # Repeated targets, speculative scope moves, and parameter renames
-        # are never admitted. Full compiler re-lowering proves every edit.
-        # The subsequent full graph re-lowering must still reproduce every
-        # operation and connection. This is a transient alpha-renaming proof,
-        # not a source map, graph command or persistent binding.
-        generated=[item for item in ast.walk(reference)
-                   if isinstance(item,ast.Assign) and len(item.targets)==1
-                   and isinstance(item.targets[0],ast.Name)]
-        authored=[item for item in ast.walk(owned)
-                  if isinstance(item,ast.Assign) and len(item.targets)==1
-                  and isinstance(item.targets[0],ast.Name)]
-        if len(generated)==len(authored):
-            old_names=[item.targets[0].id for item in generated]
-            new_names=[item.targets[0].id for item in authored]
-            old_counts=Counter(old_names)
-            new_counts=Counter(new_names)
-            old_set=set(old_names)
-            new_set=set(new_names)
-            param_names=parameter_names
-            aliases={}
-            valid=True
-            # A uniquely identified renamed temporary may move within a pure
-            # execution suite. Multiple renamed values need independent
-            # structural witnesses; position alone is not evidence after
-            # a reorder. Infer those witnesses iteratively (dependencies first)
-            # and reject any ambiguity. This only normalizes a *candidate*;
-            # the full graph compiler remains the import authority.
-            missing=[original for original in old_names if original not in new_set]
-            introduced=[current for current in new_names if current not in old_set]
-            pairs=[]
-            if len(missing)==len(introduced)==1:
-                pairs=[(missing[0],introduced[0])]
-            elif len(missing)==len(introduced)>1:
-                unresolved_old=set(missing)
-                unresolved_new=set(introduced)
-                known={}
-                old_defs={item.targets[0].id:item.value for item in generated
-                          if old_counts[item.targets[0].id]==1}
-                new_defs={item.targets[0].id:item.value for item in authored
-                          if new_counts[item.targets[0].id]==1}
-                # Match only uniquely shared pure expression ASTs after any
-                # independently proven input aliases have been resolved.
-                # Never try to infer producer identity from ambiguous shapes.
-                while unresolved_old and unresolved_new:
-                    old_keys={name:_pure_expression_witness(old_defs[name],{},set()) for name in unresolved_old
-                              if name in old_defs}
-                    new_keys={name:_pure_expression_witness(new_defs[name],known,unresolved_new) for name in unresolved_new
-                              if name in new_defs}
-                    candidates=[]
-                    for original,old_key in old_keys.items():
-                        if old_key is None:continue
-                        compatible=[current for current,value in new_keys.items()
-                                    if value is not None and value==old_key]
-                        reverse=[name for name,value in old_keys.items() if value==old_key]
-                        if len(compatible)==len(reverse)==1:
-                            candidates.append((original,compatible[0]))
-                    if not candidates:
-                        break
-                    for original,current in candidates:
-                        pairs.append((original,current))
-                        known[current]=original
-                        unresolved_old.discard(original)
-                        unresolved_new.discard(current)
-                valid=not unresolved_old and not unresolved_new
-            else:
-                # A positional mapping remains acceptable only for a pure
-                # rename with unchanged surviving generated-value order.
-                stable_old=[name for name in old_names if name in new_set]
-                stable_new=[name for name in new_names if name in old_set]
-                valid=stable_old==stable_new
-                pairs=[(original,current) for original,current in zip(old_names,new_names)
-                       if original != current] if valid else []
-            for original,current in pairs:
-                if (not original.startswith('_smi_value_') or
-                        not original[len('_smi_value_'):].isdigit() or
-                        current.startswith('_smi_') or current in old_set or
-                        current in param_names or current in source_functions or
-                        old_counts[original]!=1 or new_counts[current]!=1 or
-                        original in aliases or current in aliases.values()):
-                    valid=False
-                    break
-                aliases[current]=original
-            if aliases and valid:
-                # Refuse scope-sensitive syntax rather than rename through a
-                # closure, comprehension, global/nonlocal, or deletion. Those
-                # constructs are outside this bounded identity proof.
-                forbidden=(ast.FunctionDef,ast.AsyncFunctionDef,ast.ClassDef,
-                           ast.Lambda,ast.ListComp,ast.SetComp,ast.DictComp,
-                           ast.GeneratorExp,ast.Global,ast.Nonlocal,
-                           ast.Delete,ast.NamedExpr)
-                if not any(isinstance(item,forbidden) for statement in owned.body
-                           for item in ast.walk(statement)):
-                    # An old generated binding left in the source after its
-                    # declaration was renamed would be unbound or ambiguous.
-                    removed={old for new,old in aliases.items()}
-                    if not any(isinstance(item,ast.Name) and item.id in removed
-                               for statement in owned.body for item in ast.walk(statement)):
-                        class CanonicalLocals(ast.NodeTransformer):
-                            def visit_Name(self, item):
-                                if item.id in aliases:
-                                    item.id=aliases[item.id]
-                                return item
-                        owned=CanonicalLocals().visit(owned)
-
-        class CanonicalCalls(ast.NodeTransformer):
-            def visit_Call(self, call):
-                self.generic_visit(call)
-                if not isinstance(call.func,ast.Name) or not call.keywords:
-                    return call
-                parameters=keyword_parameters.get(call.func.id)
-                if parameters is None or len(call.args)+len(call.keywords)!=len(parameters):
-                    return call
-                if (any(not isinstance(arg,ast.Name) for arg in call.args) or
-                        any(keyword.arg is None or not isinstance(keyword.value,ast.Name)
-                            for keyword in call.keywords)):
-                    return call
-                # Explicit positional arguments must be a prefix. Every
-                # remaining parameter must appear once by exact name.
-                names=[keyword.arg for keyword in call.keywords]
-                remaining=parameters[len(call.args):]
-                if len(names)!=len(set(names)) or set(names)!=set(remaining):
-                    return call
-                by_name={keyword.arg:keyword.value for keyword in call.keywords}
-                call.args.extend(by_name[param] for param in remaining)
-                call.keywords=[]
-                return call
-
-        return CanonicalCalls().visit(owned)
-
     # Replace only explicitly selected functions in the synthetic trial. The
     # original source AST still owns exact evidence spans and the text remains
     # untouched, even when its keyword syntax differs from graph publication.
-    proved={name:proof_function(name) for name in names}
+    proved={name:_independent_proof_function(
+        selected[name],owned_functions[name][0],keyword_parameters,source_functions,name)
+        for name in names}
     candidate=ast.Module(body=[proved.get(node.name,node) if isinstance(node,ast.FunctionDef)
                                else node for node in canonical.body],type_ignores=[])
     rendered=ast.unparse(candidate)+'\n'

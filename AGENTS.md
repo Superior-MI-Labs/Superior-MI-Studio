@@ -1,6 +1,6 @@
 # Superior MI Studio — Codex repository contract
 
-**First action:** read `CODEX-START-HERE.md`, then the decision register at `docs/architecture/DECISIONS-AND-NON-GOALS.md`. Read relevant subsystem docs only for the task. The current v2.121 source and tests are factual authority; the v3.1 blueprint is the *future target*, not implemented behavior.
+**First action:** read `CODEX-START-HERE.md`, then the decision register at `docs/architecture/DECISIONS-AND-NON-GOALS.md`. Read relevant subsystem docs only for the task. The current versioned source and tests are factual authority; the v3.1 blueprint is the *future target*, not implemented behavior.
 
 ## Mission
 
