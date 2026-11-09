@@ -2547,6 +2547,44 @@ def main():
     assert w._view_sessions.get('source').route==source_root_route
     assert w._view_sessions.get('source').camera_slot()==source_root_camera
     w.tabs.setCurrentWidget(root_resource_page);app.processEvents()
+    print('QT_STAGE program-owned-navigation-refusal',flush=True)
+    # A saved native ProgramWorkspace has no source/resource session_id.
+    program_page=w.new_visual_program()
+    assert program_page in w._program_tabs
+    assert program_page.save(path=Path(directory)/'program-owned-route-v2134.smi-graph')
+    assert w.tabs.indexOf(program_page)>=0
+    w.tabs.setCurrentWidget(program_page);app.processEvents()
+    before_tabs=w.tabs.count()
+    before_owners=frozenset(w._source_documents)
+    before_bindings=(w._active_source_tab_id,w._active_resource_tab_id)
+    before_program=(program_page.document.revision,program_page.document.state)
+    before_routes={kind:(w._view_sessions.get(kind).route,
+                         w._view_sessions.get(kind).camera_slot(),
+                         w._view_sessions.get(kind).peek(-1),
+                         w._view_sessions.get(kind).peek(1))
+                   for kind in ('source','resource')}
+    assert not w._open_navigation_route(Route('resource',str(directory)))
+    assert not w._open_navigation_route(Route('source',str(python_fixture)))
+    app.processEvents()
+    assert 'select a resource or Python graph tab' in w.statusBar().currentMessage()
+    assert w.tabs.currentWidget() is program_page and w.tabs.count()==before_tabs
+    assert frozenset(w._source_documents)==before_owners
+    assert (w._active_source_tab_id,w._active_resource_tab_id)==before_bindings
+    assert (program_page.document.revision,program_page.document.state)==before_program
+    assert {kind:(w._view_sessions.get(kind).route,
+                  w._view_sessions.get(kind).camera_slot(),
+                  w._view_sessions.get(kind).peek(-1),
+                  w._view_sessions.get(kind).peek(1))
+            for kind in ('source','resource')}==before_routes
+    # Explicit new-tab intent is independent of foreground provider.
+    assert w._open_navigation_route(Route('resource',str(directory)),new_tab=True)
+    created=w._resource_tabs[w._active_resource_tab_id]
+    assert created.session_id!='resource' and w.tabs.currentWidget() is created.page
+    w._close_graph_tab(w.tabs.indexOf(created.page));app.processEvents()
+    assert w._view_sessions.get(created.session_id) is None
+    w.tabs.setCurrentWidget(root_resource_page);app.processEvents()
+    w._close_graph_tab(w.tabs.indexOf(program_page));app.processEvents()
+    assert program_page not in w._program_tabs
     # The same breadcrumb dispatcher opens both kinds through existing
     # provider/session paths. Invalid destinations must not create ghost tabs.
     breadcrumb_before=w.tabs.count()

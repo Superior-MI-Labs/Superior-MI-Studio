@@ -12,7 +12,7 @@ We take inspiration from **VS Code's development workflow** and **Unreal Engine 
 
 **[Architecture](docs/architecture) · [Wiki](https://github.com/Superior-MI-Labs/Superior-MI-Studio/wiki) · [Development pipeline](docs/RELEASE-PIPELINE.md) · [Issues](https://github.com/Superior-MI-Labs/Superior-MI-Studio/issues)**
 
-> **Current status: pre-alpha · v2.133 development candidate (Linux Mint native pending).** v2.133 fixes foreground focus theft when closing an inactive source/resource tab whose provider alias is still last-active. Its local headless suite passed 1,389 tests and its versioned ZIP passed integrity checks. v2.132 passed both GitHub headless and native Qt CI lanes; v2.124 is the latest uploaded Linux Mint host-qualified baseline. Studio is not a stable release.
+> **Current status: pre-alpha · v2.134 development candidate (GitHub CI and Linux Mint native pending).** v2.134 refuses source/resource in-place navigation from an independent visual-program tab, preventing an unhandled `session_id` access and preserving document, provider history, and camera state. Explicit new-tab navigation remains valid. v2.133 passed GitHub headless and native Qt CI; v2.124 is the latest uploaded Linux Mint host-qualified baseline. Studio is not a stable release.
 
 ## The Studio workbench · v2.120 Linux preview
 

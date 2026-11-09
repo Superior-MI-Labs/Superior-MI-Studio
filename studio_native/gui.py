@@ -26,7 +26,7 @@ from . import model as m
 from .boundary_edit import parameter_source, terminal_return_target, BoundaryEditError
 from .exit_routes import project_exit_routes, project_folded_exit_connections
 
-APP_TITLE = 'Superior MI Studio · Visual Programming Lab 2.133'
+APP_TITLE = 'Superior MI Studio · Visual Programming Lab 2.134'
 from .semantic_contract import describe_graph, ContractError, canvas_graph_source, port_presentation_role, validated_port_payloads, validated_edge_payloads
 from .assets import AssetIndex
 from .external_icons import ExternalIconAtlas, default_icon_atlas_directory, icon_id_for_resource, icon_id_for_source
@@ -5518,7 +5518,13 @@ class NativeLab(QMainWindow):
                 return (self.open_resource_in_new_tab(route.path) if route.kind=='resource' else
                         self.open_source_in_new_tab(route.path,
                             route.scope if route.mode=='focus' else 'module'))
-            if (selected is not None and selected.session_id not in ('source','resource') and
+            # ProgramWorkspace has no source/resource GraphViewSession ID.
+            # Refuse an in-place route before accessing provider-only state;
+            # explicit new-tab navigation retains its existing earlier path.
+            if not isinstance(selected,(ResourceTabView,SourceTabView)):
+                self.report('Graph navigation refused: select a resource or Python graph tab')
+                return False
+            if (selected.session_id not in ('source','resource') and
                     ((isinstance(selected,SourceTabView) and route.kind=='resource') or
                      (isinstance(selected,ResourceTabView) and route.kind=='source'))):
                 return self._transition_graph_tab(route)

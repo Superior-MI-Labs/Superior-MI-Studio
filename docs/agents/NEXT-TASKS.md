@@ -1,6 +1,6 @@
 # Superior MI Studio — canonical implementation queue
 
-**Source candidate:** v2.133 (last-active provider aliases no longer steal Qt foreground when closing an inactive secondary tab; native CI and Linux Mint host pending). **Latest uploaded Linux Mint host PASS:** v2.124 (`qualification-20261108-141148-82252.tar.gz`: 1,350 doctor regressions, native Qt `NATIVE_QT_SMOKE_PASS`). **v2.132 GitHub CI:** headless and native Qt PASS, including selected-view alias binding idempotence. The installer still owns managed cleanup only after native host qualification.
+**Source candidate:** v2.134 (program-owned tabs now refuse in-place source/resource routes; GitHub CI and Linux Mint host pending). **Latest uploaded Linux Mint host PASS:** v2.124 (`qualification-20261108-141148-82252.tar.gz`: 1,350 doctor regressions, native Qt `NATIVE_QT_SMOKE_PASS`). **v2.133 GitHub CI:** headless and native Qt PASS, including last-active alias foreground preservation. The installer still owns managed cleanup only after native host qualification.
 
 **Product direction:** One VS Code-style workspace and navigable graph, Blueprint-grade visual interactions, interchangeable source and visual programming where semantics can be proven, a growing set of file/asset previewers and relationship providers. Python is the first language, **not** the only target. Source, graph and binary resources keep specialized authoritative owners; shared presentation/tabs do not imply a universal writable AST.
 
@@ -8,13 +8,26 @@
 
 | Priority | Work | Required proof / no-go |
 |---|---|---|
-| 0 | **Qualify v2.133 GitHub native CI and Linux Mint** | v2.132 passed both CI lanes. v2.133 fixes closing inactive secondary tabs whose provider alias remains last-active, without stealing foreground selection. Qt smoke must qualify both source/resource cross-provider inactive closes and preserved root history/camera; Mint host evidence remains separate. |
+| 0 | **Qualify v2.134 GitHub native CI and Linux Mint** | v2.133 passed both CI lanes. v2.134 guards navigation when the selected page is a ProgramWorkspace with no GraphViewSession ID. Qt smoke must prove refusal preserves provider aliases, source owners, graph revisions, root history and camera, while explicit new-tab navigation remains valid; Mint evidence is separate. |
 | 1 | **Source/graph reconciliation and compiler proof consolidation** | v2.123 separates three transient proof stages in `python_lowering.py`; v2.124 skips proof-identical source-only regions during failed-batch diagnostics. v2.125 consolidates current-source function indexing and keyword-call/module-shadow admission within the same compiler module, without new state. v2.126 now captures a single live source snapshot for review hash/spans and rechecks source plus disk at review/import boundaries. v2.127 closes the parallel linked-source proof-to-commit receipt gap without another owner. Next inventory the protected root/secondary navigation branch call sites and retire only proven duplicates with native parity evidence. v2.95 added atomic multi-function selection; v2.97 completes all six conventional typed integer comparisons with shared compiler mapping and improves independent-source parse diagnostics. Refuse unsupported AST, fuzzy renames and partial imports. |
 | 2 | **Unified tab, route and root compatibility cleanup** | v2.129 fixed destination registry identity, v2.130 consolidated close dispatch, v2.131 stages new secondary pages, v2.132 consolidated selected-view alias binding, and v2.133 stops inactive provider-close focus theft. Next characterize protected source-root bootstrap and remaining aliases; do not delete anchors without actual native parity evidence. |
 | 3 | **Conservative resource capabilities** | Existing previews, imports, literal-reference evidence, relationship inspection, precise source jumps and visible-hop search are implemented. Prefer usability/diagnostics over a recursive filesystem index; static edges are not proven runtime dependencies. |
 | 4 | **Future IDE/language support** | Run/debug/LSP/DAP, other languages and an extension host require stable adapter and execution contracts. Do not build speculative infrastructure before core Python round-trip milestones qualify. |
 
-## v2.133 — preserve foreground on inactive provider close (native pending)
+## v2.134 — guard program-owned page navigation (GitHub CI / Mint pending)
+
+- `_open_navigation_route` now checks the Qt selected page type before
+  using `session_id`. Independent native visual-program documents cannot
+  be driven through source/resource GraphViewSessions or last-active aliases.
+  Unsupported in-place navigation refuses; `new_tab=True` retains the
+  existing provider-owned creation path.
+- `tests/test_v2134_program_navigation_boundary.py` and native
+  `QT_STAGE program-owned-navigation-refusal` verify refusal atomicity,
+  document and graph ownership, root route/camera, and new-tab lifecycle.
+  No new controller, state, writer, registry or ADR. See
+  `docs/architecture/PHASE5-PROGRAM-NAVIGATION-BOUNDARY-v2.134.md`.
+
+## v2.133 — preserve foreground on inactive provider close (GitHub CI PASS / Mint pending)
 
 - The last-active source/resource alias may name a secondary page **other than the selected Qt page**. `_close_graph_tab` still saves and rebinds its provider root when such a tab closes, but now uses actual foreground selection to decide whether to call `tabs.setCurrentWidget`. No new tab registry; root protections and program close behavior unchanged.
 - Three headless tests and `QT_STAGE inactive-other-provider-close-preserves-foreground` cover both provider directions, session retirement, document preservation, and unaffected foreground history/camera. GitHub native Qt and Mint host pending. See `docs/architecture/PHASE5-INACTIVE-PROVIDER-CLOSE-v2.133.md`.
