@@ -1,4 +1,21 @@
-# Codex start here — Superior MI Studio v2.130
+# Codex start here — Superior MI Studio v2.131
+
+## v2.131 — secondary graph-tab creation stages first (native pending)
+
+`open_resource_in_new_tab` and the already-initialized branch of
+`open_source_in_new_tab` now construct their Qt page, canvas and navigation
+bar before registering the new provider view/session, source document or
+consuming a numeric tab identity. A failed toolbar build refuses without
+mutating existing routes, tabs, documents or cameras. The protected initial
+Python root's first-file adapter remains unchanged. The existing native
+smoke injects failure for both providers and subsequently opens/closes each
+tab, while headless tests guard publish-after-stage ordering. No universal
+tab controller or additional state owner. See
+`docs/architecture/PHASE5-NEW-TAB-STAGING-v2.131.md`. v2.130 passed both
+GitHub CI lanes; v2.124 is the last uploaded Linux Mint host-qualified
+baseline. Next: inspect activation paths and remove only proven duplicate
+alias bindings after native Qt parity; never remove root compatibility
+anchors without a replacement contract.
 
 ## v2.130 — consolidate Qt tab-close page lookup
 

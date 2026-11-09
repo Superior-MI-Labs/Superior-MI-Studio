@@ -26,7 +26,7 @@ from . import model as m
 from .boundary_edit import parameter_source, terminal_return_target, BoundaryEditError
 from .exit_routes import project_exit_routes, project_folded_exit_connections
 
-APP_TITLE = 'Superior MI Studio · Visual Programming Lab 2.130'
+APP_TITLE = 'Superior MI Studio · Visual Programming Lab 2.131'
 from .semantic_contract import describe_graph, ContractError, canvas_graph_source, port_presentation_role, validated_port_payloads, validated_edge_payloads
 from .assets import AssetIndex
 from .external_icons import ExternalIconAtlas, default_icon_atlas_directory, icon_id_for_resource, icon_id_for_source
@@ -3307,18 +3307,26 @@ class NativeLab(QMainWindow):
             resolved=resolve_graph(Route('resource',str(Path(path).expanduser().absolute())))
         except (OSError,ResourceError,ValueError) as exc:
             self.report('Cannot open directory graph tab: '+str(exc));return False
+        # A new secondary tab must be constructed before it enters either
+        # registry or the shared navigation history. Reuse the same staged
+        # page/toolbar boundary as a cross-provider tab replacement.
+        sid='resource:'+str(self._next_resource_tab_number+1)
+        page=None
+        try:
+            canvas=GraphCanvas(self,resource_view=True)
+            canvas.session_id=sid
+            page=self._graph_page(canvas)
+            view=ResourceTabView(sid,page,canvas,path=Path(resolved.route.path),graph=resolved.graph)
+            view.toolbar=self._create_navigation_bar(page,'ResourceNavigationBar')
+        except (RuntimeError,ValueError) as exc:
+            if page is not None:page.deleteLater()
+            self.report('Cannot open directory graph tab: view unavailable: '+str(exc))
+            return False
         self._store_active_resource_view()
         self._next_resource_tab_number+=1
-        sid='resource:'+str(self._next_resource_tab_number)
-        canvas=GraphCanvas(self,resource_view=True)
-        canvas.session_id=sid
-        page=self._graph_page(canvas)
-        view=ResourceTabView(sid,page,canvas,path=Path(resolved.route.path),graph=resolved.graph)
         self._resource_tabs[sid]=view
-        # Publish the route returned by the resource provider.  No independent
-        # path/route reconstruction may enter the tab history here.
+        # Publish the provider's resolved route, never a reconstructed path.
         self._view_sessions.open(sid,resolved.route)
-        view.toolbar=self._create_navigation_bar(page,'ResourceNavigationBar')
         index=self.tabs.addTab(page,self._resource_tab_title(resolved.route))
         self._add_tab_close_button(page,index)
         self.tabs.setCurrentWidget(page)
@@ -3474,17 +3482,26 @@ class NativeLab(QMainWindow):
             graph=(resolve_graph(route,document=document).graph if document else None)
         except (OSError,ValueError) as exc:
             self.report('Cannot open graph tab: '+str(exc));return False
+        # Resolve source syntax first, but publish the shared document and
+        # secondary view only after page/navigation chrome construction works.
+        # Failed staging must not consume a tab ID or create a ghost session.
+        sid='source:'+str(self._next_source_tab_number+1)
+        page=None
+        try:
+            canvas=GraphCanvas(self,source_view=True)
+            canvas.session_id=sid
+            page=self._graph_page(canvas)
+            view=SourceTabView(sid,page,canvas,document=document,graph=graph)
+            view.toolbar=self._create_navigation_bar(page,'PythonNavigationBar')
+        except (RuntimeError,ValueError) as exc:
+            if page is not None:page.deleteLater()
+            self.report('Cannot open graph tab: view unavailable: '+str(exc))
+            return False
         self._source_documents[str(requested)]=source
         self._store_active_source_view()
         self._next_source_tab_number+=1
-        sid='source:'+str(self._next_source_tab_number)
-        canvas=GraphCanvas(self,source_view=True)
-        canvas.session_id=sid
-        page=self._graph_page(canvas)
-        view=SourceTabView(sid,page,canvas,document=document,graph=graph)
         self._source_tabs[sid]=view
         self._view_sessions.open(sid,route)
-        view.toolbar=self._create_navigation_bar(page,'PythonNavigationBar')
         index=self.tabs.addTab(page,self._source_tab_title(route))
         self._add_tab_close_button(page,index)
         self.tabs.setCurrentWidget(page)

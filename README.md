@@ -12,7 +12,7 @@ We take inspiration from **VS Code's development workflow** and **Unreal Engine 
 
 **[Architecture](docs/architecture) · [Wiki](https://github.com/Superior-MI-Labs/Superior-MI-Studio/wiki) · [Development pipeline](docs/RELEASE-PIPELINE.md) · [Issues](https://github.com/Superior-MI-Labs/Superior-MI-Studio/issues)**
 
-> **Current status: pre-alpha · v2.130 development candidate (Linux Mint native pending).** v2.130 consolidates graph-tab closure through the existing Qt page-to-view lookup, preserving protected root tabs and source/history ownership. Its local headless suite passed 1,380 tests and archive integrity verification. v2.129 passed both GitHub CI lanes; v2.124 remains the latest uploaded Linux Mint host-qualified baseline. Studio is not a stable release.
+> **Current status: pre-alpha · v2.131 development candidate (Linux Mint native pending).** v2.131 stages new secondary source/resource Qt pages and toolbars before publishing view, document or navigation-session state. Its local headless suite passed 1,383 tests, and its versioned ZIP passed integrity validation. v2.130 passed GitHub headless and native Qt CI; v2.124 is the latest uploaded Linux Mint host-qualified baseline. Studio is not a stable release.
 
 ## The Studio workbench · v2.120 Linux preview
 

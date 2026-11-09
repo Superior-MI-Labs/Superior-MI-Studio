@@ -1,6 +1,6 @@
 # Superior MI Studio — canonical implementation queue
 
-**Source candidate:** v2.130 (closing graph tabs now uses the existing `_graph_tab_for_page` lookup; native CI and Linux Mint host pending). **Latest uploaded Linux Mint host PASS:** v2.124 (`qualification-20261108-141148-82252.tar.gz`: 1,350 doctor regressions, native Qt `NATIVE_QT_SMOKE_PASS`). **v2.129 GitHub CI:** headless and native Qt PASS after correcting outgoing/destination provider registry separation. The installer still owns managed cleanup only after native host qualification.
+**Source candidate:** v2.131 (new secondary tabs stage Qt page/navigation chrome before registry, route, or document publication; native CI and Linux Mint host pending). **Latest uploaded Linux Mint host PASS:** v2.124 (`qualification-20261108-141148-82252.tar.gz`: 1,350 doctor regressions, native Qt `NATIVE_QT_SMOKE_PASS`). **v2.130 GitHub CI:** headless and native Qt PASS, including the single page-to-view close dispatch. The installer still owns managed cleanup only after native host qualification.
 
 **Product direction:** One VS Code-style workspace and navigable graph, Blueprint-grade visual interactions, interchangeable source and visual programming where semantics can be proven, a growing set of file/asset previewers and relationship providers. Python is the first language, **not** the only target. Source, graph and binary resources keep specialized authoritative owners; shared presentation/tabs do not imply a universal writable AST.
 
@@ -8,11 +8,17 @@
 
 | Priority | Work | Required proof / no-go |
 |---|---|---|
-| 0 | **Qualify v2.130 GitHub native CI and Linux Mint** | v2.129 fixed the staged provider registry and passed both GitHub CI lanes. v2.130 changes close dispatch, so its native smoke must verify inactive source/resource closure, protected root anchors, program close confirmation, route and camera continuity. Mint host evidence remains independent. |
+| 0 | **Qualify v2.131 GitHub native CI and Linux Mint** | v2.130 passed both CI lanes after consolidating tab closure. v2.131 stages new source/resource tab construction before mutable publication; native smoke must exercise both failure and later success without ghost sessions, aliases, leaked source owners or tab-counter drift. Mint host evidence remains independent. |
 | 1 | **Source/graph reconciliation and compiler proof consolidation** | v2.123 separates three transient proof stages in `python_lowering.py`; v2.124 skips proof-identical source-only regions during failed-batch diagnostics. v2.125 consolidates current-source function indexing and keyword-call/module-shadow admission within the same compiler module, without new state. v2.126 now captures a single live source snapshot for review hash/spans and rechecks source plus disk at review/import boundaries. v2.127 closes the parallel linked-source proof-to-commit receipt gap without another owner. Next inventory the protected root/secondary navigation branch call sites and retire only proven duplicates with native parity evidence. v2.95 added atomic multi-function selection; v2.97 completes all six conventional typed integer comparisons with shared compiler mapping and improves independent-source parse diagnostics. Refuse unsupported AST, fuzzy renames and partial imports. |
-| 2 | **Unified tab, route and root compatibility cleanup** | v2.129 corrected staged provider registry identity; v2.130 routes close dispatch through existing `_graph_tab_for_page`. Next inventory duplicate activation/active alias paths and remove only proven overlap after full Qt parity. Root compatibility anchors remain required. |
+| 2 | **Unified tab, route and root compatibility cleanup** | v2.129 corrected destination registry identity; v2.130 consolidated close dispatch; v2.131 stages creation of secondary source/resource pages and toolbar before publishing owner/session state. Next inventory duplicate activation and active-alias paths, removing only proven overlap after native parity. Root compatibility anchors remain required. |
 | 3 | **Conservative resource capabilities** | Existing previews, imports, literal-reference evidence, relationship inspection, precise source jumps and visible-hop search are implemented. Prefer usability/diagnostics over a recursive filesystem index; static edges are not proven runtime dependencies. |
 | 4 | **Future IDE/language support** | Run/debug/LSP/DAP, other languages and an extension host require stable adapter and execution contracts. Do not build speculative infrastructure before core Python round-trip milestones qualify. |
+
+## v2.131 — atomic staging for new secondary graph tabs (native pending)
+
+- `open_resource_in_new_tab` and the initialized-source branch of `open_source_in_new_tab` now create a Qt page, canvas and toolbar before any new view registry, session, source owner or numeric tab identity publication. A failed toolbar constructor refuses with no ghost page/session; original protected roots and first-source-open semantics are unchanged.
+- Three headless architecture-contract tests plus `QT_STAGE new-secondary-tab-staging-refusal` cover both provider failures, unchanged histories/cameras/aliases and subsequent successful opening/closure. The native smoke is authoritative for Qt event behavior.
+- Architecture note: `docs/architecture/PHASE5-NEW-TAB-STAGING-v2.131.md`. Host PASS remains v2.124 until a new uploaded Mint report; v2.130 passed both GitHub CI lanes.
 
 ## v2.130 — single Qt tab-close lookup (host pending)
 

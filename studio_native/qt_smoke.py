@@ -2417,6 +2417,59 @@ def main():
     assert w._view_sessions.get(extra_resource_id) is None
     assert len(w._resource_tabs)==1
     assert w.resource_canvas is root_resource_canvas
+    print('QT_STAGE new-secondary-tab-staging-refusal',flush=True)
+    # Both providers must build the real page and navigation chrome before
+    # allocating a session, registering a view or publishing a source owner.
+    from unittest.mock import patch
+    with tempfile.TemporaryDirectory() as staged_dir:
+        staged_root=Path(staged_dir)
+        staged_source=staged_root/'staged.py'
+        staged_source.write_text('def fresh():\n    return 2\n',encoding='utf-8')
+        root_selection=w.tabs.currentWidget()
+        original_tabs=w.tabs.count()
+        resource_registry=dict(w._resource_tabs)
+        source_registry=dict(w._source_tabs)
+        documents=dict(w._source_documents)
+        source_alias=w._active_source_tab_id
+        resource_alias=w._active_resource_tab_id
+        resource_next=w._next_resource_tab_number
+        source_next=w._next_source_tab_number
+        root_route=w._view_sessions.get('resource').route
+        root_camera=w._view_sessions.get('resource').camera_slot()
+        with patch.object(w,'_create_navigation_bar',
+                          side_effect=RuntimeError('fixture: new resource toolbar failed')):
+            assert not w.open_resource_in_new_tab(staged_root)
+        with patch.object(w,'_create_navigation_bar',
+                          side_effect=RuntimeError('fixture: new source toolbar failed')):
+            assert not w.open_source_in_new_tab(staged_source)
+        app.processEvents()
+        assert w.tabs.currentWidget() is root_selection
+        assert w.tabs.count()==original_tabs
+        assert w._resource_tabs==resource_registry and w._source_tabs==source_registry
+        assert w._source_documents==documents
+        assert w._active_resource_tab_id==resource_alias
+        assert w._active_source_tab_id==source_alias
+        assert (w._next_resource_tab_number,w._next_source_tab_number)==(resource_next,source_next)
+        assert w._view_sessions.get('resource').route==root_route
+        assert w._view_sessions.get('resource').camera_slot()==root_camera
+        assert all(w._view_sessions.get(sid) is not None for sid in resource_registry|source_registry)
+        assert 'view unavailable' in w.statusBar().currentMessage()
+        # A refused attempt must not poison subsequent real navigation.
+        assert w.open_resource_in_new_tab(staged_root)
+        opened_resource=w._resource_tabs[w._active_resource_tab_id]
+        assert opened_resource.session_id=='resource:'+str(resource_next+1)
+        w._close_graph_tab(w.tabs.indexOf(opened_resource.page));app.processEvents()
+        assert w._view_sessions.get(opened_resource.session_id) is None
+        persistent_fixture=Path(__file__).resolve().parents[1]/'examples/python-v11-bindings-and-returns.py'
+        assert w.open_source_in_new_tab(persistent_fixture)
+        opened_source=w._source_tabs[w._active_source_tab_id]
+        assert opened_source.session_id=='source:'+str(source_next+1)
+        assert str(persistent_fixture) in w._source_documents
+        assert str(staged_source) not in w._source_documents
+        w._close_graph_tab(w.tabs.indexOf(opened_source.page));app.processEvents()
+        assert w._view_sessions.get(opened_source.session_id) is None
+        w.tabs.setCurrentWidget(root_selection);app.processEvents()
+        assert w._resource_tabs['resource'] is root_resource
     assert not w.open_resource_in_new_tab(directory/'not-a-real-folder')
     assert w.tabs.count()==resource_tab_count
     # A Python tab survives directory tab creation/removal unchanged.
