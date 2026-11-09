@@ -26,7 +26,7 @@ from . import model as m
 from .boundary_edit import parameter_source, terminal_return_target, BoundaryEditError
 from .exit_routes import project_exit_routes, project_folded_exit_connections
 
-APP_TITLE = 'Superior MI Studio · Visual Programming Lab 2.134'
+APP_TITLE = 'Superior MI Studio · Visual Programming Lab 2.135'
 from .semantic_contract import describe_graph, ContractError, canvas_graph_source, port_presentation_role, validated_port_payloads, validated_edge_payloads
 from .assets import AssetIndex
 from .external_icons import ExternalIconAtlas, default_icon_atlas_directory, icon_id_for_resource, icon_id_for_source
@@ -5546,10 +5546,7 @@ class NativeLab(QMainWindow):
                 return self._navigate_source_document_in_tab(route,root_anchor=True)
             # Only the never-opened source root needs the original file-open
             # adapter, which also supports invalid Python for text diagnostics.
-            if self._active_source_tab_id!='source':
-                self._store_active_source_view()
-                self._activate_source_view(root)
-            if not self._open_python_source_path(route.path):return False
+            if not self._open_python_source_path(route.path,bootstrap_root=True):return False
             return (self.navigate_source(route.scope) if route.mode=='focus' else True)
         except (OSError,ValueError,SourceError,ResourceError) as exc:
             self.report('Graph location refused: '+str(exc))
@@ -5992,7 +5989,7 @@ class NativeLab(QMainWindow):
         parent=self.resource_path.parent
         if parent!=self.resource_path:self.browse_resource(parent)
 
-    def _open_python_source_path(self,path,*,frame=False,discard_confirmed=False):
+    def _open_python_source_path(self,path,*,frame=False,discard_confirmed=False,bootstrap_root=False):
         """One source-opening transaction for file resources and the file picker.
 
         Resolve before replacing the active document. Existing unsaved-editor
@@ -6014,8 +6011,12 @@ class NativeLab(QMainWindow):
             doc=session.parsed
             if doc is not None:
                 expanded,collapsed=self._restore_document_view(doc)
+                # A never-initialized source root may be opened while a
+                # secondary source view is last-active. Use the target root's
+                # presentation detail without swapping aliases before proof.
+                detail=(self._source_tabs['source'].detail if bootstrap_root else self.source_detail)
                 resolved=resolve_graph(Route('source',str(doc.path)),document=doc,
-                                       detail=self.source_detail,
+                                       detail=detail,
                                        expanded_scopes=expanded,collapsed_regions=collapsed)
                 graph=resolved.graph
             else:
@@ -6027,6 +6028,12 @@ class NativeLab(QMainWindow):
         self._source_documents[str(requested)]=session
         self._refresh_resource_source_views(str(requested))
         self._remember_document_view()
+        # The caller's protected root selection is committed only once the
+        # existing file/source preflight has succeeded. Refused opens must
+        # leave a secondary source provider's alias and editor intact.
+        if bootstrap_root and self._active_source_tab_id!='source':
+            self._store_active_source_view()
+            self._activate_source_view(self._source_tabs['source'])
         self._source_expanded=expanded;self._region_collapsed=collapsed
         self.python_doc=doc
         self.source_scope='module';self.source_view_mode='whole'

@@ -2585,6 +2585,59 @@ def main():
     w.tabs.setCurrentWidget(root_resource_page);app.processEvents()
     w._close_graph_tab(w.tabs.indexOf(program_page));app.processEvents()
     assert program_page not in w._program_tabs
+    print('QT_STAGE uninitialized-source-root-bootstrap-refusal',flush=True)
+    # A secondary resource tab can become a Python view while the protected
+    # source root is still uninitialized. Refusing a subsequent root open must
+    # not steal that secondary source's alias/editor/history.
+    with tempfile.TemporaryDirectory() as root_tmp:
+        root_dir=Path(root_tmp)
+        secondary_file=root_dir/'secondary.py'
+        root_file=root_dir/'root.py'
+        secondary_file.write_text('def secondary():\n    return 2\n',encoding='utf-8')
+        root_file.write_text('def root():\n    return 3\n',encoding='utf-8')
+        other=NativeLab();other.show();app.processEvents()
+        assert other._view_sessions.get('source') is None
+        assert other.open_resource_in_new_tab(root_dir)
+        assert other._open_navigation_route(Route('source',str(secondary_file)))
+        secondary_sid=other._active_source_tab_id
+        assert secondary_sid!='source'
+        assert other._view_sessions.get('source') is None
+        secondary_session=other._view_sessions.get(secondary_sid)
+        assert secondary_session is not None
+        secondary_route=secondary_session.route
+        secondary_camera=secondary_session.camera_slot()
+        secondary_owner=other._active_source_document()
+        assert secondary_owner is not None
+        resource_root_page=other._resource_tabs['resource'].page
+        other.tabs.setCurrentWidget(resource_root_page);app.processEvents()
+        before_editor=(other._loaded_editor_identity,other.source_editor.toPlainText())
+        before_alias=(other._active_source_tab_id,other._active_resource_tab_id)
+        before_owners=dict(other._source_documents)
+        before_root_route=other._view_sessions.get('resource').route
+        with patch('studio_native.gui.QMessageBox') as warnings:
+            with patch.object(other,'_new_source_document',
+                              side_effect=ValueError('fixture: first root open refused')):
+                assert not other._open_navigation_route(Route('source',str(root_file)))
+            warnings.warning.assert_called_once()
+        app.processEvents()
+        assert other.tabs.currentWidget() is resource_root_page
+        assert (other._active_source_tab_id,other._active_resource_tab_id)==before_alias
+        assert (other._loaded_editor_identity,other.source_editor.toPlainText())==before_editor
+        assert other._source_documents==before_owners
+        assert other._view_sessions.get('source') is None
+        assert secondary_session.route==secondary_route
+        assert secondary_session.camera_slot()==secondary_camera
+        assert other._view_sessions.get('resource').route==before_root_route
+        # A successful retry must initialize only the protected root without
+        # resetting the independently navigable secondary source view.
+        assert other._open_navigation_route(Route('source',str(root_file)))
+        assert other._active_source_tab_id=='source'
+        assert other._view_sessions.get('source').route==Route('source',str(root_file))
+        assert secondary_session.route==secondary_route
+        assert other._source_documents[str(secondary_file)] is secondary_owner
+        assert other.close()
+        app.processEvents()
+    w.activateWindow();app.processEvents()
     # The same breadcrumb dispatcher opens both kinds through existing
     # provider/session paths. Invalid destinations must not create ghost tabs.
     breadcrumb_before=w.tabs.count()
