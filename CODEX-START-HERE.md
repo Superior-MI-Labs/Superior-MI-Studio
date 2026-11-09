@@ -1,4 +1,21 @@
-# Codex start here — Superior MI Studio v2.134
+# Codex start here — Superior MI Studio v2.135
+
+## v2.135 — first protected source-root alias binds only after proof (CI/host pending)
+
+A cross-provider transition can create an independent Python view on a
+secondary resource tab while the protected `source` root remains unopened.
+The legacy first-source adapter previously rebound the provider's last-active
+source aliases **before** the existing file preflight could refuse. A failed
+root open could therefore leave Qt selected on a resource tab while the
+source alias/editor had been reset to an uninitialized root. The existing
+`_open_python_source_path` now supports one private `bootstrap_root`
+parameter: its original source validation and graph projection run first,
+then it commits the root alias only on success. The secondary view remains
+independent; invalid Python text diagnostics and explicit file-picker
+behavior remain unchanged. No new route, parser or source owner. See
+`docs/architecture/PHASE5-SOURCE-ROOT-BOOTSTRAP-v2.135.md`.
+v2.134 passed GitHub headless and native Qt CI; v2.135 and Mint host pending.
+
 
 ## v2.134 — ProgramWorkspace is not a provider view (CI/host pending)
 
