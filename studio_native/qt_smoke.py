@@ -2549,12 +2549,15 @@ def main():
     w.tabs.setCurrentWidget(root_resource_page);app.processEvents()
     print('QT_STAGE program-owned-navigation-refusal',flush=True)
     # A saved native ProgramWorkspace has no source/resource session_id.
-    assert w.tabs.indexOf(reopened)>=0
-    w.tabs.setCurrentWidget(reopened);app.processEvents()
+    program_page=w.new_visual_program()
+    assert isinstance(program_page,ProgramWorkspace)
+    assert program_page.save(path=Path(directory)/'program-owned-route-v2134.smi-graph')
+    assert w.tabs.indexOf(program_page)>=0
+    w.tabs.setCurrentWidget(program_page);app.processEvents()
     before_tabs=w.tabs.count()
     before_owners=frozenset(w._source_documents)
     before_bindings=(w._active_source_tab_id,w._active_resource_tab_id)
-    before_program=(reopened.document.revision,reopened.document.state)
+    before_program=(program_page.document.revision,program_page.document.state)
     before_routes={kind:(w._view_sessions.get(kind).route,
                          w._view_sessions.get(kind).camera_slot(),
                          w._view_sessions.get(kind).peek(-1),
@@ -2564,10 +2567,10 @@ def main():
     assert not w._open_navigation_route(Route('source',str(python_fixture)))
     app.processEvents()
     assert 'select a resource or Python graph tab' in w.statusBar().currentMessage()
-    assert w.tabs.currentWidget() is reopened and w.tabs.count()==before_tabs
+    assert w.tabs.currentWidget() is program_page and w.tabs.count()==before_tabs
     assert frozenset(w._source_documents)==before_owners
     assert (w._active_source_tab_id,w._active_resource_tab_id)==before_bindings
-    assert (reopened.document.revision,reopened.document.state)==before_program
+    assert (program_page.document.revision,program_page.document.state)==before_program
     assert {kind:(w._view_sessions.get(kind).route,
                   w._view_sessions.get(kind).camera_slot(),
                   w._view_sessions.get(kind).peek(-1),
@@ -2580,6 +2583,8 @@ def main():
     w._close_graph_tab(w.tabs.indexOf(created.page));app.processEvents()
     assert w._view_sessions.get(created.session_id) is None
     w.tabs.setCurrentWidget(root_resource_page);app.processEvents()
+    w._close_graph_tab(w.tabs.indexOf(program_page));app.processEvents()
+    assert program_page not in w._program_tabs
     # The same breadcrumb dispatcher opens both kinds through existing
     # provider/session paths. Invalid destinations must not create ghost tabs.
     breadcrumb_before=w.tabs.count()

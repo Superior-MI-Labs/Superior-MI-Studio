@@ -31,7 +31,7 @@ class ProgramNavigationBoundaryTests(unittest.TestCase):
 
     def test_native_qt_refusal_and_new_tab_stage(self):
         self.assertIn('QT_STAGE program-owned-navigation-refusal',SMOKE)
-        self.assertIn('w.tabs.setCurrentWidget(reopened)',SMOKE)
+        self.assertIn('w.tabs.setCurrentWidget(program_page)',SMOKE)
         self.assertIn("assert not w._open_navigation_route(Route('resource',str(directory)))",SMOKE)
         self.assertIn("assert not w._open_navigation_route(Route('source',str(python_fixture)))",SMOKE)
         for name in ('before_program','before_routes','before_owners','before_bindings'):
