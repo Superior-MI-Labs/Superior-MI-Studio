@@ -2550,7 +2550,7 @@ def main():
     print('QT_STAGE program-owned-navigation-refusal',flush=True)
     # A saved native ProgramWorkspace has no source/resource session_id.
     program_page=w.new_visual_program()
-    assert isinstance(program_page,ProgramWorkspace)
+    assert program_page in w._program_tabs
     assert program_page.save(path=Path(directory)/'program-owned-route-v2134.smi-graph')
     assert w.tabs.indexOf(program_page)>=0
     w.tabs.setCurrentWidget(program_page);app.processEvents()
