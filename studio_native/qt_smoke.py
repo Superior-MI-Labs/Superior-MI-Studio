@@ -2489,6 +2489,28 @@ def main():
     w._close_graph_tab(w.tabs.indexOf(extra_source.page));app.processEvents()
     assert w.tabs.indexOf(extra_source.page)==-1
     assert w._source_tabs['source'] is python_root
+    print('QT_STAGE selected-graph-view-binding-idempotence',flush=True)
+    # The Qt page is the selected authority. Rebinding the same tab through
+    # the public adapter must be a no-op for histories, camera and document.
+    root_resource_view=w._resource_tabs['resource']
+    w.tabs.setCurrentWidget(root_resource_page);app.processEvents()
+    resource_binding=(w._active_resource_tab_id,w.resource_page,w.resource_canvas)
+    root_history=w._view_sessions.get('resource')
+    root_route=root_history.route
+    root_camera=root_history.camera_slot()
+    assert w._bind_selected_graph_view(root_resource_view) is False
+    assert (w._active_resource_tab_id,w.resource_page,w.resource_canvas)==resource_binding
+    assert root_history.route==root_route and root_history.camera_slot()==root_camera
+    w.tabs.setCurrentWidget(python_root.page);app.processEvents()
+    source_binding=(w._active_source_tab_id,w.source_page,w.source_canvas)
+    source_history=w._view_sessions.get('source')
+    source_route=source_history.route
+    source_camera=source_history.camera_slot()
+    assert w._bind_selected_graph_view(python_root) is False
+    assert (w._active_source_tab_id,w.source_page,w.source_canvas)==source_binding
+    assert source_history.route==source_route and source_history.camera_slot()==source_camera
+    assert w._source_tabs['source'].document is first_doc
+    w.tabs.setCurrentWidget(root_resource_page);app.processEvents()
     # The same breadcrumb dispatcher opens both kinds through existing
     # provider/session paths. Invalid destinations must not create ghost tabs.
     breadcrumb_before=w.tabs.count()

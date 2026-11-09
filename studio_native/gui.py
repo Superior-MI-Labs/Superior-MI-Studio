@@ -26,7 +26,7 @@ from . import model as m
 from .boundary_edit import parameter_source, terminal_return_target, BoundaryEditError
 from .exit_routes import project_exit_routes, project_folded_exit_connections
 
-APP_TITLE = 'Superior MI Studio · Visual Programming Lab 2.131'
+APP_TITLE = 'Superior MI Studio · Visual Programming Lab 2.132'
 from .semantic_contract import describe_graph, ContractError, canvas_graph_source, port_presentation_role, validated_port_payloads, validated_edge_payloads
 from .assets import AssetIndex
 from .external_icons import ExternalIconAtlas, default_icon_atlas_directory, icon_id_for_resource, icon_id_for_source
@@ -3406,21 +3406,35 @@ class NativeLab(QMainWindow):
                     return view
         return self._program_tabs.get(page)
 
+    def _bind_selected_graph_view(self,view):
+        """Synchronize legacy active-view aliases from the selected Qt page.
+
+        The provider-specific views and GraphViewSessions remain authoritative.
+        This idempotent adapter is shared by the Qt tab-change signal and
+        explicit navigation/history (which may run without a new signal).
+        """
+        if isinstance(view,ResourceTabView):
+            if self._active_resource_tab_id==view.session_id:return False
+            self._store_active_resource_view()
+            self._activate_resource_view(view)
+            return True
+        if isinstance(view,SourceTabView):
+            if self._active_source_tab_id==view.session_id:return False
+            if self._source_analysis_timer.isActive():
+                self._source_analysis_timer.stop()
+                self._refresh_live_source()
+            self._store_active_source_view()
+            self._activate_source_view(view)
+            return True
+        return False
+
     def _workspace_tab_changed(self,_index):
         if self._switching_source_tab:return
         if self._draft_recovery_timer.isActive():
             self._draft_recovery_timer.stop()
             self._flush_source_recovery()
         incoming=self._graph_tab_for_page(self.tabs.currentWidget())
-        if isinstance(incoming,ResourceTabView) and incoming.session_id!=self._active_resource_tab_id:
-            self._store_active_resource_view()
-            self._activate_resource_view(incoming)
-        elif isinstance(incoming,SourceTabView) and incoming.session_id!=self._active_source_tab_id:
-            if self._source_analysis_timer.isActive():
-                self._source_analysis_timer.stop()
-                self._refresh_live_source()
-            self._store_active_source_view()
-            self._activate_source_view(incoming)
+        self._bind_selected_graph_view(incoming)
         self.refresh_inspector()
         self._sync_library_mode()
         self._refresh_operation_library()
@@ -5505,17 +5519,13 @@ class NativeLab(QMainWindow):
                      (isinstance(selected,ResourceTabView) and route.kind=='source'))):
                 return self._transition_graph_tab(route)
             if route.kind=='resource':
-                if isinstance(selected,ResourceTabView) and self._active_resource_tab_id!=selected.session_id:
-                    self._store_active_resource_view()
-                    self._activate_resource_view(selected)
+                if isinstance(selected,ResourceTabView):self._bind_selected_graph_view(selected)
                 return self.browse_resource(route.path)
             # A source tab has its own identity even when the selected source
             # file matches one in another tab. Do not reset root history through
             # _open_python_source_path or accidentally navigate a stale alias.
             if isinstance(selected,SourceTabView):
-                if self._active_source_tab_id!=selected.session_id:
-                    self._store_active_source_view()
-                    self._activate_source_view(selected)
+                self._bind_selected_graph_view(selected)
                 if self._view_sessions.get(selected.session_id) is not None:
                     return self._navigate_source_document_in_tab(route)
             # Compatibility anchor: a file opened from the original resource
@@ -5556,16 +5566,11 @@ class NativeLab(QMainWindow):
         if destination is None:return False
         if destination.kind != kind:
             return self._transition_graph_tab(destination,history_direction=direction)
+        self._bind_selected_graph_view(selected)
         if kind=='resource':
-            if self._active_resource_tab_id!=selected.session_id:
-                self._store_active_resource_view()
-                self._activate_resource_view(selected)
             ok=self.browse_resource(destination.path,record_history=False,
                                     history_direction=direction)
         else:
-            if self._active_source_tab_id!=selected.session_id:
-                self._store_active_source_view()
-                self._activate_source_view(selected)
             ok=self._navigate_source_document_in_tab(destination,history_direction=direction)
         return bool(ok)
 

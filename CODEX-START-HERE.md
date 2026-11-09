@@ -1,4 +1,23 @@
-# Codex start here — Superior MI Studio v2.131
+# Codex start here — Superior MI Studio v2.132
+
+## v2.132 — selected-view alias activation consolidation (native pending)
+
+The existing `_workspace_tab_changed`, `_open_navigation_route` and
+`_navigate_history` previously duplicated the same provider-specific
+store/activate sequence for already-selected resource or Python tabs. They
+now call one private idempotent `_bind_selected_graph_view` adapter that
+reuses the original provider-owned `_store_active_*` and `_activate_*`
+methods. Only source activation needs to flush the existing pending source
+analysis timer. The original protected source-root bootstrap remains explicit
+because it can bind a root that is not yet the selected Qt page; do not fold
+it into the ordinary selected-view helper. The `GraphViewSessions` history,
+Qt page registry, source owner and camera contracts are unchanged. Three
+headless tests and `QT_STAGE selected-graph-view-binding-idempotence` test
+root/source no-op parity in native Qt. See
+`docs/architecture/PHASE5-SELECTED-VIEW-BINDING-v2.132.md`.
+
+v2.131 passed both GitHub CI lanes, but no newer Mint host report than v2.124
+has been supplied. No product-release promotion follows from CI alone.
 
 ## v2.131 — secondary graph-tab creation stages first (native pending)
 
