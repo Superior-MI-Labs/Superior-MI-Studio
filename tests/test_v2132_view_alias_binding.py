@@ -34,9 +34,14 @@ class ActiveViewAliasTests(unittest.TestCase):
                            if name=='_open_navigation_route' else code)
             self.assertNotIn('self._store_active_resource_view()',selected_path,name)
             self.assertNotIn('self._store_active_source_view()',selected_path,name)
-        # Opening the never-initialized protected root intentionally retains
-        # its explicit, non-selected activation adapter.
-        self.assertIn("self._activate_source_view(root)",body('_open_navigation_route'))
+        # The uninitialized source-root exception uses the original source
+        # loader, which defers binding until after preflight. No navigation
+        # call site may activate a non-selected root prematurely.
+        self.assertIn("self._open_python_source_path(route.path, bootstrap_root=True)",
+                      body('_open_navigation_route'))
+        self.assertNotIn("self._activate_source_view(root)",body('_open_navigation_route'))
+        self.assertIn("if bootstrap_root and self._active_source_tab_id != 'source':",
+                      body('_open_python_source_path'))
 
     def test_qt_smoke_checks_real_tab_selection_without_history_mutation(self):
         self.assertIn('QT_STAGE selected-graph-view-binding-idempotence',SMOKE)
