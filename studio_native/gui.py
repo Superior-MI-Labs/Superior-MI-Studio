@@ -26,7 +26,7 @@ from . import model as m
 from .boundary_edit import parameter_source, terminal_return_target, BoundaryEditError
 from .exit_routes import project_exit_routes, project_folded_exit_connections
 
-APP_TITLE = 'Superior MI Studio · Visual Programming Lab 2.132'
+APP_TITLE = 'Superior MI Studio · Visual Programming Lab 2.133'
 from .semantic_contract import describe_graph, ContractError, canvas_graph_source, port_presentation_role, validated_port_payloads, validated_edge_payloads
 from .assets import AssetIndex
 from .external_icons import ExternalIconAtlas, default_icon_atlas_directory, icon_id_for_resource, icon_id_for_source
@@ -3533,6 +3533,10 @@ class NativeLab(QMainWindow):
     def _close_graph_tab(self,index):
         if index<0 or index>=self.tabs.count():return
         page=self.tabs.widget(index)
+        # Provider-local active aliases track the last view of that kind,
+        # which need not be the foreground Qt page. Closing such an inactive
+        # tab may rebind its provider root, but must not steal foreground focus.
+        closing_selected=self.tabs.currentWidget() is page
         # The same Qt page-to-view lookup used by tab activation and routing
         # owns close dispatch too. Never re-scan provider maps independently:
         # active window aliases can refer to a different selected provider.
@@ -3559,7 +3563,7 @@ class NativeLab(QMainWindow):
             if resource.session_id==self._active_resource_tab_id:
                 target=next(iter(self._resource_tabs.values()))
                 self._activate_resource_view(target)
-                self.tabs.setCurrentWidget(target.page)
+                if closing_selected:self.tabs.setCurrentWidget(target.page)
             self._queue_presentation_save()
             return
         if not isinstance(view,SourceTabView):
@@ -3579,7 +3583,7 @@ class NativeLab(QMainWindow):
         if view.session_id==self._active_source_tab_id:
             target=next(iter(self._source_tabs.values()))
             self._activate_source_view(target)
-            self.tabs.setCurrentWidget(target.page)
+            if closing_selected:self.tabs.setCurrentWidget(target.page)
         self._queue_presentation_save()
 
     def _source_position_key(self,view,node_id):

@@ -2511,6 +2511,42 @@ def main():
     assert source_history.route==source_route and source_history.camera_slot()==source_camera
     assert w._source_tabs['source'].document is first_doc
     w.tabs.setCurrentWidget(root_resource_page);app.processEvents()
+    print('QT_STAGE inactive-other-provider-close-preserves-foreground',flush=True)
+    # Selecting a resource tab leaves the last source alias on the previously
+    # active source view. Closing that *inactive* view must rebind the source
+    # root without changing the actual selected resource page.
+    fixture=Path(__file__).resolve().parents[1]/'examples/python-v11-bindings-and-returns.py'
+    assert w.open_source_in_new_tab(fixture)
+    inactive_source=w._source_tabs[w._active_source_tab_id]
+    source_sid=inactive_source.session_id
+    root_resource_route=w._view_sessions.get('resource').route
+    root_resource_camera=w._view_sessions.get('resource').camera_slot()
+    w.tabs.setCurrentWidget(root_resource_page);app.processEvents()
+    assert w._active_source_tab_id==source_sid
+    w._close_graph_tab(w.tabs.indexOf(inactive_source.page));app.processEvents()
+    assert w.tabs.currentWidget() is root_resource_page
+    assert source_sid not in w._source_tabs and w._view_sessions.get(source_sid) is None
+    assert w._active_source_tab_id=='source'
+    assert w._source_tabs['source'] is python_root
+    assert w._view_sessions.get('resource').route==root_resource_route
+    assert w._view_sessions.get('resource').camera_slot()==root_resource_camera
+    # Repeat in the other direction: a last-active resource view may be
+    # inactive while the user is looking at the protected Python root.
+    assert w.open_resource_in_new_tab(directory)
+    inactive_resource=w._resource_tabs[w._active_resource_tab_id]
+    resource_sid=inactive_resource.session_id
+    source_root_route=w._view_sessions.get('source').route
+    source_root_camera=w._view_sessions.get('source').camera_slot()
+    w.tabs.setCurrentWidget(python_root.page);app.processEvents()
+    assert w._active_resource_tab_id==resource_sid
+    w._close_graph_tab(w.tabs.indexOf(inactive_resource.page));app.processEvents()
+    assert w.tabs.currentWidget() is python_root.page
+    assert resource_sid not in w._resource_tabs and w._view_sessions.get(resource_sid) is None
+    assert w._active_resource_tab_id=='resource'
+    assert w._resource_tabs['resource'] is root_resource
+    assert w._view_sessions.get('source').route==source_root_route
+    assert w._view_sessions.get('source').camera_slot()==source_root_camera
+    w.tabs.setCurrentWidget(root_resource_page);app.processEvents()
     # The same breadcrumb dispatcher opens both kinds through existing
     # provider/session paths. Invalid destinations must not create ghost tabs.
     breadcrumb_before=w.tabs.count()

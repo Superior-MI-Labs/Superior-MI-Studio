@@ -1,4 +1,21 @@
-# Codex start here — Superior MI Studio v2.132
+# Codex start here — Superior MI Studio v2.133
+
+## v2.133 — closing inactive provider alias cannot steal Qt focus (native pending)
+
+`_close_graph_tab` now distinguishes the actual selected Qt page from the
+resource/source provider's **last-active alias**. Closing a secondary tab
+whose session is still that provider's last-active ID must rebind its
+provider root, but may select the root Qt page **only when the closed tab
+was the foreground tab**. This preserves a different provider's foreground
+selection, history and camera. ProgramWorkspace close confirmation and both
+protected root guards remain unchanged. The real native smoke exercises both
+source→resource and resource→source inactive-close cases. Three headless
+contract tests cover source structure and expected Qt assertions. No new
+registry, source owner or navigation method. See
+`docs/architecture/PHASE5-INACTIVE-PROVIDER-CLOSE-v2.133.md`.
+
+v2.132 passed both GitHub CI lanes; v2.124 remains the last uploaded Mint
+host-qualified baseline. No automatic promotion on GitHub CI alone.
 
 ## v2.132 — selected-view alias activation consolidation (native pending)
 

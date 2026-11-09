@@ -12,7 +12,7 @@ We take inspiration from **VS Code's development workflow** and **Unreal Engine 
 
 **[Architecture](docs/architecture) · [Wiki](https://github.com/Superior-MI-Labs/Superior-MI-Studio/wiki) · [Development pipeline](docs/RELEASE-PIPELINE.md) · [Issues](https://github.com/Superior-MI-Labs/Superior-MI-Studio/issues)**
 
-> **Current status: pre-alpha · v2.132 development candidate (Linux Mint native pending).** v2.132 consolidates selected-view alias synchronization across Qt tab changes, explicit navigation, and history navigation, preserving protected roots and existing document/route owners. Its local headless suite passed 1,386 tests and its ZIP passed integrity checks. v2.131 passed both GitHub CI lanes; v2.124 is the latest uploaded Linux Mint host-qualified baseline. Studio is not a stable release.
+> **Current status: pre-alpha · v2.133 development candidate (Linux Mint native pending).** v2.133 fixes foreground focus theft when closing an inactive source/resource tab whose provider alias is still last-active. Its local headless suite passed 1,389 tests and its versioned ZIP passed integrity checks. v2.132 passed both GitHub headless and native Qt CI lanes; v2.124 is the latest uploaded Linux Mint host-qualified baseline. Studio is not a stable release.
 
 ## The Studio workbench · v2.120 Linux preview
 
