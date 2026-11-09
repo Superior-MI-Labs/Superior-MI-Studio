@@ -5518,7 +5518,13 @@ class NativeLab(QMainWindow):
                 return (self.open_resource_in_new_tab(route.path) if route.kind=='resource' else
                         self.open_source_in_new_tab(route.path,
                             route.scope if route.mode=='focus' else 'module'))
-            if (selected is not None and selected.session_id not in ('source','resource') and
+            # ProgramWorkspace has no source/resource GraphViewSession ID.
+            # Refuse an in-place route before accessing provider-only state;
+            # explicit new-tab navigation retains its existing earlier path.
+            if not isinstance(selected,(ResourceTabView,SourceTabView)):
+                self.report('Graph navigation refused: select a resource or Python graph tab')
+                return False
+            if (selected.session_id not in ('source','resource') and
                     ((isinstance(selected,SourceTabView) and route.kind=='resource') or
                      (isinstance(selected,ResourceTabView) and route.kind=='source'))):
                 return self._transition_graph_tab(route)

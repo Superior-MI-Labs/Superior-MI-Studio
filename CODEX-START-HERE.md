@@ -1,4 +1,19 @@
-# Codex start here — Superior MI Studio v2.133
+# Codex start here — Superior MI Studio v2.134
+
+## v2.134 — ProgramWorkspace is not a provider view (CI/host pending)
+
+The shared `_open_navigation_route` correctly identified the selected Qt
+page but then read `selected.session_id` before confirming source/resource
+type. Native `ProgramWorkspace` has no such session. The route could raise
+`AttributeError` instead of refusing an unsupported in-place navigation.
+A typed guard in the existing dispatcher now preserves provider, source and
+graph ownership. Explicit `new_tab=True` retains its established path.
+The native Qt stage checks both refusal routes, unchanged histories/cameras,
+source owners and graph revision, and an explicit new-tab success.
+See `docs/architecture/PHASE5-PROGRAM-NAVIGATION-BOUNDARY-v2.134.md`.
+GitHub CI and the independent Mint host report are pending; v2.124 remains
+the latest uploaded host-qualified baseline.
+
 
 ## v2.133 — closing inactive provider alias cannot steal Qt focus (native pending)
 

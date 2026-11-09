@@ -4,7 +4,7 @@ This is a product-direction overview, **not** a parallel engineering task queue.
 
 ## Current phase: trust and consolidation
 
-- The uploaded v2.120 Linux qualification report passes headless and native Qt checks. v2.121 is a new release-portability and compiler-proof cleanup candidate with 1,338 local headless tests passing, but its native Qt and public CI evidence remain pending. This does not publish a stable release.
+- The latest uploaded Linux Mint native host-qualified baseline is v2.124. v2.133 passed both GitHub CI lanes; v2.134 is a pending development candidate for program-tab navigation refusal. GitHub CI does not replace the target host's native Qt evidence, and none of these versions is a stable product release.
 - Consolidate existing Python compiler-proof implementation, remove redundant passes, improve conflict evidence and keep source immutable until explicit publication.
 - Finish graph view, navigation, tab and legacy-root cleanup without splitting document ownership, camera/session identity or source revisions.
 - Maintain positive/refusal regression coverage and real Qt interaction checks.
