@@ -1,4 +1,24 @@
-# Codex start here — Superior MI Studio v2.135
+# Codex start here — Superior MI Studio v2.136
+
+## v2.136 — original source-root directories belong to the filesystem root (CI/host pending)
+
+The protected Python root could request a directory while the last-active
+resource alias still named a secondary tab. The route dispatcher reused
+`browse_resource` but without a target tab identity, so it could advance
+the secondary's history and show the wrong canvas. The same provider now
+preflights `browse_resource(root_anchor=True)` with the protected root's
+view preferences, and only binds its root alias after successful resolution.
+This is the filesystem mirror of v2.135's source-root protection, not
+another tab manager. A prequalified replacement skips re-reading the root's
+former directory during alias activation. Existing resource routes,
+source/graph owners, editor drafts and root guards remain unchanged.
+`tests/test_v2136_resource_root_route.py` and real
+`QT_STAGE source-root-resource-anchor-isolation` qualify both refusal and
+successful routing with a separate secondary resource tab.
+See `docs/architecture/PHASE5-RESOURCE-ROOT-ROUTE-v2.136.md`.
+v2.135 passed GitHub headless and native Qt CI; Mint host qualification is
+still outstanding.
+
 
 ## v2.135 — first protected source-root alias binds only after proof (CI/host pending)
 

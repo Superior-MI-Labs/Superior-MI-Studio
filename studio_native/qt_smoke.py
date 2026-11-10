@@ -2638,6 +2638,52 @@ def main():
         assert other.close()
         app.processEvents()
     w.activateWindow();app.processEvents()
+    print('QT_STAGE source-root-resource-anchor-isolation',flush=True)
+    # The last-active resource alias may be a secondary tab while Qt shows
+    # the protected Python source root. Opening a directory must not navigate
+    # that secondary tab or mutate it on a failed resource preflight.
+    with tempfile.TemporaryDirectory() as isolated_resources:
+        target_root=Path(isolated_resources)
+        extra_path=target_root/'secondary'
+        root_target=target_root/'root-destination'
+        extra_path.mkdir();root_target.mkdir()
+        assert w.open_resource_in_new_tab(extra_path)
+        extra_view=w._resource_tabs[w._active_resource_tab_id]
+        extra_sid=extra_view.session_id
+        assert extra_sid!='resource'
+        extra_history=w._view_sessions.get(extra_sid)
+        extra_route=extra_history.route
+        extra_camera=extra_history.camera_slot()
+        resource_root=w._resource_tabs['resource']
+        resource_root_session=w._view_sessions.get('resource')
+        root_before=(resource_root_session.route,resource_root_session.camera_slot(),
+                     resource_root_session.peek(-1),resource_root_session.peek(1))
+        source_root=w._source_tabs['source'].page
+        w.tabs.setCurrentWidget(source_root);app.processEvents()
+        assert w._active_resource_tab_id==extra_sid
+        aliases_before=(w._active_resource_tab_id,w.resource_path,
+                        w.resource_canvas,w.resource_page)
+        assert not w._open_navigation_route(Route('resource',str(target_root/'absent')))
+        app.processEvents()
+        assert w.tabs.currentWidget() is source_root
+        assert (w._active_resource_tab_id,w.resource_path,
+                w.resource_canvas,w.resource_page)==aliases_before
+        assert (resource_root_session.route,resource_root_session.camera_slot(),
+                resource_root_session.peek(-1),resource_root_session.peek(1))==root_before
+        assert extra_history.route==extra_route and extra_history.camera_slot()==extra_camera
+        assert w._open_navigation_route(Route('resource',str(root_target)))
+        app.processEvents()
+        assert w.tabs.currentWidget() is resource_root.page
+        assert w._active_resource_tab_id=='resource'
+        assert resource_root_session.route==Route('resource',str(root_target))
+        assert extra_history.route==extra_route and extra_history.camera_slot()==extra_camera
+        assert extra_view.path==extra_path
+        w.tabs.setCurrentWidget(extra_view.page);app.processEvents()
+        assert w.resource_path==extra_path
+        assert w._active_resource_session() is extra_history
+        w._close_graph_tab(w.tabs.indexOf(extra_view.page));app.processEvents()
+        assert w._view_sessions.get(extra_sid) is None
+        w.tabs.setCurrentWidget(resource_root.page);app.processEvents()
     # The same breadcrumb dispatcher opens both kinds through existing
     # provider/session paths. Invalid destinations must not create ghost tabs.
     breadcrumb_before=w.tabs.count()

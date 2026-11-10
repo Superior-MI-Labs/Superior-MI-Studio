@@ -1,6 +1,6 @@
 # Superior MI Studio — canonical implementation queue
 
-**Source candidate:** v2.135 (defer initial source-root alias binding until successful file-open preflight; GitHub CI and Linux Mint host pending). **Latest uploaded Linux Mint host PASS:** v2.124 (`qualification-20261108-141148-82252.tar.gz`: 1,350 doctor regressions, native Qt `NATIVE_QT_SMOKE_PASS`). **v2.134 GitHub CI:** headless and native Qt PASS, including native visual-program navigation refusal and explicit new-tab success. The installer still owns managed cleanup only after native host qualification.
+**Source candidate:** v2.136 (source-root directory navigation now targets the protected resource root rather than the last-active secondary resource alias; GitHub CI and Linux Mint host pending). **Latest uploaded Linux Mint host PASS:** v2.124 (`qualification-20261108-141148-82252.tar.gz`: 1,350 doctor regressions, native Qt `NATIVE_QT_SMOKE_PASS`). **v2.135 GitHub CI:** headless and native Qt PASS, including deferred first-source-root binding and unchanged secondary source view. The installer still owns managed cleanup only after native host qualification.
 
 **Product direction:** One VS Code-style workspace and navigable graph, Blueprint-grade visual interactions, interchangeable source and visual programming where semantics can be proven, a growing set of file/asset previewers and relationship providers. Python is the first language, **not** the only target. Source, graph and binary resources keep specialized authoritative owners; shared presentation/tabs do not imply a universal writable AST.
 
@@ -8,13 +8,27 @@
 
 | Priority | Work | Required proof / no-go |
 |---|---|---|
-| 0 | **Qualify v2.135 GitHub native CI and Linux Mint** | v2.134 passed both CI lanes. v2.135 defers activation of an uninitialized protected source root until the single source-opening preflight succeeds. Native Qt must prove a refused first open leaves the secondary source alias/editor/history untouched, then successful retry binds the root without destroying secondary ownership. Mint evidence remains separate. |
+| 0 | **Qualify v2.136 GitHub native CI and Linux Mint** | v2.135 passed both CI lanes. v2.136 directs original source-root directory navigation to the original resource root, not a last-active secondary resource view. Refused preflight must preserve the foreground, both resource histories/cameras, source ownership and provider aliases; successful navigation must change only the root. Mint evidence remains separate. |
 | 1 | **Source/graph reconciliation and compiler proof consolidation** | v2.123 separates three transient proof stages in `python_lowering.py`; v2.124 skips proof-identical source-only regions during failed-batch diagnostics. v2.125 consolidates current-source function indexing and keyword-call/module-shadow admission within the same compiler module, without new state. v2.126 now captures a single live source snapshot for review hash/spans and rechecks source plus disk at review/import boundaries. v2.127 closes the parallel linked-source proof-to-commit receipt gap without another owner. Next inventory the protected root/secondary navigation branch call sites and retire only proven duplicates with native parity evidence. v2.95 added atomic multi-function selection; v2.97 completes all six conventional typed integer comparisons with shared compiler mapping and improves independent-source parse diagnostics. Refuse unsupported AST, fuzzy renames and partial imports. |
 | 2 | **Unified tab, route and root compatibility cleanup** | v2.129 fixed destination registry identity, v2.130 consolidated close dispatch, v2.131 stages new secondary pages, v2.132 consolidated selected-view alias binding, and v2.133 stops inactive provider-close focus theft. Next characterize protected source-root bootstrap and remaining aliases; do not delete anchors without actual native parity evidence. |
 | 3 | **Conservative resource capabilities** | Existing previews, imports, literal-reference evidence, relationship inspection, precise source jumps and visible-hop search are implemented. Prefer usability/diagnostics over a recursive filesystem index; static edges are not proven runtime dependencies. |
 | 4 | **Future IDE/language support** | Run/debug/LSP/DAP, other languages and an extension host require stable adapter and execution contracts. Do not build speculative infrastructure before core Python round-trip milestones qualify. |
 
-## v2.135 — deferred initial source-root binding (GitHub CI / Mint pending)
+## v2.136 — protected resource-root navigation (GitHub CI / Mint pending)
+
+- `_open_navigation_route` uses `browse_resource(root_anchor=True)` when
+  the foreground is the protected source root and the target is a directory.
+  The resource provider preflights the target with protected-root preferences
+  before rebinding any last-active resource alias. A resolved root graph does
+  not need a second reproject of the prior directory on alias activation.
+  Secondary source/resource tabs and file-backed authorities are unchanged.
+- `tests/test_v2136_resource_root_route.py` and native
+  `QT_STAGE source-root-resource-anchor-isolation` prove failed-route
+  atomicity, root/secondary history and camera separation, valid root target,
+  and independent secondary tab recovery. See
+  `docs/architecture/PHASE5-RESOURCE-ROOT-ROUTE-v2.136.md`.
+
+## v2.135 — deferred initial source-root binding (GitHub CI PASS / Mint pending)
 
 - The existing `_open_python_source_path` accepts one private
   `bootstrap_root` option so it can prove file and source presentation
