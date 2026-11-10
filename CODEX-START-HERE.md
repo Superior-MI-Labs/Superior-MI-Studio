@@ -1,4 +1,22 @@
-# Codex start here — Superior MI Studio v2.137
+# Codex start here — Superior MI Studio v2.138
+
+## v2.138 — source whole-file Up follows the selected graph session (CI/host pending)
+
+`source_go_parent` was the last whole-file Python toolbar path that
+called the filesystem provider directly, skipping `_open_navigation_route`.
+With a secondary Python graph selected, Up could navigate an unrelated
+last-active resource tab instead of replacing the selected tab's provider.
+It now delegates the parent directory via the existing Route dispatcher,
+which already distinguishes original protected roots from secondary
+cross-provider sessions and preserves history/camera identities. Focused
+lexical-scope parent navigation remains unchanged. A real Qt
+`QT_STAGE source-parent-uses-selected-graph-session` tests
+resource→Python→parent→Back on one secondary tab, protected roots and
+safe closure, with structural checks in
+`tests/test_v2138_source_parent_route.py`.
+See `docs/architecture/PHASE5-SOURCE-PARENT-ROUTE-v2.138.md`.
+v2.137 passed GitHub headless and native Qt CI. Mint host pending.
+
 
 ## v2.137 — initial source-root focus now refuses before publishing a root (CI/host pending)
 

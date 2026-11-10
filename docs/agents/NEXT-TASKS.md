@@ -1,6 +1,6 @@
 # Superior MI Studio — canonical implementation queue
 
-**Source candidate:** v2.137 (an uninitialized protected Python root must qualify a requested function focus before any root/session publication; GitHub CI and Linux Mint host pending). **Latest uploaded Linux Mint host PASS:** v2.124 (`qualification-20261108-141148-82252.tar.gz`: 1,350 doctor regressions, native Qt `NATIVE_QT_SMOKE_PASS`). **v2.136 GitHub CI:** headless and native Qt PASS, including protected resource-root vs secondary alias separation. The installer still owns managed cleanup only after native host qualification.
+**Source candidate:** v2.138 (the Python whole-file Up command uses the existing graph route dispatcher rather than a last-active resource alias; GitHub CI and Linux Mint host pending). **Latest uploaded Linux Mint host PASS:** v2.124 (`qualification-20261108-141148-82252.tar.gz`: 1,350 doctor regressions, native Qt `NATIVE_QT_SMOKE_PASS`). **v2.137 GitHub CI:** headless and native Qt PASS, including atomic first-root focus admission and valid Back history. The installer still owns managed cleanup only after native host qualification.
 
 **Product direction:** One VS Code-style workspace and navigable graph, Blueprint-grade visual interactions, interchangeable source and visual programming where semantics can be proven, a growing set of file/asset previewers and relationship providers. Python is the first language, **not** the only target. Source, graph and binary resources keep specialized authoritative owners; shared presentation/tabs do not imply a universal writable AST.
 
@@ -8,13 +8,26 @@
 
 | Priority | Work | Required proof / no-go |
 |---|---|---|
-| 0 | **Qualify v2.137 GitHub native CI and Linux Mint** | v2.136 passed both CI lanes. v2.137 preflights the exact focus scope using the same source document before a never-opened root publishes history, owner or Qt aliases. Refused focus leaves root uninitialized and secondary sessions unchanged; valid focus retains a whole-file Back entry. Mint evidence remains separate. |
+| 0 | **Qualify v2.138 GitHub native CI and Linux Mint** | v2.137 passed both CI lanes. v2.138 routes whole-file Python Up through the existing selected-tab navigation dispatcher, preserving the original root or secondary tab identity, history/camera and source owner. Native Qt must prove secondary Python→parent resource→Back without mutating either root. Mint evidence remains separate. |
 | 1 | **Source/graph reconciliation and compiler proof consolidation** | v2.123 separates three transient proof stages in `python_lowering.py`; v2.124 skips proof-identical source-only regions during failed-batch diagnostics. v2.125 consolidates current-source function indexing and keyword-call/module-shadow admission within the same compiler module, without new state. v2.126 now captures a single live source snapshot for review hash/spans and rechecks source plus disk at review/import boundaries. v2.127 closes the parallel linked-source proof-to-commit receipt gap without another owner. Next inventory the protected root/secondary navigation branch call sites and retire only proven duplicates with native parity evidence. v2.95 added atomic multi-function selection; v2.97 completes all six conventional typed integer comparisons with shared compiler mapping and improves independent-source parse diagnostics. Refuse unsupported AST, fuzzy renames and partial imports. |
 | 2 | **Unified tab, route and root compatibility cleanup** | v2.129 fixed destination registry identity, v2.130 consolidated close dispatch, v2.131 stages new secondary pages, v2.132 consolidated selected-view alias binding, and v2.133 stops inactive provider-close focus theft. Next characterize protected source-root bootstrap and remaining aliases; do not delete anchors without actual native parity evidence. |
 | 3 | **Conservative resource capabilities** | Existing previews, imports, literal-reference evidence, relationship inspection, precise source jumps and visible-hop search are implemented. Prefer usability/diagnostics over a recursive filesystem index; static edges are not proven runtime dependencies. |
 | 4 | **Future IDE/language support** | Run/debug/LSP/DAP, other languages and an extension host require stable adapter and execution contracts. Do not build speculative infrastructure before core Python round-trip milestones qualify. |
 
-## v2.137 — atomic initial Python focus admission (GitHub CI / Mint pending)
+## v2.138 — source Up shares the canonical route dispatcher (GitHub CI / Mint pending)
+
+- `source_go_parent` formerly called `browse_resource` directly in
+  whole-file mode, bypassing selected Qt page and GraphViewSessions. It now
+  constructs the same existing `Route('resource',parent)` used by breadcrumb
+  navigation. The dispatcher chooses protected resource root or same-tab
+  secondary provider transition; focus-parent behavior is unchanged.
+- `tests/test_v2138_source_parent_route.py` and native
+  `QT_STAGE source-parent-uses-selected-graph-session` verify
+  secondary resource→source→resource→Back with the same session, unchanged
+  original roots and safe closure. No new graph, document or navigation owner.
+  See `docs/architecture/PHASE5-SOURCE-PARENT-ROUTE-v2.138.md`.
+
+## v2.137 — atomic initial Python focus admission (GitHub CI PASS / Mint pending)
 
 - An uninitialized source root formerly opened whole-file source before
   checking a requested focus scope. A missing scope could return False
