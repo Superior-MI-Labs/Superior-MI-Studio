@@ -1,4 +1,25 @@
-# Codex start here — Superior MI Studio v2.138
+# Codex start here — Superior MI Studio v2.139
+
+## v2.139 — exact independent-source receipt through compiler commit (CI/host pending)
+
+The independent source proof used one SourceDocumentSession, but verified only
+revision/text and disk-current across the compiler. Its saved_raw disk preimage
+can change during an explicit source save without advancing editor revision.
+A review or import could then accept commands proven against an older source
+baseline. The existing python_lowering.py compiler now uses one read-only
+`_assert_independent_source_snapshot` for revision, text and exact saved
+bytes before and after the existing disk inspection at review and import
+boundaries. Invalid source/editor state takes precedence over stale compiler
+diagnostics. The check also covers empty edit batches and source-map evidence.
+Import's Unicode and graph-revision gates fail closed without raw exceptions.
+No second document, write path, parser or persistent receipt.
+Seven new adversarial tests plus original v2.126/v2.127 suites guard this.
+See `docs/architecture/PHASE4-INDEPENDENT-RECEIPT-v2.139.md`.
+
+Uploaded Mint host evidence `qualification-20261110-184157-31566.tar.gz`
+contains 1,405 passing tests and NATIVE_QT_SMOKE_PASS for v2.138.
+v2.139 is NOT host-qualified yet.
+
 
 ## v2.138 — source whole-file Up follows the selected graph session (CI/host pending)
 

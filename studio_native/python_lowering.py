@@ -2343,6 +2343,29 @@ def _independent_keyword_parameter_contract(module: ast.Module, selected: dict,
     return keyword_parameters
 
 
+def _assert_independent_source_snapshot(session, revision: int, source_text: str,
+                                        saved_raw: bytes, *, stage: str) -> None:
+    """Check one existing source owner before AND after external disk inspection.
+
+    A source save can change saved_raw without advancing the editor revision.
+    The preflight and commit receipt must therefore cover revision, live text
+    and the exact saved-byte baseline. This is a read-only qualification gate,
+    not another document snapshot owner or writer.
+    """
+    from .program_graph import GraphConflict
+
+    def check_owner():
+        if session.revision != revision or session.text != source_text:
+            raise GraphConflict('Source revision changed ' + stage)
+        if session.saved_raw != saved_raw:
+            raise GraphConflict('Source saved baseline changed ' + stage)
+
+    check_owner()
+    if session.inspect_external() != 'current':
+        raise GraphConflict('Source changed on disk ' + stage)
+    check_owner()
+
+
 def _independent_functions_plan(graph, session, functions, *, expected_graph_revision: int):
     """Qualify named independent regions with the existing whole-graph compiler.
 
@@ -2366,8 +2389,10 @@ def _independent_functions_plan(graph, session, functions, *, expected_graph_rev
     # proof. Never mix AST, source spans and hash from different revisions.
     source_revision=session.revision
     source_text=session.text
-    if session.inspect_external() != 'current':
-        raise GraphConflict('Source changed on disk; independent function review refused')
+    source_saved_raw=session.saved_raw
+    _assert_independent_source_snapshot(
+        session,source_revision,source_text,source_saved_raw,
+        stage='before independent function review')
     try:
         raw=source_text.encode('utf-8')
     except UnicodeError as exc:
@@ -2454,10 +2479,9 @@ def _independent_functions_plan(graph, session, functions, *, expected_graph_rev
     except ProgramGraphError as exc:
         # Reentrant source/disk updates invalidate even a failed proof's
         # attribution: report the owner conflict, not a misleading function.
-        if session.revision != source_revision or session.text != source_text:
-            raise GraphConflict('Source revision changed during independent function review') from exc
-        if session.inspect_external() != 'current':
-            raise GraphConflict('Source changed on disk during independent function review') from exc
+        _assert_independent_source_snapshot(
+            session,source_revision,source_text,source_saved_raw,
+            stage='during independent function review')
         # A failed multi-region proof must name the offending source region.
         # Isolate each selected function against the same canonical baseline;
         # this diagnostic reuses the compiler rather than independently
@@ -2491,16 +2515,20 @@ def _independent_functions_plan(graph, session, functions, *, expected_graph_rev
     # The compiler is synchronous, but source and disk can still change
     # through reentrant host callbacks. A review receipt must describe the
     # exact revision/bytes used for the initial proof, not a later revision.
-    if session.revision != source_revision or session.text != source_text:
-        raise GraphConflict('Source revision changed during independent function review')
-    if session.inspect_external() != 'current':
-        raise GraphConflict('Source changed on disk during independent function review')
+    _assert_independent_source_snapshot(
+        session,source_revision,source_text,source_saved_raw,
+        stage='during independent function review')
     lines,spans=_independent_change_lines(selected,canonical,baseline,review.changes,
                                          source_text)
     receipt=IndependentFunctionsReview(graph.revision,source_revision,
         hashlib.sha256(raw).hexdigest(),names,
         tuple((name,selected[name].lineno,selected[name].end_lineno) for name in names),
         review.changes,len(external.body)-len(names),lines,spans)
+    # Span/line evidence is derived after proof. It too must describe the
+    # exact owner snapshot captured when qualification began.
+    _assert_independent_source_snapshot(
+        session,source_revision,source_text,source_saved_raw,
+        stage='during independent function review')
     return receipt,commands
 
 
@@ -2528,21 +2556,28 @@ def import_independent_source_functions(graph, session, functions, *,
                                         expected_source_sha256: str) -> bool:
     """Requalify a multi-function receipt and commit one undoable transaction."""
     import hashlib
-    from .program_graph import GraphConflict
+    from .program_graph import GraphConflict, ProgramGraphError
+    revision,text,saved_raw=session.revision,session.text,session.saved_raw
+    try:
+        source_hash=hashlib.sha256(text.encode('utf-8')).hexdigest()
+    except UnicodeError as exc:
+        raise ProgramGraphError('Independent Python source cannot be encoded as UTF-8') from exc
     if (type(expected_source_revision) is not int or
-            expected_source_revision != session.revision or
+            expected_source_revision != revision or
             not isinstance(expected_source_sha256,str) or
-            hashlib.sha256(session.text.encode('utf-8')).hexdigest()!=expected_source_sha256):
+            source_hash!=expected_source_sha256):
         raise GraphConflict('Independent source revision changed after review')
     receipt,commands=_independent_functions_plan(graph,session,functions,
         expected_graph_revision=expected_graph_revision)
     if (receipt.source_revision != expected_source_revision or
             receipt.source_sha256 != expected_source_sha256):
         raise GraphConflict('Independent source changed during qualification')
-    # Verify disk state again at the import boundary. A valid earlier review
-    # must never authorize a graph edit after an external source write.
-    if session.inspect_external() != 'current':
-        raise GraphConflict('Source changed on disk before graph import')
+    # Recheck the exact source owner's saved baseline as well as its text,
+    # before and after disk inspection, even when no graph command is needed.
+    _assert_independent_source_snapshot(
+        session,revision,text,saved_raw,stage='before graph import')
+    if graph.revision != receipt.graph_revision:
+        raise GraphConflict('Graph revision changed before independent source import')
     return graph.edit_many(receipt.graph_revision,commands) if commands else False
 
 
