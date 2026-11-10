@@ -2703,6 +2703,35 @@ def main():
         w._close_graph_tab(w.tabs.indexOf(extra_view.page));app.processEvents()
         assert w._view_sessions.get(extra_sid) is None
         w.tabs.setCurrentWidget(resource_root.page);app.processEvents()
+    print('QT_STAGE source-parent-uses-selected-graph-session',flush=True)
+    # Up from a secondary Python whole-file view must return to that same
+    # secondary tab's filesystem provider, preserving its history and root tabs.
+    with tempfile.TemporaryDirectory() as parent_route_tmp:
+        parent_dir=Path(parent_route_tmp)
+        script=parent_dir/'owned.py'
+        script.write_text('def value():\n    return 7\n',encoding='utf-8')
+        root_source_route=w._view_sessions.get('source').route
+        root_resource_route=w._view_sessions.get('resource').route
+        assert w.open_resource_in_new_tab(parent_dir)
+        sid=w._active_resource_tab_id
+        session=w._view_sessions.get(sid)
+        assert sid not in ('source','resource')
+        assert w._open_navigation_route(Route('source',str(script)))
+        assert session.route==Route('source',str(script))
+        assert sid in w._source_tabs
+        assert w.source_go_parent()
+        app.processEvents()
+        assert session.route==Route('resource',str(parent_dir))
+        assert session.peek(-1)==Route('source',str(script))
+        assert sid in w._resource_tabs and sid not in w._source_tabs
+        assert w.tabs.currentWidget() is w._resource_tabs[sid].page
+        assert w._view_sessions.get('resource').route==root_resource_route
+        assert w._view_sessions.get('source').route==root_source_route
+        assert w._navigate_history('resource',-1)
+        assert session.route==Route('source',str(script))
+        w._close_graph_tab(w.tabs.currentIndex());app.processEvents()
+        assert w._view_sessions.get(sid) is None
+        w.tabs.setCurrentWidget(w._resource_tabs['resource'].page);app.processEvents()
     # The same breadcrumb dispatcher opens both kinds through existing
     # provider/session paths. Invalid destinations must not create ghost tabs.
     breadcrumb_before=w.tabs.count()

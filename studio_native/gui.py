@@ -26,7 +26,7 @@ from . import model as m
 from .boundary_edit import parameter_source, terminal_return_target, BoundaryEditError
 from .exit_routes import project_exit_routes, project_folded_exit_connections
 
-APP_TITLE = 'Superior MI Studio · Visual Programming Lab 2.137'
+APP_TITLE = 'Superior MI Studio · Visual Programming Lab 2.138'
 from .semantic_contract import describe_graph, ContractError, canvas_graph_source, port_presentation_role, validated_port_payloads, validated_edge_payloads
 from .assets import AssetIndex
 from .external_icons import ExternalIconAtlas, default_icon_atlas_directory, icon_id_for_resource, icon_id_for_source
@@ -6266,7 +6266,10 @@ class NativeLab(QMainWindow):
     def source_go_parent(self):
         if not self.python_doc:return
         if self.source_view_mode=='whole':
-            return self.browse_resource(self.python_doc.path.parent)
+            # Use the selected Qt graph tab and its navigation session.
+            # Direct browse_resource() would target a last-active resource
+            # alias, potentially moving a different secondary tab instead.
+            return self._open_navigation_route(Route('resource',str(self.python_doc.path.parent)))
         parent=self.python_doc.scopes[self.source_scope].parent
         if parent is not None:return self.navigate_source(parent)
         return self.show_source_overview()
