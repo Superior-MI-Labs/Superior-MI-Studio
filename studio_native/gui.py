@@ -26,7 +26,7 @@ from . import model as m
 from .boundary_edit import parameter_source, terminal_return_target, BoundaryEditError
 from .exit_routes import project_exit_routes, project_folded_exit_connections
 
-APP_TITLE = 'Superior MI Studio · Visual Programming Lab 2.135'
+APP_TITLE = 'Superior MI Studio · Visual Programming Lab 2.136'
 from .semantic_contract import describe_graph, ContractError, canvas_graph_source, port_presentation_role, validated_port_payloads, validated_edge_payloads
 from .assets import AssetIndex
 from .external_icons import ExternalIconAtlas, default_icon_atlas_directory, icon_id_for_resource, icon_id_for_source
@@ -3230,7 +3230,7 @@ class NativeLab(QMainWindow):
         view.relationship_focus=self.resource_relationship_focus
         view.relationship_direction=self.resource_relationship_direction
 
-    def _activate_resource_view(self,view):
+    def _activate_resource_view(self,view,*,reproject=True):
         """Bind temporary Qt compatibility aliases from the selected tab.
 
         Resource paths and graphs are supplied by the existing provider. These
@@ -3251,7 +3251,7 @@ class NativeLab(QMainWindow):
         # A tab is a view of current source sessions, not a frozen AST copy.
         # Inactive resource tabs are refreshed on activation; their cameras
         # remain owned by the existing GraphCanvas presentation store.
-        if view.imports or any(path in self._source_documents for path in view.expanded):
+        if reproject and (view.imports or any(path in self._source_documents for path in view.expanded)):
             resolved=resolve_graph(Route('resource',str(view.path)),
                 resource_offset=view.offset,resource_imports=view.imports,
                 resource_relationship_kinds=view.relationship_layers,
@@ -3260,7 +3260,7 @@ class NativeLab(QMainWindow):
                 resource_expanded=view.expanded,source_documents=self._source_documents)
             view.graph=self.resource_graph=resolved.graph
             view.canvas.rebuild()
-        self._refresh_navigation('resource')
+        if reproject:self._refresh_navigation('resource')
 
     def _refresh_resource_source_views(self, path):
         """Reproject opened source's active revision into expanded file cards.
@@ -5529,8 +5529,12 @@ class NativeLab(QMainWindow):
                      (isinstance(selected,ResourceTabView) and route.kind=='source'))):
                 return self._transition_graph_tab(route)
             if route.kind=='resource':
-                if isinstance(selected,ResourceTabView):self._bind_selected_graph_view(selected)
-                return self.browse_resource(route.path)
+                if isinstance(selected,ResourceTabView):
+                    self._bind_selected_graph_view(selected)
+                    return self.browse_resource(route.path)
+                # The original source anchor navigates to the original resource
+                # anchor, never the last-active secondary resource alias.
+                return self.browse_resource(route.path,root_anchor=True)
             # A source tab has its own identity even when the selected source
             # file matches one in another tab. Do not reset root history through
             # _open_python_source_path or accidentally navigate a stale alias.
@@ -5903,23 +5907,37 @@ class NativeLab(QMainWindow):
                         ' · syntactic associations only, not runtime resolution')
 
     def browse_resource(self,path,*,activate=True,offset=0,record_history=True,
-                        history_direction=None):
+                        history_direction=None,root_anchor=False):
         try:
             resolved=Path(path).expanduser().absolute()
-            # Resolve before publishing any navigation or expansion change.
-            # A refused directory must not erase the current tab's view state.
-            expanded=(set() if resolved!=self.resource_path else set(self.resource_expanded))
+            # A protected-root navigation must project using the target root's
+            # preferences, not a secondary tab's last-active compatibility aliases.
+            # No alias, canvas or history changes until this resolution succeeds.
+            root=self._resource_tabs['resource'] if root_anchor else None
+            prior_path=root.path if root is not None else self.resource_path
+            prior_offset=root.offset if root is not None else self.resource_offset
+            expanded=(set() if resolved!=prior_path else set(
+                root.expanded if root is not None else self.resource_expanded))
+            imports=root.imports if root is not None else self.resource_show_imports
+            layers=root.relationship_layers if root is not None else self.resource_relationship_layers
+            focus=root.relationship_focus if root is not None else self.resource_relationship_focus
+            direction=root.relationship_direction if root is not None else self.resource_relationship_direction
             graph=resolve_graph(Route('resource',str(resolved)),
-                                resource_offset=offset,resource_imports=self.resource_show_imports,
-                                resource_relationship_kinds=self.resource_relationship_layers,
-                                resource_relationship_focus=(self.resource_relationship_focus
-                                    if resolved==self.resource_path and offset==self.resource_offset else None),
-                                resource_relationship_direction=self.resource_relationship_direction,
+                                resource_offset=offset,resource_imports=imports,
+                                resource_relationship_kinds=layers,
+                                resource_relationship_focus=(
+                                    focus if resolved==prior_path and offset==prior_offset else None),
+                                resource_relationship_direction=direction,
                                 resource_expanded=expanded,
                                 source_documents=self._source_documents).graph
         except (OSError,ResourceError,ValueError) as exc:
             self.report('Filesystem browse refused: '+str(exc))
             return False
+        # The graph is already qualified. Bind the protected root only now,
+        # skipping an unnecessary read of its former (possibly stale) path.
+        if root_anchor and self._active_resource_tab_id!='resource':
+            self._store_active_resource_view()
+            self._activate_resource_view(self._resource_tabs['resource'],reproject=False)
         previous_resource_path=self.resource_path
         self.resource_expanded=expanded
         self.resource_relationship_focus=graph['relationship_focus']

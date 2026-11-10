@@ -12,7 +12,7 @@ We take inspiration from **VS Code's development workflow** and **Unreal Engine 
 
 **[Architecture](docs/architecture) · [Wiki](https://github.com/Superior-MI-Labs/Superior-MI-Studio/wiki) · [Development pipeline](docs/RELEASE-PIPELINE.md) · [Issues](https://github.com/Superior-MI-Labs/Superior-MI-Studio/issues)**
 
-> **Current status: pre-alpha · v2.135 development candidate (GitHub CI and Linux Mint native pending).** v2.135 defers initial Python source-root activation until file opening has succeeded, preserving a previously selected secondary source view when an attempted root open fails. v2.134 passed GitHub headless and native Qt CI; v2.124 is the latest uploaded Linux Mint host-qualified baseline. Studio is not a stable release.
+> **Current status: pre-alpha · v2.136 development candidate (GitHub CI and Linux Mint native pending).** v2.136 ensures directory navigation from the protected Python root targets the protected filesystem root without modifying a last-active secondary resource tab. v2.135 passed GitHub headless and native Qt CI; v2.124 is the latest uploaded Linux Mint host-qualified baseline. Studio is not a stable release.
 
 ## The Studio workbench · v2.120 Linux preview
 
