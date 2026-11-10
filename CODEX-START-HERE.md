@@ -1,4 +1,23 @@
-# Codex start here — Superior MI Studio v2.136
+# Codex start here — Superior MI Studio v2.137
+
+## v2.137 — initial source-root focus now refuses before publishing a root (CI/host pending)
+
+An uninitialized protected source root could receive a focused function
+route, open the entire Python document and create the root session, then
+fail when `navigate_source` discovered that the function scope was gone.
+The original file-opening transaction now optionally validates the exact
+focus scope through `resolve_source_session_route` using the **same live
+SourceDocumentSession** before updating source registries or Qt aliases.
+Valid focus retains the whole-file Back history; invalid focus or syntax
+cannot create a ghost root. This avoids duplicate source reads and any
+compensating rollback. It is not a new parser or tab owner.
+The new `tests/test_v2137_initial_root_focus.py`, updated older
+characterization tests and native
+`QT_STAGE uninitialized-source-root-focus-atomicity` cover both refusal
+and successful initial focus while another source view stays intact.
+See `docs/architecture/PHASE5-INITIAL-ROOT-FOCUS-v2.137.md`.
+v2.136 passed GitHub headless and native Qt CI. Mint host pending.
+
 
 ## v2.136 — original source-root directories belong to the filesystem root (CI/host pending)
 

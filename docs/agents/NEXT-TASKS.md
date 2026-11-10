@@ -1,6 +1,6 @@
 # Superior MI Studio — canonical implementation queue
 
-**Source candidate:** v2.136 (source-root directory navigation now targets the protected resource root rather than the last-active secondary resource alias; GitHub CI and Linux Mint host pending). **Latest uploaded Linux Mint host PASS:** v2.124 (`qualification-20261108-141148-82252.tar.gz`: 1,350 doctor regressions, native Qt `NATIVE_QT_SMOKE_PASS`). **v2.135 GitHub CI:** headless and native Qt PASS, including deferred first-source-root binding and unchanged secondary source view. The installer still owns managed cleanup only after native host qualification.
+**Source candidate:** v2.137 (an uninitialized protected Python root must qualify a requested function focus before any root/session publication; GitHub CI and Linux Mint host pending). **Latest uploaded Linux Mint host PASS:** v2.124 (`qualification-20261108-141148-82252.tar.gz`: 1,350 doctor regressions, native Qt `NATIVE_QT_SMOKE_PASS`). **v2.136 GitHub CI:** headless and native Qt PASS, including protected resource-root vs secondary alias separation. The installer still owns managed cleanup only after native host qualification.
 
 **Product direction:** One VS Code-style workspace and navigable graph, Blueprint-grade visual interactions, interchangeable source and visual programming where semantics can be proven, a growing set of file/asset previewers and relationship providers. Python is the first language, **not** the only target. Source, graph and binary resources keep specialized authoritative owners; shared presentation/tabs do not imply a universal writable AST.
 
@@ -8,13 +8,29 @@
 
 | Priority | Work | Required proof / no-go |
 |---|---|---|
-| 0 | **Qualify v2.136 GitHub native CI and Linux Mint** | v2.135 passed both CI lanes. v2.136 directs original source-root directory navigation to the original resource root, not a last-active secondary resource view. Refused preflight must preserve the foreground, both resource histories/cameras, source ownership and provider aliases; successful navigation must change only the root. Mint evidence remains separate. |
+| 0 | **Qualify v2.137 GitHub native CI and Linux Mint** | v2.136 passed both CI lanes. v2.137 preflights the exact focus scope using the same source document before a never-opened root publishes history, owner or Qt aliases. Refused focus leaves root uninitialized and secondary sessions unchanged; valid focus retains a whole-file Back entry. Mint evidence remains separate. |
 | 1 | **Source/graph reconciliation and compiler proof consolidation** | v2.123 separates three transient proof stages in `python_lowering.py`; v2.124 skips proof-identical source-only regions during failed-batch diagnostics. v2.125 consolidates current-source function indexing and keyword-call/module-shadow admission within the same compiler module, without new state. v2.126 now captures a single live source snapshot for review hash/spans and rechecks source plus disk at review/import boundaries. v2.127 closes the parallel linked-source proof-to-commit receipt gap without another owner. Next inventory the protected root/secondary navigation branch call sites and retire only proven duplicates with native parity evidence. v2.95 added atomic multi-function selection; v2.97 completes all six conventional typed integer comparisons with shared compiler mapping and improves independent-source parse diagnostics. Refuse unsupported AST, fuzzy renames and partial imports. |
 | 2 | **Unified tab, route and root compatibility cleanup** | v2.129 fixed destination registry identity, v2.130 consolidated close dispatch, v2.131 stages new secondary pages, v2.132 consolidated selected-view alias binding, and v2.133 stops inactive provider-close focus theft. Next characterize protected source-root bootstrap and remaining aliases; do not delete anchors without actual native parity evidence. |
 | 3 | **Conservative resource capabilities** | Existing previews, imports, literal-reference evidence, relationship inspection, precise source jumps and visible-hop search are implemented. Prefer usability/diagnostics over a recursive filesystem index; static edges are not proven runtime dependencies. |
 | 4 | **Future IDE/language support** | Run/debug/LSP/DAP, other languages and an extension host require stable adapter and execution contracts. Do not build speculative infrastructure before core Python round-trip milestones qualify. |
 
-## v2.136 — protected resource-root navigation (GitHub CI / Mint pending)
+## v2.137 — atomic initial Python focus admission (GitHub CI / Mint pending)
+
+- An uninitialized source root formerly opened whole-file source before
+  checking a requested focus scope. A missing scope could return False
+  after root/session publication. The original `_open_python_source_path`
+  now accepts an optional `focus_scope` and qualifies the same live
+  SourceDocumentSession through `resolve_source_session_route` before
+  publishing any tab/session/source state. Only then does the existing
+  dispatcher open the root and navigate to focus, preserving the usual
+  whole-file Back entry. No duplicate parser or source-owner registry.
+- `tests/test_v2137_initial_root_focus.py` and native
+  `QT_STAGE uninitialized-source-root-focus-atomicity` extend the existing
+  secondary-source/root fixture to prove refused-focus atomicity and
+  successful initial focus with original Back history. See
+  `docs/architecture/PHASE5-INITIAL-ROOT-FOCUS-v2.137.md`.
+
+## v2.136 — protected resource-root navigation (GitHub CI PASS / Mint pending)
 
 - `_open_navigation_route` uses `browse_resource(root_anchor=True)` when
   the foreground is the protected source root and the target is a directory.

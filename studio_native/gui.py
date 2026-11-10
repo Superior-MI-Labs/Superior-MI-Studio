@@ -26,7 +26,7 @@ from . import model as m
 from .boundary_edit import parameter_source, terminal_return_target, BoundaryEditError
 from .exit_routes import project_exit_routes, project_folded_exit_connections
 
-APP_TITLE = 'Superior MI Studio · Visual Programming Lab 2.136'
+APP_TITLE = 'Superior MI Studio · Visual Programming Lab 2.137'
 from .semantic_contract import describe_graph, ContractError, canvas_graph_source, port_presentation_role, validated_port_payloads, validated_edge_payloads
 from .assets import AssetIndex
 from .external_icons import ExternalIconAtlas, default_icon_atlas_directory, icon_id_for_resource, icon_id_for_source
@@ -5542,15 +5542,19 @@ class NativeLab(QMainWindow):
                 self._bind_selected_graph_view(selected)
                 if self._view_sessions.get(selected.session_id) is not None:
                     return self._navigate_source_document_in_tab(route)
-            # Compatibility anchor: a file opened from the original resource
-            # root still activates the original source root. Resolve its alias
-            # explicitly; a previously selected secondary source is not root.
-            root=self._source_tabs['source']
+            # Compatibility anchor: opening from the original resource
+            # root targets the protected source root, not a secondary alias.
             if self._view_sessions.get('source') is not None:
                 return self._navigate_source_document_in_tab(route,root_anchor=True)
             # Only the never-opened source root needs the original file-open
             # adapter, which also supports invalid Python for text diagnostics.
-            if not self._open_python_source_path(route.path,bootstrap_root=True):return False
+            # The first source-root open must prove a requested focus scope
+            # before publishing the whole-file root and then visiting focus.
+            # An invalid scope cannot leave a newly initialized root behind.
+            if not self._open_python_source_path(
+                    route.path,bootstrap_root=True,
+                    focus_scope=route.scope if route.mode=='focus' else None):
+                return False
             return (self.navigate_source(route.scope) if route.mode=='focus' else True)
         except (OSError,ValueError,SourceError,ResourceError) as exc:
             self.report('Graph location refused: '+str(exc))
@@ -6007,7 +6011,8 @@ class NativeLab(QMainWindow):
         parent=self.resource_path.parent
         if parent!=self.resource_path:self.browse_resource(parent)
 
-    def _open_python_source_path(self,path,*,frame=False,discard_confirmed=False,bootstrap_root=False):
+    def _open_python_source_path(self,path,*,frame=False,discard_confirmed=False,
+                                 bootstrap_root=False,focus_scope=None):
         """One source-opening transaction for file resources and the file picker.
 
         Resolve before replacing the active document. Existing unsaved-editor
@@ -6037,7 +6042,16 @@ class NativeLab(QMainWindow):
                                        detail=detail,
                                        expanded_scopes=expanded,collapsed_regions=collapsed)
                 graph=resolved.graph
+                if focus_scope is not None:
+                    # Reuse the existing live-document route qualifier for the
+                    # exact same source revision. No new compiler or owner.
+                    resolve_source_session_route(
+                        Route('source',str(doc.path),focus_scope,'focus'),
+                        session,detail=detail,expanded_scopes=expanded,
+                        collapsed_regions=collapsed)
             else:
+                if focus_scope is not None:
+                    raise SourceError('Cannot focus invalid Python source')
                 expanded,collapsed=set(),set()
                 graph=None
         except (OSError,ValueError) as exc:

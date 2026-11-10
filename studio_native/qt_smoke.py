@@ -2630,9 +2630,28 @@ def main():
         assert other._view_sessions.get('resource').route==before_root_route
         # A successful retry must initialize only the protected root without
         # resetting the independently navigable secondary source view.
-        assert other._open_navigation_route(Route('source',str(root_file)))
+        print('QT_STAGE uninitialized-source-root-focus-atomicity',flush=True)
+        # Both missing and valid focus targets are checked against the same
+        # live owner before publishing the first protected source root.
+        missing_focus=Route('source',str(root_file),'missing-scope','focus')
+        with patch('studio_native.gui.QMessageBox') as warnings:
+            assert not other._open_navigation_route(missing_focus)
+            warnings.warning.assert_called_once()
+        app.processEvents()
+        assert other.tabs.currentWidget() is resource_root_page
+        assert (other._active_source_tab_id,other._active_resource_tab_id)==before_alias
+        assert (other._loaded_editor_identity,other.source_editor.toPlainText())==before_editor
+        assert other._source_documents==before_owners
+        assert other._view_sessions.get('source') is None
+        assert secondary_session.route==secondary_route
+        assert secondary_session.camera_slot()==secondary_camera
+        root_focus=next(key for key,scope in PythonDocument(root_file).scopes.items()
+                        if scope.title=='root')
+        valid_focus=Route('source',str(root_file),root_focus,'focus')
+        assert other._open_navigation_route(valid_focus)
         assert other._active_source_tab_id=='source'
-        assert other._view_sessions.get('source').route==Route('source',str(root_file))
+        assert other._view_sessions.get('source').route==valid_focus
+        assert other._view_sessions.get('source').peek(-1)==Route('source',str(root_file))
         assert secondary_session.route==secondary_route
         assert other._source_documents[str(secondary_file)] is secondary_owner
         assert other.close()

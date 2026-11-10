@@ -28,7 +28,7 @@ class SourceRootBootstrapTests(unittest.TestCase):
 
     def test_uninitialized_root_calls_single_owned_file_open(self):
         source=method('_open_navigation_route')
-        self.assertIn('self._open_python_source_path(route.path, bootstrap_root=True)',source)
+        self.assertIn("self._open_python_source_path(route.path, bootstrap_root=True, focus_scope=route.scope if route.mode == 'focus' else None)",source)
         self.assertNotIn('self._activate_source_view(root)',source)
         self.assertIn("if self._view_sessions.get('source') is not None:",source)
         self.assertIn("self._navigate_source_document_in_tab(route, root_anchor=True)",source)

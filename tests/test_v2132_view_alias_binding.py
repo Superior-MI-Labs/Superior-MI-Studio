@@ -37,7 +37,7 @@ class ActiveViewAliasTests(unittest.TestCase):
         # The uninitialized source-root exception uses the original source
         # loader, which defers binding until after preflight. No navigation
         # call site may activate a non-selected root prematurely.
-        self.assertIn("self._open_python_source_path(route.path, bootstrap_root=True)",
+        self.assertIn("self._open_python_source_path(route.path, bootstrap_root=True, focus_scope=route.scope if route.mode == 'focus' else None)",
                       body('_open_navigation_route'))
         self.assertNotIn("self._activate_source_view(root)",body('_open_navigation_route'))
         self.assertIn("if bootstrap_root and self._active_source_tab_id != 'source':",
