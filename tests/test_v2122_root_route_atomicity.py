@@ -37,7 +37,7 @@ class RootNavigationAtomicityTests(unittest.TestCase):
         # Only the original never-opened source view may use the legacy file
         # picker adapter. A loaded root must share the live-source resolver.
         self.assertLess(result.index("self._view_sessions.get('source')"),
-                        result.index("self._open_python_source_path(route.path, bootstrap_root=True)"))
+                        result.index("self._open_python_source_path(route.path, bootstrap_root=True, focus_scope=route.scope if route.mode == 'focus' else None)"))
         # Initial root activation now occurs inside the same source loader
         # after its existing preflight, never in the route dispatcher.
         self.assertNotIn('self._activate_source_view(root)',result)

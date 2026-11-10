@@ -12,7 +12,7 @@ We take inspiration from **VS Code's development workflow** and **Unreal Engine 
 
 **[Architecture](docs/architecture) · [Wiki](https://github.com/Superior-MI-Labs/Superior-MI-Studio/wiki) · [Development pipeline](docs/RELEASE-PIPELINE.md) · [Issues](https://github.com/Superior-MI-Labs/Superior-MI-Studio/issues)**
 
-> **Current status: pre-alpha · v2.136 development candidate (GitHub CI and Linux Mint native pending).** v2.136 ensures directory navigation from the protected Python root targets the protected filesystem root without modifying a last-active secondary resource tab. v2.135 passed GitHub headless and native Qt CI; v2.124 is the latest uploaded Linux Mint host-qualified baseline. Studio is not a stable release.
+> **Current status: pre-alpha · v2.137 development candidate (GitHub CI and Linux Mint native pending).** v2.137 prevents a missing function-focus scope from opening a previously uninitialized Python root before navigation refusal. Valid initial focus retains whole-file Back history. v2.136 passed GitHub headless and native Qt CI; v2.124 is the latest uploaded Linux Mint host-qualified baseline. Studio is not a stable release.
 
 ## The Studio workbench · v2.120 Linux preview
 
