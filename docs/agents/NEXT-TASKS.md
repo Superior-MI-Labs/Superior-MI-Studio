@@ -1,6 +1,6 @@
 # Superior MI Studio — canonical implementation queue
 
-**Source candidate:** v2.138 (the Python whole-file Up command uses the existing graph route dispatcher rather than a last-active resource alias; GitHub CI and Linux Mint host pending). **Latest uploaded Linux Mint host PASS:** v2.124 (`qualification-20261108-141148-82252.tar.gz`: 1,350 doctor regressions, native Qt `NATIVE_QT_SMOKE_PASS`). **v2.137 GitHub CI:** headless and native Qt PASS, including atomic first-root focus admission and valid Back history. The installer still owns managed cleanup only after native host qualification.
+**Source candidate:** v2.139 (independent-source compiler receipts verify exact saved-byte baselines across proof/import and after disk checks; CI and Linux Mint host pending). **Latest uploaded Linux Mint host PASS:** v2.138 (`qualification-20261110-184157-31566.tar.gz`: 1,405 tests and native Qt `NATIVE_QT_SMOKE_PASS`, `CHECKS_PASS`). **v2.138 GitHub CI:** headless and native Qt PASS, including selected-tab parent navigation. The installer still owns managed cleanup only after native qualification.
 
 **Product direction:** One VS Code-style workspace and navigable graph, Blueprint-grade visual interactions, interchangeable source and visual programming where semantics can be proven, a growing set of file/asset previewers and relationship providers. Python is the first language, **not** the only target. Source, graph and binary resources keep specialized authoritative owners; shared presentation/tabs do not imply a universal writable AST.
 
@@ -8,13 +8,30 @@
 
 | Priority | Work | Required proof / no-go |
 |---|---|---|
-| 0 | **Qualify v2.138 GitHub native CI and Linux Mint** | v2.137 passed both CI lanes. v2.138 routes whole-file Python Up through the existing selected-tab navigation dispatcher, preserving the original root or secondary tab identity, history/camera and source owner. Native Qt must prove secondary Python→parent resource→Back without mutating either root. Mint evidence remains separate. |
+| 0 | **Qualify v2.139 GitHub native CI and Linux Mint** | v2.138 passed GitHub and uploaded Mint native/headless gates. v2.139 consolidates exact source-owner revision/text/saved-byte receipts before/after disk inspection during independent Python proof, including no-op graph imports and Unicode refusal. Do not promote until both CI lanes and host qualification pass. |
 | 1 | **Source/graph reconciliation and compiler proof consolidation** | v2.123 separates three transient proof stages in `python_lowering.py`; v2.124 skips proof-identical source-only regions during failed-batch diagnostics. v2.125 consolidates current-source function indexing and keyword-call/module-shadow admission within the same compiler module, without new state. v2.126 now captures a single live source snapshot for review hash/spans and rechecks source plus disk at review/import boundaries. v2.127 closes the parallel linked-source proof-to-commit receipt gap without another owner. Next inventory the protected root/secondary navigation branch call sites and retire only proven duplicates with native parity evidence. v2.95 added atomic multi-function selection; v2.97 completes all six conventional typed integer comparisons with shared compiler mapping and improves independent-source parse diagnostics. Refuse unsupported AST, fuzzy renames and partial imports. |
 | 2 | **Unified tab, route and root compatibility cleanup** | v2.129 fixed destination registry identity, v2.130 consolidated close dispatch, v2.131 stages new secondary pages, v2.132 consolidated selected-view alias binding, and v2.133 stops inactive provider-close focus theft. Next characterize protected source-root bootstrap and remaining aliases; do not delete anchors without actual native parity evidence. |
 | 3 | **Conservative resource capabilities** | Existing previews, imports, literal-reference evidence, relationship inspection, precise source jumps and visible-hop search are implemented. Prefer usability/diagnostics over a recursive filesystem index; static edges are not proven runtime dependencies. |
 | 4 | **Future IDE/language support** | Run/debug/LSP/DAP, other languages and an extension host require stable adapter and execution contracts. Do not build speculative infrastructure before core Python round-trip milestones qualify. |
 
-## v2.138 — source Up shares the canonical route dispatcher (GitHub CI / Mint pending)
+## v2.139 — exact source-owner receipts for independent compiler proof (CI / Mint pending)
+
+- Independent Python source review previously trusted revision and text across
+  compiler proof while a source-owned save could update saved_raw without
+  incrementing that revision. The single compiler module now checks revision,
+  text and saved bytes before/after existing disk inspection on both successful
+  and failed proofs, including post-source-map evidence.
+- Import binds the same snapshot across the planner, verifies again immediately
+  before graph edit (even on no-op import), checks final graph revision, and
+  converts unencodable live drafts to the normal ProgramGraphError.
+- Seven new adversarial tests in
+  `tests/test_v2139_independent_receipt_integrity.py` cover valid import,
+  reentrant save during proof, failed-proof attribution, after-plan save,
+  no-op refusal, inspection callback race and unencodable import.
+  No new owner, mutable receipt store, source writer or parser.
+  See `docs/architecture/PHASE4-INDEPENDENT-RECEIPT-v2.139.md`.
+
+## v2.138 — source Up shares the canonical route dispatcher (GitHub CI / Linux Mint PASS)
 
 - `source_go_parent` formerly called `browse_resource` directly in
   whole-file mode, bypassing selected Qt page and GraphViewSessions. It now

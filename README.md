@@ -12,7 +12,7 @@ We take inspiration from **VS Code's development workflow** and **Unreal Engine 
 
 **[Architecture](docs/architecture) · [Wiki](https://github.com/Superior-MI-Labs/Superior-MI-Studio/wiki) · [Development pipeline](docs/RELEASE-PIPELINE.md) · [Issues](https://github.com/Superior-MI-Labs/Superior-MI-Studio/issues)**
 
-> **Current status: pre-alpha · v2.138 development candidate (GitHub CI and Linux Mint native pending).** v2.138 routes whole-file Python Up through the selected graph tab, preserving that tab's independent session and Back history rather than modifying another resource tab. v2.137 passed GitHub headless and native Qt CI; v2.124 is the latest uploaded Linux Mint host-qualified baseline. Studio is not a stable release.
+> **Current status: pre-alpha · v2.139 development candidate (GitHub CI and Linux Mint native pending).** v2.139 strengthens independent Python source/graph compiler receipts by checking the exact saved-byte baseline, live text and revision across qualification and import. v2.138 passed both GitHub CI lanes and uploaded Linux Mint host tests (1,405 headless and native Qt PASS). Studio is not a stable release.
 
 ## The Studio workbench · v2.120 Linux preview
 
