@@ -12,7 +12,7 @@ We take inspiration from **VS Code's development workflow** and **Unreal Engine 
 
 **[Architecture](docs/architecture) · [Wiki](https://github.com/Superior-MI-Labs/Superior-MI-Studio/wiki) · [Development pipeline](docs/RELEASE-PIPELINE.md) · [Issues](https://github.com/Superior-MI-Labs/Superior-MI-Studio/issues)**
 
-> **Current status: pre-alpha · v2.142 development candidate (GitHub CI and Linux Mint native pending).** v2.142 consolidates independent-source compiler ownership checks across positive proof and failure diagnostics, preventing stale function errors after concurrent source, disk or graph changes. v2.141 passed GitHub headless and native Qt CI; v2.138 is the latest uploaded Linux Mint host-qualified baseline (1,405 headless tests and native Qt PASS). Studio is not a stable release.
+> **Current status: pre-alpha · v2.143 development candidate (GitHub CI and Linux Mint native pending).** v2.143 reuses source/disk/graph preimage checks during initial Python preview and independent keyword/local qualification, refusing stale early compiler diagnostics. v2.142 passed GitHub headless and native Qt CI; v2.138 remains the latest uploaded Linux Mint host-qualified baseline (1,405 headless tests and native Qt PASS). Studio is not a stable release.
 
 ## The Studio workbench · v2.120 Linux preview
 
