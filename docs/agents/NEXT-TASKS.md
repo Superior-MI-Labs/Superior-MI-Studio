@@ -1,6 +1,6 @@
 # Superior MI Studio — canonical implementation queue
 
-**Source candidate:** v2.140 (independent and generated-source compiler receipts refuse graph revisions advanced during proof, evidence mapping or import; CI and Linux Mint host pending). **Latest uploaded Linux Mint host PASS:** v2.138 (`qualification-20261110-184157-31566.tar.gz`: 1,405 tests and native Qt `NATIVE_QT_SMOKE_PASS`, `CHECKS_PASS`). **v2.139 GitHub CI:** headless and native Qt PASS, including exact saved-byte receipt qualification. The installer still owns managed cleanup only after native qualification.
+**Source candidate:** v2.141 (linked-source attach validates one exact ProgramGraph/source/disk preimage across preview and fingerprint construction; GitHub CI and Linux Mint host pending). **Latest uploaded Linux Mint host PASS:** v2.138 (`qualification-20261110-184157-31566.tar.gz`: 1,405 tests and native Qt `NATIVE_QT_SMOKE_PASS`, `CHECKS_PASS`). **v2.140 GitHub CI:** headless and native Qt PASS, including generated and independent source graph-revision proof. The installer still owns managed cleanup only after native qualification.
 
 **Product direction:** One VS Code-style workspace and navigable graph, Blueprint-grade visual interactions, interchangeable source and visual programming where semantics can be proven, a growing set of file/asset previewers and relationship providers. Python is the first language, **not** the only target. Source, graph and binary resources keep specialized authoritative owners; shared presentation/tabs do not imply a universal writable AST.
 
@@ -8,13 +8,28 @@
 
 | Priority | Work | Required proof / no-go |
 |---|---|---|
-| 0 | **Qualify v2.140 GitHub native CI and Linux Mint** | v2.138 passed uploaded Mint qualification; v2.139 passed both GitHub CI lanes. v2.140 ensures independent Python compiler proof cannot return a receipt carrying a newer graph revision than the one originally qualified, including failed-proof diagnostics, provenance mapping and no-op import. Mint evidence remains separate. |
-| 1 | **Source/graph reconciliation and compiler proof consolidation** | v2.123 separates three transient proof stages in `python_lowering.py`; v2.124 skips proof-identical source-only regions during failed-batch diagnostics. v2.125 consolidates current-source function indexing and keyword-call/module-shadow admission within the same compiler module, without new state. v2.126 now captures a single live source snapshot for review hash/spans and rechecks source plus disk at review/import boundaries. v2.127 closes the parallel linked-source proof-to-commit receipt gap without another owner. Next inventory the protected root/secondary navigation branch call sites and retire only proven duplicates with native parity evidence. v2.95 added atomic multi-function selection; v2.97 completes all six conventional typed integer comparisons with shared compiler mapping and improves independent-source parse diagnostics. Refuse unsupported AST, fuzzy renames and partial imports. |
+| 0 | **Qualify v2.141 GitHub native CI and Linux Mint** | v2.138 remains the latest uploaded Mint PASS; v2.140 passed both GitHub CI lanes. v2.141 binds explicit source-to-graph link attachment to exact owner revisions/text/saved bytes and disk state before and after generating the linking baseline. Failed link admission must never create a stale association; Mint evidence remains separate. |
+| 1 | **Source/graph reconciliation and compiler proof consolidation** | v2.125 consolidates live-source function indexing and keyword-call shadow admission. v2.126–v2.127 capture source snapshots and guard linked imports. v2.139 guards saved-byte preimages; v2.140 binds generated and independent compiler receipts to exact graph revisions; v2.141 closes the earlier link-attachment snapshot boundary without another owner. Continue characterizing end-to-end compiler proof failures, retained diagnostics and bounded source-to-graph round trips. Refuse unsupported AST, fuzzy renames, partial imports and speculative new compiler services. |
 | 2 | **Unified tab, route and root compatibility cleanup** | v2.129 fixed destination registry identity, v2.130 consolidated close dispatch, v2.131 stages new secondary pages, v2.132 consolidated selected-view alias binding, and v2.133 stops inactive provider-close focus theft. Next characterize protected source-root bootstrap and remaining aliases; do not delete anchors without actual native parity evidence. |
 | 3 | **Conservative resource capabilities** | Existing previews, imports, literal-reference evidence, relationship inspection, precise source jumps and visible-hop search are implemented. Prefer usability/diagnostics over a recursive filesystem index; static edges are not proven runtime dependencies. |
 | 4 | **Future IDE/language support** | Run/debug/LSP/DAP, other languages and an extension host require stable adapter and execution contracts. Do not build speculative infrastructure before core Python round-trip milestones qualify. |
 
-## v2.140 — exact graph revision for independent compiler proof (CI / Mint pending)
+## v2.141 — link attachment preimage closure (CI / Mint pending)
+
+- `LinkedPythonSource.attach` now snapshots its existing ProgramGraph and
+  SourceDocumentSession versions before preview/fingerprint admission.
+  It rechecks the saved raw bytes, source revision/text, graph revision and
+  external disk preimage after preview, refusing a stale link rather than
+  issuing a receipt built from different owners. No new registry, parser,
+  graph/source writer or source-link subsystem.
+- Eight headless adversarial cases in
+  `tests/test_v2141_link_attach_preimage.py` exercise clean attach,
+  late graph/editor/disk mutation, saved-byte drift without a text revision,
+  inspection and fingerprint callbacks, and stale-preview error precedence.
+  Native Qt retains normal linked-source smoke coverage.
+  See `docs/architecture/PHASE4-LINK-ATTACH-PREIMAGE-v2.141.md`.
+
+## v2.140 — exact graph revision for independent compiler proof (GitHub CI PASS / Mint pending)
 
 - An external graph edit can occur through an original ProgramGraph owner while
   a synchronous compiler review runs. The independent planner formerly

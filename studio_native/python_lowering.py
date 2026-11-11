@@ -2668,16 +2668,35 @@ class LinkedPythonSource:
         # association time. Once linked, unsaved edits are the intended input.
         if session.dirty:
             raise GraphConflict('Link requires a clean Python source document')
+        source_revision,source_text,saved_raw=(session.revision,session.text,session.saved_raw)
+        graph_revision=graph.revision
+        fingerprint=cls._graph_fingerprint(graph)
+
+        def assert_current():
+            # One admission preimage, not a second source/graph owner. Source
+            # saves can advance saved_raw without advancing editor revision.
+            if (session.revision != source_revision or session.text != source_text or
+                    session.saved_raw != saved_raw):
+                raise GraphConflict('Source changed during Python link admission')
+            if graph.revision != graph_revision:
+                raise GraphConflict('Graph changed during Python link admission')
+
         if session.inspect_external() != 'current':
             raise GraphConflict('Source changed on disk; link refused')
+        assert_current()
         preview = preview_python(graph.state)
+        # Preview generation can invoke a reentrant host callback. Refuse an
+        # association based on two different owner revisions, even if the
+        # source text from the earlier snapshot happened to match.
+        if session.inspect_external() != 'current':
+            raise GraphConflict('Source changed on disk during Python link admission')
+        assert_current()
         if preview.source is None:
             raise GraphConflict('Cannot link unqualified graph: ' + '; '.join(preview.issues))
-        if session.text != preview.source or session.saved_raw != preview.source.encode('utf-8'):
+        if source_text != preview.source or saved_raw != preview.source.encode('utf-8'):
             raise GraphConflict('Source is not an exact generated-Python baseline for this graph')
-        return cls(graph, session, preview.source, graph.revision, session.revision,
-                   hashlib.sha256(session.saved_raw).hexdigest(), session.text,
-                   cls._graph_fingerprint(graph))
+        return cls(graph,session,preview.source,graph_revision,source_revision,
+                   hashlib.sha256(saved_raw).hexdigest(),source_text,fingerprint)
 
     def _qualify_receipt(self) -> str:
         """One source+graph conflict gate shared by review and import.

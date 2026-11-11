@@ -1,4 +1,21 @@
-# Codex start here — Superior MI Studio v2.140
+# Codex start here — Superior MI Studio v2.141
+
+## v2.141 — linked-source attachment now verifies both owners after preview (CI/host pending)
+
+`LinkedPythonSource.attach` used an initial clean/disk check, generated a
+Python preview and then stamped a new link with whichever source/graph
+revision happened to be current. A reentrant edit or external file write
+during preview could create a link whose baseline and owner fingerprints
+came from different revisions. Attach now retains one source revision,
+text, saved bytes, graph revision and graph fingerprint, verifies the same
+preimage around both disk inspections and preview generation, and refuses
+if any owner changed. No parallel source snapshots or link registries.
+Eight headless adversarial tests cover this admission boundary; existing
+native Qt linked-source workflows retain their coverage.
+See `docs/architecture/PHASE4-LINK-ATTACH-PREIMAGE-v2.141.md`.
+v2.140 passed both GitHub CI lanes; v2.138 is still the latest uploaded
+Linux Mint native PASS. No release promotion without host proof.
+
 
 ## v2.140 — compiler proof receipts retain the qualified graph revision (CI/host pending)
 
