@@ -1,4 +1,21 @@
-# Codex start here — Superior MI Studio v2.144
+# Codex start here — Superior MI Studio v2.145
+
+## v2.145 — linked source no-op receipts cannot skip reentrant graph changes (CI / host pending)
+
+`LinkedPythonSource._qualify_receipt` checked the existing ProgramGraph
+revision/fingerprint before calling `SourceDocumentSession.inspect_external`.
+A reentrant callback in that inspection could advance the graph but still
+return an accepted disk hash. A linked review or no-op import could accept a
+changed graph, sometimes restamping the link without semantic proof.
+The same receipt owner now confirms its captured graph revision after
+source disk inspection and refuses if it advanced during the gate.
+A preexisting undo/redo to a graph with identical content remains supported.
+Seven headless cases cover review, no-op, actual imports, source-only trivia
+and exact content-equivalent undo. No parallel compiler or state.
+See `docs/architecture/PHASE4-LINKED-GRAPH-INSPECTION-v2.145.md`.
+v2.144 passed both GitHub CI lanes; v2.138 remains the latest uploaded
+Linux Mint host-qualified baseline.
+
 
 ## v2.144 — verify saved graph preimage at source publication (CI / host pending)
 

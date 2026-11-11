@@ -2712,7 +2712,11 @@ class LinkedPythonSource:
         """
         import hashlib
         from .program_graph import GraphConflict
-        if self.graph.revision != self.graph_revision and (
+        # Graph identity is checked across the *whole* source inspection.
+        # A reentrant callback inside inspect_external can advance the graph
+        # after the initial fingerprint check, including no-op imports.
+        graph_revision=self.graph.revision
+        if graph_revision != self.graph_revision and (
                 self._graph_fingerprint(self.graph) != self.graph_fingerprint):
             raise GraphConflict('Graph changed since source link; relink explicitly')
         if self.session.revision < self.source_revision:
@@ -2727,6 +2731,8 @@ class LinkedPythonSource:
             raise GraphConflict('Source disk baseline changed with unproven draft; relink refused')
         if self.session.revision == self.source_revision and self.session.text != self.source_text:
             raise GraphConflict('Source changed without a document revision')
+        if self.graph.revision != graph_revision:
+            raise GraphConflict('Graph changed during linked Python qualification')
         return current_disk_hash
 
     def _assert_current_source(self, revision: int, text: str, saved_raw: bytes) -> str:
