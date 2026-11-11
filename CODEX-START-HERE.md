@@ -1,4 +1,20 @@
-# Codex start here — Superior MI Studio v2.142
+# Codex start here — Superior MI Studio v2.143
+
+## v2.143 — early independent-source qualification uses the same owner proof (CI/host pending)
+
+The independent-source planner checked source/disk/graph revisions after
+the full compiler proof, but its initial generated preview, keyword-call
+admission and transient local syntax normalization could report stale
+errors after a reentrant editor, file or ProgramGraph change. These
+boundaries now reuse the existing `assert_proof_owners` local gate on
+both success and failed qualification; no new parser, shadow source owner
+or rollback mechanism. Eight adversarial tests preserve clean import and
+precise stable missing-function refusals while proving concurrent owner
+changes take priority. See
+`docs/architecture/PHASE4-INDEPENDENT-EARLY-PREIMAGE-v2.143.md`.
+v2.142 passed GitHub headless/native Qt CI; v2.138 remains the last
+uploaded Linux Mint host-qualified baseline.
+
 
 ## v2.142 — failed independent compiler diagnostics verify the exact owners (CI/host pending)
 

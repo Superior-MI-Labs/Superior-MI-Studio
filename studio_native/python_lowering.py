@@ -2424,7 +2424,14 @@ def _independent_functions_plan(graph, session, functions, *, expected_graph_rev
         raise ProgramGraphError('Independent Python source cannot be encoded as UTF-8') from exc
     if len(raw) > MAX_PREVIEW_BYTES:
         raise ProgramGraphError('Independent Python review exceeds compiler size limit')
-    baseline=preview_python(graph.state)
+    # Previewing a graph-owned source can invoke a reentrant host callback.
+    # Do not attribute a rejection to an AST/graph from a stale preimage.
+    try:
+        baseline=preview_python(graph.state)
+    except ProgramGraphError:
+        assert_proof_owners()
+        raise
+    assert_proof_owners()
     if baseline.source is None:
         raise ProgramGraphError('Graph is not qualified for Python: '+'; '.join(baseline.issues))
     try:
@@ -2484,15 +2491,21 @@ def _independent_functions_plan(graph, session, functions, *, expected_graph_rev
         selected[name]=found[0]
     # Existing graph-owned callee signature and module-scope shadow preflight.
     # The helper uses this exact source AST and the indexed graph baseline.
-    keyword_parameters = _independent_keyword_parameter_contract(
-        external, selected, source_functions, owned_functions)
+    try:
+        keyword_parameters = _independent_keyword_parameter_contract(
+            external, selected, source_functions, owned_functions)
 
-    # Replace only explicitly selected functions in the synthetic trial. The
-    # original source AST still owns exact evidence spans and the text remains
-    # untouched, even when its keyword syntax differs from graph publication.
-    proved={name:_independent_proof_function(
-        selected[name],owned_functions[name][0],keyword_parameters,source_functions,name)
-        for name in names}
+        # Replace only explicitly selected functions in the synthetic trial.
+        # The source owner retains its original AST and exact text evidence.
+        proved={name:_independent_proof_function(
+            selected[name],owned_functions[name][0],keyword_parameters,source_functions,name)
+            for name in names}
+    except ProgramGraphError:
+        # An owner change during keyword admission or transient syntax proof
+        # takes precedence over the error of an obsolete source revision.
+        assert_proof_owners()
+        raise
+    assert_proof_owners()
     candidate=ast.Module(body=[proved.get(node.name,node) if isinstance(node,ast.FunctionDef)
                                else node for node in canonical.body],type_ignores=[])
     rendered=ast.unparse(candidate)+'\n'
