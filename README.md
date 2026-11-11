@@ -12,7 +12,7 @@ We take inspiration from **VS Code's development workflow** and **Unreal Engine 
 
 **[Architecture](docs/architecture) · [Wiki](https://github.com/Superior-MI-Labs/Superior-MI-Studio/wiki) · [Development pipeline](docs/RELEASE-PIPELINE.md) · [Issues](https://github.com/Superior-MI-Labs/Superior-MI-Studio/issues)**
 
-> **Current status: pre-alpha · v2.140 development candidate (GitHub CI and Linux Mint native pending).** v2.140 ensures independent Python source reconciliation cannot adopt a graph revision that advanced after compiler proof, including no-op imports. v2.139 passed both GitHub CI lanes; v2.138 is the latest uploaded Linux Mint host-qualified baseline (1,405 headless tests and native Qt PASS). Studio is not a stable release.
+> **Current status: pre-alpha · v2.140 development candidate (GitHub CI and Linux Mint native pending).** v2.140 ensures independent and generated Python source reconciliation cannot adopt a graph revision that advanced after compiler proof, including no-op imports. v2.139 passed both GitHub CI lanes; v2.138 is the latest uploaded Linux Mint host-qualified baseline (1,405 headless tests and native Qt PASS). Studio is not a stable release.
 
 ## The Studio workbench · v2.120 Linux preview
 

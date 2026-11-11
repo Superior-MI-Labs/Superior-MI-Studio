@@ -38,3 +38,17 @@ No other owner, editor, second compiler, graph state store, worker,
 lock, AST adapter, or release pipeline is introduced. A v2.140 CI
 PASS is not Linux Mint host qualification. Roll back to v2.139 on
 spurious conflict refusals with stable revisions.
+
+## Generated-source entry points share the same revision boundary
+
+Public review_generated_source_edit and import_generated_source_edit also
+use the existing _qualified_source_edit_plan, but formerly could return
+an advisory receipt, a no-op or a stale failure after a reentrant graph
+edit. Both now check the original ProgramGraph revision after successful
+compiler proof and after a compiler refusal, before returning or committing.
+
+tests/test_v2140_generated_source_revision.py adds seven regression tests:
+ordinary review/import, stable no-op, mutated graph after successful review,
+real import, no-op import, and both kinds of failed-proof diagnostic.
+These checks use official ProgramGraph graph edits and no new compiler,
+writer, lock, registry, document or graph store.

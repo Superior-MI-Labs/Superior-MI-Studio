@@ -1364,21 +1364,37 @@ def _qualified_source_edit_plan(graph, base_source: str, edited_source: str, *,
 
 def review_generated_source_edit(graph, base_source: str, edited_source: str, *,
                                  expected_revision: int, allow_source_trivia: bool = False) -> SourceEditReview:
-    """Preflight the complete proposed source against graph lowering, without changes.
+    """Preflight proposed generated-source edits without assigning a later graph revision.
 
-    The report is advisory, not an authorization token: import must requalify
-    the current graph and source revisions immediately before committing.
+    A reentrant ProgramGraph transaction invalidates the review, even when
+    the trial compiler succeeded or the proposed edit is a no-op.
     """
-    review,_=_qualified_source_edit_plan(graph,base_source,edited_source,
-        expected_revision=expected_revision,allow_source_trivia=allow_source_trivia)
+    from .program_graph import ProgramGraphError, GraphConflict
+    try:
+        review,_=_qualified_source_edit_plan(graph,base_source,edited_source,
+            expected_revision=expected_revision,allow_source_trivia=allow_source_trivia)
+    except ProgramGraphError as exc:
+        if graph.revision != expected_revision:
+            raise GraphConflict('Graph revision changed during generated source review') from exc
+        raise
+    if graph.revision != expected_revision:
+        raise GraphConflict('Graph revision changed during generated source review')
     return review
 
 
 def import_generated_source_edit(graph, base_source: str, edited_source: str, *,
                                  expected_revision: int, allow_source_trivia: bool = False) -> bool:
-    """Requalify and atomically commit a supported generated-source edit batch."""
-    review,commands=_qualified_source_edit_plan(graph,base_source,edited_source,
-        expected_revision=expected_revision,allow_source_trivia=allow_source_trivia)
+    """Requalify and atomically commit only the exact proven graph revision."""
+    from .program_graph import ProgramGraphError, GraphConflict
+    try:
+        review,commands=_qualified_source_edit_plan(graph,base_source,edited_source,
+            expected_revision=expected_revision,allow_source_trivia=allow_source_trivia)
+    except ProgramGraphError as exc:
+        if graph.revision != expected_revision:
+            raise GraphConflict('Graph revision changed during generated source import') from exc
+        raise
+    if graph.revision != expected_revision:
+        raise GraphConflict('Graph revision changed during generated source import')
     if not commands:
         return False
     return graph.edit_many(review.graph_revision,commands)

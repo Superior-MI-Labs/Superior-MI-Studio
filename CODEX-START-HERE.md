@@ -12,7 +12,7 @@ on failed proof (before stale source attribution), before and after
 evidence mapping, and when emitting the receipt. Failed per-function
 diagnostics also prioritize a concurrent graph conflict. Source receipts
 remain exactly as v2.139; no new graph owner, lock or compiler.
-Six adversarial tests use official ProgramGraph layout edit transactions.
+Six independent and seven generated-source adversarial tests use official ProgramGraph transactions. The existing generated-source review/import entry points now also reject reentrant graph revision changes on successful proof, no-op returns and failed-proof diagnostics. No second compiler or graph owner.
 See `docs/architecture/PHASE4-INDEPENDENT-GRAPH-REVISION-v2.140.md`.
 
 v2.139 passed GitHub headless and native Qt CI.

@@ -1,6 +1,6 @@
 # Superior MI Studio — canonical implementation queue
 
-**Source candidate:** v2.140 (independent-source compiler receipts cannot inherit graph revisions advanced during proof or evidence mapping; CI and Linux Mint host pending). **Latest uploaded Linux Mint host PASS:** v2.138 (`qualification-20261110-184157-31566.tar.gz`: 1,405 tests and native Qt `NATIVE_QT_SMOKE_PASS`, `CHECKS_PASS`). **v2.139 GitHub CI:** headless and native Qt PASS, including exact saved-byte receipt qualification. The installer still owns managed cleanup only after native qualification.
+**Source candidate:** v2.140 (independent and generated-source compiler receipts refuse graph revisions advanced during proof, evidence mapping or import; CI and Linux Mint host pending). **Latest uploaded Linux Mint host PASS:** v2.138 (`qualification-20261110-184157-31566.tar.gz`: 1,405 tests and native Qt `NATIVE_QT_SMOKE_PASS`, `CHECKS_PASS`). **v2.139 GitHub CI:** headless and native Qt PASS, including exact saved-byte receipt qualification. The installer still owns managed cleanup only after native qualification.
 
 **Product direction:** One VS Code-style workspace and navigable graph, Blueprint-grade visual interactions, interchangeable source and visual programming where semantics can be proven, a growing set of file/asset previewers and relationship providers. Python is the first language, **not** the only target. Source, graph and binary resources keep specialized authoritative owners; shared presentation/tabs do not imply a universal writable AST.
 
@@ -22,10 +22,11 @@
   revision qualified at its start. It now refuses any change after proof,
   during failed-proof attribution and after source evidence construction,
   and records only the exact expected graph revision.
-- Six new adversarial tests use real `ProgramGraph.edit('move_node')` to
+- Six independent-source tests use real `ProgramGraph.edit('move_node')` to
   advance a graph during successful proof, failed proof, source evidence,
   after-plan import and no-op import. Valid steady-state review/import stays
-  supported. See
+  supported. Seven generated-source tests now cover its public review/import,
+  no-op and stale error paths. See
   `docs/architecture/PHASE4-INDEPENDENT-GRAPH-REVISION-v2.140.md`.
 
 ## v2.139 — exact source-owner receipts for independent compiler proof (GitHub CI PASS / Mint pending)
