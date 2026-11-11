@@ -1,4 +1,23 @@
-# Codex start here — Superior MI Studio v2.139
+# Codex start here — Superior MI Studio v2.140
+
+## v2.140 — compiler proof receipts retain the qualified graph revision (CI/host pending)
+
+Independent-source proof previously built transient commands for
+`expected_graph_revision` but issued a result with `graph.revision` read
+after compiler proof and source evidence processing. A reentrant graph edit
+could advance the owner revision; the old review could then mislabel
+unproven commands as belonging to the newer graph. The existing
+`_independent_functions_plan` now checks the expected graph revision
+on failed proof (before stale source attribution), before and after
+evidence mapping, and when emitting the receipt. Failed per-function
+diagnostics also prioritize a concurrent graph conflict. Source receipts
+remain exactly as v2.139; no new graph owner, lock or compiler.
+Six adversarial tests use official ProgramGraph layout edit transactions.
+See `docs/architecture/PHASE4-INDEPENDENT-GRAPH-REVISION-v2.140.md`.
+
+v2.139 passed GitHub headless and native Qt CI.
+Latest uploaded Mint host PASS remains v2.138 (1,405 tests, native Qt).
+
 
 ## v2.139 — exact independent-source receipt through compiler commit (CI/host pending)
 

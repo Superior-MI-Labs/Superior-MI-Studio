@@ -2477,6 +2477,11 @@ def _independent_functions_plan(graph, session, functions, *, expected_graph_rev
             allow_pure_reordering=True, _baseline_preview=baseline,
             _baseline_tree=canonical)
     except ProgramGraphError as exc:
+        # A concurrent graph edit invalidates an earlier compiler witness,
+        # even when it changed presentation only. Never attribute a failed
+        # proof to an old source region after the ProgramGraph owner advanced.
+        if graph.revision != expected_graph_revision:
+            raise GraphConflict('Graph revision changed during independent function review') from exc
         # Reentrant source/disk updates invalidate even a failed proof's
         # attribution: report the owner conflict, not a misleading function.
         _assert_independent_source_snapshot(
@@ -2503,6 +2508,8 @@ def _independent_functions_plan(graph, session, functions, *, expected_graph_rev
                     allow_pure_reordering=True, _baseline_preview=baseline,
                     _baseline_tree=canonical)
             except ProgramGraphError as region_error:
+                if graph.revision != expected_graph_revision:
+                    raise GraphConflict('Graph revision changed during independent function review') from region_error
                 region=selected[name]
                 raise ProgramGraphError(
                     f'Function {name!r} (source lines {region.lineno}-{region.end_lineno}): '
@@ -2518,9 +2525,11 @@ def _independent_functions_plan(graph, session, functions, *, expected_graph_rev
     _assert_independent_source_snapshot(
         session,source_revision,source_text,source_saved_raw,
         stage='during independent function review')
+    if graph.revision != expected_graph_revision:
+        raise GraphConflict('Graph revision changed during independent function review')
     lines,spans=_independent_change_lines(selected,canonical,baseline,review.changes,
                                          source_text)
-    receipt=IndependentFunctionsReview(graph.revision,source_revision,
+    receipt=IndependentFunctionsReview(expected_graph_revision,source_revision,
         hashlib.sha256(raw).hexdigest(),names,
         tuple((name,selected[name].lineno,selected[name].end_lineno) for name in names),
         review.changes,len(external.body)-len(names),lines,spans)
@@ -2529,6 +2538,8 @@ def _independent_functions_plan(graph, session, functions, *, expected_graph_rev
     _assert_independent_source_snapshot(
         session,source_revision,source_text,source_saved_raw,
         stage='during independent function review')
+    if graph.revision != expected_graph_revision:
+        raise GraphConflict('Graph revision changed during independent function review')
     return receipt,commands
 
 
