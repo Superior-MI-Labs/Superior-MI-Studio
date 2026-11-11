@@ -4,7 +4,7 @@ This is a product-direction overview, **not** a parallel engineering task queue.
 
 ## Current phase: trust and consolidation
 
-- The latest uploaded Linux Mint native host-qualified baseline is v2.138 (1,405 headless tests and native Qt PASS). v2.139 passed both GitHub CI lanes; v2.140 is a development candidate for exact graph-revision compiler receipt integrity. GitHub CI does not replace target-host evidence for newer versions; none is a stable product release.
+- The latest uploaded Linux Mint native host-qualified baseline is v2.138 (1,405 headless tests and native Qt PASS). v2.140 passed both GitHub CI lanes; v2.141 is a development candidate for source-to-graph link attachment preimage integrity. GitHub CI does not replace target-host evidence for newer versions; none is a stable product release.
 - Consolidate existing Python compiler-proof implementation, remove redundant passes, improve conflict evidence and keep source immutable until explicit publication.
 - Finish graph view, navigation, tab and legacy-root cleanup without splitting document ownership, camera/session identity or source revisions.
 - Maintain positive/refusal regression coverage and real Qt interaction checks.
