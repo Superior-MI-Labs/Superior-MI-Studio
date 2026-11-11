@@ -1364,21 +1364,37 @@ def _qualified_source_edit_plan(graph, base_source: str, edited_source: str, *,
 
 def review_generated_source_edit(graph, base_source: str, edited_source: str, *,
                                  expected_revision: int, allow_source_trivia: bool = False) -> SourceEditReview:
-    """Preflight the complete proposed source against graph lowering, without changes.
+    """Preflight proposed generated-source edits without assigning a later graph revision.
 
-    The report is advisory, not an authorization token: import must requalify
-    the current graph and source revisions immediately before committing.
+    A reentrant ProgramGraph transaction invalidates the review, even when
+    the trial compiler succeeded or the proposed edit is a no-op.
     """
-    review,_=_qualified_source_edit_plan(graph,base_source,edited_source,
-        expected_revision=expected_revision,allow_source_trivia=allow_source_trivia)
+    from .program_graph import ProgramGraphError, GraphConflict
+    try:
+        review,_=_qualified_source_edit_plan(graph,base_source,edited_source,
+            expected_revision=expected_revision,allow_source_trivia=allow_source_trivia)
+    except ProgramGraphError as exc:
+        if graph.revision != expected_revision:
+            raise GraphConflict('Graph revision changed during generated source review') from exc
+        raise
+    if graph.revision != expected_revision:
+        raise GraphConflict('Graph revision changed during generated source review')
     return review
 
 
 def import_generated_source_edit(graph, base_source: str, edited_source: str, *,
                                  expected_revision: int, allow_source_trivia: bool = False) -> bool:
-    """Requalify and atomically commit a supported generated-source edit batch."""
-    review,commands=_qualified_source_edit_plan(graph,base_source,edited_source,
-        expected_revision=expected_revision,allow_source_trivia=allow_source_trivia)
+    """Requalify and atomically commit only the exact proven graph revision."""
+    from .program_graph import ProgramGraphError, GraphConflict
+    try:
+        review,commands=_qualified_source_edit_plan(graph,base_source,edited_source,
+            expected_revision=expected_revision,allow_source_trivia=allow_source_trivia)
+    except ProgramGraphError as exc:
+        if graph.revision != expected_revision:
+            raise GraphConflict('Graph revision changed during generated source import') from exc
+        raise
+    if graph.revision != expected_revision:
+        raise GraphConflict('Graph revision changed during generated source import')
     if not commands:
         return False
     return graph.edit_many(review.graph_revision,commands)
@@ -2477,6 +2493,11 @@ def _independent_functions_plan(graph, session, functions, *, expected_graph_rev
             allow_pure_reordering=True, _baseline_preview=baseline,
             _baseline_tree=canonical)
     except ProgramGraphError as exc:
+        # A concurrent graph edit invalidates an earlier compiler witness,
+        # even when it changed presentation only. Never attribute a failed
+        # proof to an old source region after the ProgramGraph owner advanced.
+        if graph.revision != expected_graph_revision:
+            raise GraphConflict('Graph revision changed during independent function review') from exc
         # Reentrant source/disk updates invalidate even a failed proof's
         # attribution: report the owner conflict, not a misleading function.
         _assert_independent_source_snapshot(
@@ -2503,6 +2524,8 @@ def _independent_functions_plan(graph, session, functions, *, expected_graph_rev
                     allow_pure_reordering=True, _baseline_preview=baseline,
                     _baseline_tree=canonical)
             except ProgramGraphError as region_error:
+                if graph.revision != expected_graph_revision:
+                    raise GraphConflict('Graph revision changed during independent function review') from region_error
                 region=selected[name]
                 raise ProgramGraphError(
                     f'Function {name!r} (source lines {region.lineno}-{region.end_lineno}): '
@@ -2518,9 +2541,11 @@ def _independent_functions_plan(graph, session, functions, *, expected_graph_rev
     _assert_independent_source_snapshot(
         session,source_revision,source_text,source_saved_raw,
         stage='during independent function review')
+    if graph.revision != expected_graph_revision:
+        raise GraphConflict('Graph revision changed during independent function review')
     lines,spans=_independent_change_lines(selected,canonical,baseline,review.changes,
                                          source_text)
-    receipt=IndependentFunctionsReview(graph.revision,source_revision,
+    receipt=IndependentFunctionsReview(expected_graph_revision,source_revision,
         hashlib.sha256(raw).hexdigest(),names,
         tuple((name,selected[name].lineno,selected[name].end_lineno) for name in names),
         review.changes,len(external.body)-len(names),lines,spans)
@@ -2529,6 +2554,8 @@ def _independent_functions_plan(graph, session, functions, *, expected_graph_rev
     _assert_independent_source_snapshot(
         session,source_revision,source_text,source_saved_raw,
         stage='during independent function review')
+    if graph.revision != expected_graph_revision:
+        raise GraphConflict('Graph revision changed during independent function review')
     return receipt,commands
 
 
