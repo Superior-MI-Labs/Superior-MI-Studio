@@ -1,4 +1,21 @@
-# Codex start here — Superior MI Studio v2.138
+# Codex start here — Superior MI Studio v2.139
+
+## v2.139 — independent-source proof receipts cannot outlive evidence (CI / host pending)
+
+In `python_lowering._independent_functions_plan`, compiler proof previously
+checked the source owner/disk, built advisory source line/column spans, then
+stamped a review with whatever ProgramGraph revision existed at return.
+If source, disk or graph changed during span evidence, the receipt could
+misstate the revision and provenance of its approved edits. A single
+local preimage guard now checks the live SourceDocumentSession, disk and
+ProgramGraph both before and after evidence mapping, and prioritizes
+ownership conflicts over stale compiler diagnostics. Existing generated
+lowering and import transactions remain the only authorities. Normal
+review/import is unchanged; adversarial test coverage is in
+`tests/test_v2139_independent_evidence_preimage.py`.
+See `docs/architecture/PHASE4-INDEPENDENT-EVIDENCE-PREIMAGE-v2.139.md`.
+v2.138 passed headless/native GitHub CI; Linux Mint host report pending.
+
 
 ## v2.138 — source whole-file Up follows the selected graph session (CI/host pending)
 

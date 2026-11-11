@@ -2368,6 +2368,20 @@ def _independent_functions_plan(graph, session, functions, *, expected_graph_rev
     source_text=session.text
     if session.inspect_external() != 'current':
         raise GraphConflict('Source changed on disk; independent function review refused')
+
+    def assert_preimage():
+        """One owner gate for compiler proof, diagnostics and receipt evidence."""
+        # A disk-inspection callback can update the live editor; check source
+        # before and after that read rather than mixing revisions in a receipt.
+        if session.revision != source_revision or session.text != source_text:
+            raise GraphConflict('Source revision changed during independent function review')
+        if session.inspect_external() != 'current':
+            raise GraphConflict('Source changed on disk during independent function review')
+        if session.revision != source_revision or session.text != source_text:
+            raise GraphConflict('Source revision changed during independent function review')
+        if graph.revision != expected_graph_revision:
+            raise GraphConflict('Graph revision changed during independent function review')
+
     try:
         raw=source_text.encode('utf-8')
     except UnicodeError as exc:
@@ -2454,10 +2468,7 @@ def _independent_functions_plan(graph, session, functions, *, expected_graph_rev
     except ProgramGraphError as exc:
         # Reentrant source/disk updates invalidate even a failed proof's
         # attribution: report the owner conflict, not a misleading function.
-        if session.revision != source_revision or session.text != source_text:
-            raise GraphConflict('Source revision changed during independent function review') from exc
-        if session.inspect_external() != 'current':
-            raise GraphConflict('Source changed on disk during independent function review') from exc
+        assert_preimage()
         # A failed multi-region proof must name the offending source region.
         # Isolate each selected function against the same canonical baseline;
         # this diagnostic reuses the compiler rather than independently
@@ -2479,25 +2490,25 @@ def _independent_functions_plan(graph, session, functions, *, expected_graph_rev
                     allow_pure_reordering=True, _baseline_preview=baseline,
                     _baseline_tree=canonical)
             except ProgramGraphError as region_error:
+                assert_preimage()
                 region=selected[name]
                 raise ProgramGraphError(
                     f'Function {name!r} (source lines {region.lineno}-{region.end_lineno}): '
                     f'{region_error}') from exc
         # In the unlikely case that each individual region is valid but their
         # combination is not, retain the complete batch refusal intact.
+        assert_preimage()
         raise ProgramGraphError('Combined function review refused: '+str(exc)) from exc
     if any(change.function not in selected for change in review.changes):
         raise ProgramGraphError('Proposed edits escaped the selected functions')
-    # The compiler is synchronous, but source and disk can still change
-    # through reentrant host callbacks. A review receipt must describe the
-    # exact revision/bytes used for the initial proof, not a later revision.
-    if session.revision != source_revision or session.text != source_text:
-        raise GraphConflict('Source revision changed during independent function review')
-    if session.inspect_external() != 'current':
-        raise GraphConflict('Source changed on disk during independent function review')
+    # Compilation and advisory span construction are both part of one proof:
+    # a receipt must not describe the later owner revision if either phase
+    # observed a reentrant editor, disk or ProgramGraph update.
+    assert_preimage()
     lines,spans=_independent_change_lines(selected,canonical,baseline,review.changes,
                                          source_text)
-    receipt=IndependentFunctionsReview(graph.revision,source_revision,
+    assert_preimage()
+    receipt=IndependentFunctionsReview(expected_graph_revision,source_revision,
         hashlib.sha256(raw).hexdigest(),names,
         tuple((name,selected[name].lineno,selected[name].end_lineno) for name in names),
         review.changes,len(external.body)-len(names),lines,spans)
