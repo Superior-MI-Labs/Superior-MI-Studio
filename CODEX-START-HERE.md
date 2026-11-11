@@ -1,4 +1,20 @@
-# Codex start here — Superior MI Studio v2.145
+# Codex start here — Superior MI Studio v2.146
+
+## v2.146 — linked import receipt refresh validates before restamping (CI / host pending)
+
+The compiler-owned `LinkedPythonSource.import_edits` could commit a graph
+transaction, then update its graph revision/fingerprint and source revision
+before regenerating the Python baseline. A failed preview or a reentrant
+source, filesystem or graph change during that refresh left a partially
+updated acceptance receipt. The existing import path now calculates and
+qualifies all new fields before advancing the link's accepted metadata.
+No graph undo/rollback shim, second compiler, document owner or source
+writer. Eight new regression tests cover positive two-step import,
+source-owned trivia and postcommit failure injection. See
+`docs/architecture/PHASE4-LINKED-POSTCOMMIT-RECEIPT-v2.146.md`.
+v2.145 passed GitHub CI headless and native Qt. v2.138 remains the latest
+uploaded Linux Mint host PASS; do not promote until native host proof.
+
 
 ## v2.145 — linked source no-op receipts cannot skip reentrant graph changes (CI / host pending)
 

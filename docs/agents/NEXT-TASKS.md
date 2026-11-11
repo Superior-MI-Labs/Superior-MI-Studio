@@ -1,6 +1,6 @@
 # Superior MI Studio — canonical implementation queue
 
-**Source candidate:** v2.145 (linked Python review/import refuse ProgramGraph revision changes during source external inspection, including no-op receipts; GitHub CI and Linux Mint host pending). **Latest uploaded Linux Mint host PASS:** v2.138 (`qualification-20261110-184157-31566.tar.gz`: 1,405 tests and native Qt `NATIVE_QT_SMOKE_PASS`, `CHECKS_PASS`). **v2.144 GitHub CI:** headless and native Qt PASS, including saved-graph publication preimage checks. The installer still owns managed cleanup only after native qualification.
+**Source candidate:** v2.146 (linked-source post-import receipt fields advance together only after regenerated graph/source evidence remains current; GitHub CI and Linux Mint host pending). **Latest uploaded Linux Mint host PASS:** v2.138 (`qualification-20261110-184157-31566.tar.gz`: 1,405 tests and native Qt `NATIVE_QT_SMOKE_PASS`, `CHECKS_PASS`). **v2.145 GitHub CI:** headless and native Qt PASS, including linked graph changes during disk inspection. The installer still owns managed cleanup only after native qualification.
 
 **Product direction:** One VS Code-style workspace and navigable graph, Blueprint-grade visual interactions, interchangeable source and visual programming where semantics can be proven, a growing set of file/asset previewers and relationship providers. Python is the first language, **not** the only target. Source, graph and binary resources keep specialized authoritative owners; shared presentation/tabs do not imply a universal writable AST.
 
@@ -8,13 +8,27 @@
 
 | Priority | Work | Required proof / no-go |
 |---|---|---|
-| 0 | **Qualify v2.145 GitHub native CI and Linux Mint** | v2.138 remains the latest uploaded Mint PASS; v2.144 passed both CI lanes. v2.145 adds an after-inspection graph revision check inside the same linked-source receipt gate, preventing false no-op acceptance or stale imports after reentrant source inspection. Mint evidence remains separate. |
-| 1 | **Source/graph reconciliation and compiler proof consolidation** | v2.125 consolidates live-source indexing and keyword-call admission. v2.126–v2.127 capture source snapshots and linked imports. v2.139–v2.144 guard saved-byte, graph-revision, attachment, diagnostic and publication integrity; v2.145 closes the reentrant graph revision window in linked source receipt inspection, including no-op import. Next characterize actual source-to-graph round trips and remove proven duplication only. Refuse unsupported AST, fuzzy renames, partial imports and speculative compiler services. |
+| 0 | **Qualify v2.146 GitHub native CI and Linux Mint** | v2.138 remains the latest uploaded Mint PASS; v2.145 passed both CI lanes. v2.146 defers all linked-source receipt stamping until the committed graph's Python projection and exact source/disk/graph preimage are rechecked. Failed refresh preserves the previous link receipt without rolling back user-owned graph edits. Mint evidence remains separate. |
+| 1 | **Source/graph reconciliation and compiler proof consolidation** | v2.125 consolidates live-source indexing and keyword-call admission. v2.126–v2.127 capture source snapshots and linked imports. v2.139–v2.145 guard saved-byte, graph-revision, attachment, diagnostic, publication and linked receipt inspection. v2.146 keeps post-import link receipt stamping behind regenerated Python and live owner proof. Next characterize actual source-to-graph round trips and remove proven duplication only. Refuse unsupported AST, fuzzy renames, partial imports and speculative compiler services. |
 | 2 | **Unified tab, route and root compatibility cleanup** | v2.129 fixed destination registry identity, v2.130 consolidated close dispatch, v2.131 stages new secondary pages, v2.132 consolidated selected-view alias binding, and v2.133 stops inactive provider-close focus theft. Next characterize protected source-root bootstrap and remaining aliases; do not delete anchors without actual native parity evidence. |
 | 3 | **Conservative resource capabilities** | Existing previews, imports, literal-reference evidence, relationship inspection, precise source jumps and visible-hop search are implemented. Prefer usability/diagnostics over a recursive filesystem index; static edges are not proven runtime dependencies. |
 | 4 | **Future IDE/language support** | Run/debug/LSP/DAP, other languages and an extension host require stable adapter and execution contracts. Do not build speculative infrastructure before core Python round-trip milestones qualify. |
 
-## v2.145 — linked receipt reentrant graph inspection (GitHub CI / Mint pending)
+## v2.146 — linked post-import receipt qualification (GitHub CI / Mint pending)
+
+- `LinkedPythonSource.import_edits` no longer restamps accepted graph/source
+  revisions and fingerprint before refreshing its Python baseline. It
+  generates and qualifies the new baseline from the committed ProgramGraph,
+  verifies source editor, saved bytes, filesystem and graph revision, then
+  advances all existing receipt fields together.
+- Eight tests in `tests/test_v2146_linked_postcommit_receipt.py` cover
+  normal two-step import, failed or unqualified postcommit preview, reentrant
+  graph/editor/disk/fingerprint mutation and source-owned trivia. An already
+  committed graph edit is never silently undone if receipt refresh refuses;
+  the old link receipt remains untouched and requires explicit recovery.
+  See `docs/architecture/PHASE4-LINKED-POSTCOMMIT-RECEIPT-v2.146.md`.
+
+## v2.145 — linked receipt reentrant graph inspection (GitHub CI PASS / Mint pending)
 
 - `LinkedPythonSource._qualify_receipt` now captures its original graph
   revision and refuses a graph transaction that advances the revision

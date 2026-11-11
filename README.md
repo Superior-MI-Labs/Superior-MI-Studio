@@ -12,7 +12,7 @@ We take inspiration from **VS Code's development workflow** and **Unreal Engine 
 
 **[Architecture](docs/architecture) · [Wiki](https://github.com/Superior-MI-Labs/Superior-MI-Studio/wiki) · [Development pipeline](docs/RELEASE-PIPELINE.md) · [Issues](https://github.com/Superior-MI-Labs/Superior-MI-Studio/issues)**
 
-> **Current status: pre-alpha · v2.145 development candidate (GitHub CI and Linux Mint native pending).** v2.145 prevents linked-source review or no-op import from accepting graph changes during source disk inspection, without rejecting valid graph undo/redo. v2.144 passed GitHub headless and native Qt CI; v2.138 remains the latest uploaded Linux Mint host-qualified baseline (1,405 headless tests and native Qt PASS). Studio is not a stable release.
+> **Current status: pre-alpha · v2.146 development candidate (GitHub CI and Linux Mint native pending).** v2.146 keeps linked-source post-import receipt fields unchanged until regenerated Python and source/graph/disk preimages are all validated, preventing partial link acceptance after failed refresh. v2.145 passed GitHub headless and native Qt CI; v2.138 remains the latest uploaded Linux Mint host-qualified baseline (1,405 headless tests and native Qt PASS). Studio is not a stable release.
 
 ## The Studio workbench · v2.120 Linux preview
 

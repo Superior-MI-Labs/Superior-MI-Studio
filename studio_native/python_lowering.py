@@ -2796,10 +2796,34 @@ class LinkedPythonSource:
             raise
         current_disk_hash = self._assert_current_source(revision, text, saved_raw)
         changed = self.graph.edit_many(review.graph_revision, commands) if commands else False
-        self.graph_revision = self.graph.revision
-        self.graph_fingerprint = self._graph_fingerprint(self.graph)
+        # The graph transaction is already committed by its sole owner.
+        # Compute and qualify every next receipt field BEFORE advancing any
+        # accepted link metadata. A failed refresh must leave the link stale,
+        # never half-updated; graph undo is not a safe compensating rollback.
+        committed_revision = self.graph.revision
+        next_preview = preview_python(self.graph.state)
+        if self.graph.revision != committed_revision:
+            raise GraphConflict('Graph changed during linked Python receipt refresh; relink explicitly')
+        if next_preview.source is None:
+            raise GraphConflict('Committed graph cannot refresh linked Python: ' +
+                                '; '.join(next_preview.issues))
+        next_fingerprint = self._graph_fingerprint(self.graph)
+        if self.graph.revision != committed_revision:
+            raise GraphConflict('Graph changed during linked Python receipt refresh; relink explicitly')
+        if (self.session.revision != revision or self.session.text != text or
+                self.session.saved_raw != saved_raw):
+            raise GraphConflict('Source changed during linked Python receipt refresh')
+        if self.session.inspect_external() != 'current':
+            raise GraphConflict('Source changed on disk during linked Python receipt refresh')
+        if (self.session.revision != revision or self.session.text != text or
+                self.session.saved_raw != saved_raw):
+            raise GraphConflict('Source changed during linked Python receipt refresh')
+        if self.graph.revision != committed_revision:
+            raise GraphConflict('Graph changed during linked Python receipt refresh; relink explicitly')
+        self.graph_revision = committed_revision
+        self.graph_fingerprint = next_fingerprint
         self.source_revision = revision
-        self.base_source = preview_python(self.graph.state).source
+        self.base_source = next_preview.source
         self.source_text = text
         self.disk_sha256 = current_disk_hash
         return changed
