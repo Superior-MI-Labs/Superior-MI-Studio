@@ -2818,7 +2818,7 @@ def publish_python(graph, destination, *, expected_revision: int,
     """
     import hashlib
     from pathlib import Path
-    from .program_graph import ProgramGraph, GraphConflict
+    from .program_graph import ProgramGraph, ProgramGraphError, GraphConflict
     from .python_edit import EditProposal, apply_proposal, create_source_exclusive
     from .python_graph import SourceError
     if not isinstance(graph, ProgramGraph):
@@ -2826,7 +2826,25 @@ def publish_python(graph, destination, *, expected_revision: int,
     if type(expected_revision) is not int or graph.revision != expected_revision:
         raise GraphConflict('Stale graph revision; publication refused')
     state, raw_graph = graph.saved_snapshot_for_publication()
-    preview=preview_python(state)
+    if state['revision'] != expected_revision:
+        raise GraphConflict('Graph changed during Python publication')
+
+    def assert_saved_preimage():
+        """Requalify the original graph owner before source publication."""
+        if graph.revision != expected_revision:
+            raise GraphConflict('Graph changed during Python publication')
+        current_state,current_raw=graph.saved_snapshot_for_publication()
+        if current_raw != raw_graph or current_state != state:
+            raise GraphConflict('Graph changed during Python publication')
+
+    try:
+        preview=preview_python(state)
+    except ProgramGraphError:
+        assert_saved_preimage()
+        raise
+    # Preview can invoke reentrant callbacks. Even a failed preview must not
+    # report a stale compiler diagnostic over a changed saved graph.
+    assert_saved_preimage()
     if preview.source is None:
         raise GraphConflict('Python publication refused: ' + '; '.join(preview.issues))
     path=Path(destination).expanduser().absolute()
@@ -2836,6 +2854,8 @@ def publish_python(graph, destination, *, expected_revision: int,
     # Verify the source at the publication boundary, not merely in the UI.
     compile(ast.parse(raw.decode('utf-8')),str(path),'exec')
     if expected_target_sha256 is None:
+        # Existing exclusive creation remains the only source writer.
+        assert_saved_preimage()
         published=create_source_exclusive(path,raw)
     else:
         if (not isinstance(expected_target_sha256,str) or len(expected_target_sha256)!=64 or
@@ -2846,6 +2866,9 @@ def publish_python(graph, destination, *, expected_revision: int,
         original=path.read_bytes()
         if hashlib.sha256(original).hexdigest()!=expected_target_sha256:
             raise SourceError('Existing source SHA-256 differs; refusing publication')
+        # Recheck after reading the destination and before the established
+        # compare-and-swap source writer can alter it or create a backup.
+        assert_saved_preimage()
         apply_proposal(EditProposal(path,original,raw,'utf-8','Publish qualified ProgramGraph Python'))
         published=path.resolve(strict=True)
     return PythonPublication(str(published),hashlib.sha256(raw).hexdigest(),
