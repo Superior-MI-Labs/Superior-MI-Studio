@@ -12,7 +12,7 @@ Studio already has one authoritative set of source, install and qualification sc
 
 ## GitHub CI (as implemented)
 
-`.github/workflows/headless.yml` checks push and pull requests on Linux with a Python 3.12 headless lane and an Ubuntu PyQt6 native-Qt offscreen lane. CI verifies its environment only. A successful CI run does not assert that a particular user's machine or an install/promotion was qualified.
+`.github/workflows/headless.yml` runs the same Python 3.12 headless lane and Ubuntu PyQt6 native-Qt offscreen lane for **pull requests (including drafts)**, direct pushes to `main`, and explicit manual dispatch. A feature-branch push without a PR does not run this workflow by default; opening a draft PR or pushing new commits to an existing PR triggers its qualification. This avoids running identical suites twice for the same branch commit (once on `push`, once on `pull_request`). For an early branch without a PR, use the existing `scripts/agent-verify.sh` locally or manually dispatch the workflow. Neither qualification job, refusal gate, or required Linux Mint host evidence has been weakened. CI verifies its environment only. A successful CI run does not assert that a particular user's machine or an install/promotion was qualified.
 
 ## Candidate archive and local install
 

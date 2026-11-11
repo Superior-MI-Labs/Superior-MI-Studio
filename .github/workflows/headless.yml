@@ -1,6 +1,10 @@
 name: Studio headless qualification
+# Feature-branch pushes qualify once through their PR instead of running
+# the full headless and native Qt jobs again on the same commit.
+# Main always retains its direct-push gate; pre-PR work may dispatch manually.
 on:
   push:
+    branches: [main]
   pull_request:
   workflow_dispatch:
 jobs:
