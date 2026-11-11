@@ -1,6 +1,6 @@
 # Superior MI Studio — canonical implementation queue
 
-**Source candidate:** v2.143 (independent-source early preview and keyword/local admission now recheck exact graph/source/disk owner preimages before returning a diagnostic; GitHub CI and Linux Mint host pending). **Latest uploaded Linux Mint host PASS:** v2.138 (`qualification-20261110-184157-31566.tar.gz`: 1,405 tests and native Qt `NATIVE_QT_SMOKE_PASS`, `CHECKS_PASS`). **v2.142 GitHub CI:** headless and native Qt PASS, including exact owner checks during regional failure attribution. The installer still owns managed cleanup only after native qualification.
+**Source candidate:** v2.144 (saved ProgramGraph preimage reverified immediately before creating or replacing generated Python files; GitHub CI and Linux Mint host pending). **Latest uploaded Linux Mint host PASS:** v2.138 (`qualification-20261110-184157-31566.tar.gz`: 1,405 tests and native Qt `NATIVE_QT_SMOKE_PASS`, `CHECKS_PASS`). **v2.143 GitHub CI:** headless and native Qt PASS, including early independent-source admission checks. The installer still owns managed cleanup only after native qualification.
 
 **Product direction:** One VS Code-style workspace and navigable graph, Blueprint-grade visual interactions, interchangeable source and visual programming where semantics can be proven, a growing set of file/asset previewers and relationship providers. Python is the first language, **not** the only target. Source, graph and binary resources keep specialized authoritative owners; shared presentation/tabs do not imply a universal writable AST.
 
@@ -8,13 +8,31 @@
 
 | Priority | Work | Required proof / no-go |
 |---|---|---|
-| 0 | **Qualify v2.143 GitHub native CI and Linux Mint** | v2.138 remains the latest uploaded Mint PASS; v2.142 passed both CI lanes. v2.143 reuses the existing source/disk/graph gate after initial Python preview and keyword/local syntax normalization, rejecting stale early diagnostics while preserving exact-name and compiler authority. Mint evidence remains separate. |
-| 1 | **Source/graph reconciliation and compiler proof consolidation** | v2.125 consolidates live-source indexing and keyword-call admission. v2.126–v2.127 capture source snapshots and linked imports. v2.139–v2.142 guard saved-byte, graph-revision, attachment and failure-diagnostic integrity; v2.143 extends the same owner gate to early preview/normalization. Next characterize bounded source-to-graph round trips and remove proven duplication only. Refuse unsupported AST, fuzzy renames, partial imports and speculative new compiler services. |
+| 0 | **Qualify v2.144 GitHub native CI and Linux Mint** | v2.138 remains the latest uploaded Mint PASS; v2.143 passed both CI lanes. v2.144 rechecks the original saved graph preimage after Python preview and at both existing source writer boundaries; graph/disk changes must refuse without source publication. Mint evidence remains separate. |
+| 1 | **Source/graph reconciliation and compiler proof consolidation** | v2.125 consolidates live-source indexing and keyword-call admission. v2.126–v2.127 capture source snapshots and linked imports. v2.139–v2.143 protect saved-byte, graph-revision, attachment and diagnostic integrity; v2.144 closes the saved graph-to-source publication preimage window using the existing writer. Next characterize bounded source-to-graph round trips and remove proven duplication only. Refuse unsupported AST, fuzzy renames, partial imports and speculative new compiler services. |
 | 2 | **Unified tab, route and root compatibility cleanup** | v2.129 fixed destination registry identity, v2.130 consolidated close dispatch, v2.131 stages new secondary pages, v2.132 consolidated selected-view alias binding, and v2.133 stops inactive provider-close focus theft. Next characterize protected source-root bootstrap and remaining aliases; do not delete anchors without actual native parity evidence. |
 | 3 | **Conservative resource capabilities** | Existing previews, imports, literal-reference evidence, relationship inspection, precise source jumps and visible-hop search are implemented. Prefer usability/diagnostics over a recursive filesystem index; static edges are not proven runtime dependencies. |
 | 4 | **Future IDE/language support** | Run/debug/LSP/DAP, other languages and an extension host require stable adapter and execution contracts. Do not build speculative infrastructure before core Python round-trip milestones qualify. |
 
-## v2.143 — early independent-source admission ownership (CI / Mint pending)
+## v2.144 — saved graph Python publication preimage (GitHub CI / Mint pending)
+
+- `publish_python` now keeps one captured clean saved graph preimage
+  (revision, state and exact disk bytes). The existing graph owner is
+  reverified after source preview and immediately before either existing
+  source publication writer. A stale graph or external disk write refuses
+  before creating/replacing Python, without a compensating rollback.
+- Nine headless cases in `tests/test_v2144_publication_saved_preimage.py`
+  exercise valid new/replacement publication, graph edit/save during
+  preview, external graph write, invalid/raised preview with graph change,
+  and target preimage callbacks. The existing source writer and backups
+  remain authoritative. See
+  `docs/architecture/PHASE4-PUBLICATION-SAVED-PREIMAGE-v2.144.md`.
+- Actions budget note: this public repository's standard runners are
+  free for execution minutes, but redundant branch-creation and PR
+  workflows still consume compute. Create new branches at their complete
+  candidate commit rather than triggering a separate base-ref run.
+
+## v2.143 — early independent-source admission ownership (GitHub CI PASS / Mint pending)
 
 - The `_independent_functions_plan` initial Python preview and transient
   keyword/local syntax proof now reuse its existing lexical

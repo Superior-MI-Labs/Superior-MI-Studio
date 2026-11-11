@@ -1,4 +1,20 @@
-# Codex start here — Superior MI Studio v2.143
+# Codex start here — Superior MI Studio v2.144
+
+## v2.144 — verify saved graph preimage at source publication (CI / host pending)
+
+`publish_python` formerly read a clean ProgramGraph disk snapshot,
+lowered Python, then created or overwrote a Python file without confirming
+that the graph was still the same revision and saved bytes. It now uses
+one local read-only preimage guard after lowering and immediately before
+the existing exclusive/create-or-exact-replace source writers. Reentrant
+graph edits and external writes are refused before publication; normal
+output bytes, backups and receipts retain the original contract. Nine
+adversarial tests cover normal and changed source graph publication.
+See `docs/architecture/PHASE4-PUBLICATION-SAVED-PREIMAGE-v2.144.md`.
+v2.143 passed both GitHub CI lanes; v2.138 remains the latest uploaded
+Linux Mint host-qualified version. The repository is public so standard
+runner execution is free, but duplicate CI runs should still be avoided.
+
 
 ## v2.143 — early independent-source qualification uses the same owner proof (CI/host pending)
 
