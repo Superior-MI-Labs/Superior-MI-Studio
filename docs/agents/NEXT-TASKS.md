@@ -1,6 +1,6 @@
 # Superior MI Studio — canonical implementation queue
 
-**Source candidate:** v2.141 (linked-source attach validates one exact ProgramGraph/source/disk preimage across preview and fingerprint construction; GitHub CI and Linux Mint host pending). **Latest uploaded Linux Mint host PASS:** v2.138 (`qualification-20261110-184157-31566.tar.gz`: 1,405 tests and native Qt `NATIVE_QT_SMOKE_PASS`, `CHECKS_PASS`). **v2.140 GitHub CI:** headless and native Qt PASS, including generated and independent source graph-revision proof. The installer still owns managed cleanup only after native qualification.
+**Source candidate:** v2.142 (one source/disk/graph preimage gate also protects per-function and combined compiler failure diagnostics; GitHub CI and Linux Mint host pending). **Latest uploaded Linux Mint host PASS:** v2.138 (`qualification-20261110-184157-31566.tar.gz`: 1,405 tests and native Qt `NATIVE_QT_SMOKE_PASS`, `CHECKS_PASS`). **v2.141 GitHub CI:** headless and native Qt PASS, including linked-source attachment admission integrity. The installer still owns managed cleanup only after native qualification.
 
 **Product direction:** One VS Code-style workspace and navigable graph, Blueprint-grade visual interactions, interchangeable source and visual programming where semantics can be proven, a growing set of file/asset previewers and relationship providers. Python is the first language, **not** the only target. Source, graph and binary resources keep specialized authoritative owners; shared presentation/tabs do not imply a universal writable AST.
 
@@ -8,13 +8,28 @@
 
 | Priority | Work | Required proof / no-go |
 |---|---|---|
-| 0 | **Qualify v2.141 GitHub native CI and Linux Mint** | v2.138 remains the latest uploaded Mint PASS; v2.140 passed both GitHub CI lanes. v2.141 binds explicit source-to-graph link attachment to exact owner revisions/text/saved bytes and disk state before and after generating the linking baseline. Failed link admission must never create a stale association; Mint evidence remains separate. |
-| 1 | **Source/graph reconciliation and compiler proof consolidation** | v2.125 consolidates live-source function indexing and keyword-call shadow admission. v2.126–v2.127 capture source snapshots and guard linked imports. v2.139 guards saved-byte preimages; v2.140 binds generated and independent compiler receipts to exact graph revisions; v2.141 closes the earlier link-attachment snapshot boundary without another owner. Continue characterizing end-to-end compiler proof failures, retained diagnostics and bounded source-to-graph round trips. Refuse unsupported AST, fuzzy renames, partial imports and speculative new compiler services. |
+| 0 | **Qualify v2.142 GitHub native CI and Linux Mint** | v2.138 remains the latest uploaded Mint PASS; v2.141 passed both GitHub CI lanes. v2.142 consolidates the independent-function source/disk/graph owner gate across normal proof and diagnostic isolation, so failed region attribution cannot report stale source errors after reentrant edits. Mint evidence remains separate. |
+| 1 | **Source/graph reconciliation and compiler proof consolidation** | v2.125 consolidates live-source function indexing and keyword-call shadow admission. v2.126–v2.127 capture source snapshots and guard linked imports. v2.139 guards saved-byte preimages; v2.140 binds generated and independent compiler receipts to exact graph revisions; v2.141 closes link attachment; v2.142 consolidates success/refusal owner checks through function-level diagnostics. Next characterize bounded source-to-graph round trips and avoid speculative compiler services. Refuse unsupported AST, fuzzy renames and partial imports. |
 | 2 | **Unified tab, route and root compatibility cleanup** | v2.129 fixed destination registry identity, v2.130 consolidated close dispatch, v2.131 stages new secondary pages, v2.132 consolidated selected-view alias binding, and v2.133 stops inactive provider-close focus theft. Next characterize protected source-root bootstrap and remaining aliases; do not delete anchors without actual native parity evidence. |
 | 3 | **Conservative resource capabilities** | Existing previews, imports, literal-reference evidence, relationship inspection, precise source jumps and visible-hop search are implemented. Prefer usability/diagnostics over a recursive filesystem index; static edges are not proven runtime dependencies. |
 | 4 | **Future IDE/language support** | Run/debug/LSP/DAP, other languages and an extension host require stable adapter and execution contracts. Do not build speculative infrastructure before core Python round-trip milestones qualify. |
 
-## v2.141 — link attachment preimage closure (CI / Mint pending)
+## v2.142 — independent compiler diagnostic owner gate consolidation (CI / Mint pending)
+
+- `_independent_functions_plan` now has one local `assert_proof_owners`
+  guard using its existing source/disk and ProgramGraph revision check.
+  Full proof failure, regional failure attribution, combined-refusal
+  diagnostics and successful evidence mapping share that guard rather than
+  duplicating or omitting conflict checks. No additional compiler pass,
+  mutable snapshot, parser, source writer or graph owner.
+- Six adversarial tests in
+  `tests/test_v2142_independent_diagnostic_preimage.py` verify valid
+  review/import plus source editor, external disk, saved-byte-only and
+  graph changes during region diagnostics; combined-only refusal cannot
+  mask a later source revision. See
+  `docs/architecture/PHASE4-INDEPENDENT-DIAGNOSTIC-PREIMAGE-v2.142.md`.
+
+## v2.141 — link attachment preimage closure (GitHub CI PASS / Mint pending)
 
 - `LinkedPythonSource.attach` now snapshots its existing ProgramGraph and
   SourceDocumentSession versions before preview/fingerprint admission.

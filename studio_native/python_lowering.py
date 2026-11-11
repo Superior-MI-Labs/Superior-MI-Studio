@@ -2409,6 +2409,15 @@ def _independent_functions_plan(graph, session, functions, *, expected_graph_rev
     _assert_independent_source_snapshot(
         session,source_revision,source_text,source_saved_raw,
         stage='before independent function review')
+
+    def assert_proof_owners():
+        """One source/disk/graph gate shared by result and error attribution."""
+        if graph.revision != expected_graph_revision:
+            raise GraphConflict('Graph revision changed during independent function review')
+        _assert_independent_source_snapshot(
+            session,source_revision,source_text,source_saved_raw,
+            stage='during independent function review')
+
     try:
         raw=source_text.encode('utf-8')
     except UnicodeError as exc:
@@ -2493,16 +2502,9 @@ def _independent_functions_plan(graph, session, functions, *, expected_graph_rev
             allow_pure_reordering=True, _baseline_preview=baseline,
             _baseline_tree=canonical)
     except ProgramGraphError as exc:
-        # A concurrent graph edit invalidates an earlier compiler witness,
-        # even when it changed presentation only. Never attribute a failed
-        # proof to an old source region after the ProgramGraph owner advanced.
-        if graph.revision != expected_graph_revision:
-            raise GraphConflict('Graph revision changed during independent function review') from exc
-        # Reentrant source/disk updates invalidate even a failed proof's
-        # attribution: report the owner conflict, not a misleading function.
-        _assert_independent_source_snapshot(
-            session,source_revision,source_text,source_saved_raw,
-            stage='during independent function review')
+        # Reentrant source or graph edits outrank stale compiler diagnostics.
+        # The same gate will also protect every trial region attribution.
+        assert_proof_owners()
         # A failed multi-region proof must name the offending source region.
         # Isolate each selected function against the same canonical baseline;
         # this diagnostic reuses the compiler rather than independently
@@ -2524,38 +2526,29 @@ def _independent_functions_plan(graph, session, functions, *, expected_graph_rev
                     allow_pure_reordering=True, _baseline_preview=baseline,
                     _baseline_tree=canonical)
             except ProgramGraphError as region_error:
-                if graph.revision != expected_graph_revision:
-                    raise GraphConflict('Graph revision changed during independent function review') from region_error
+                assert_proof_owners()
                 region=selected[name]
                 raise ProgramGraphError(
                     f'Function {name!r} (source lines {region.lineno}-{region.end_lineno}): '
                     f'{region_error}') from exc
         # In the unlikely case that each individual region is valid but their
         # combination is not, retain the complete batch refusal intact.
+        assert_proof_owners()
         raise ProgramGraphError('Combined function review refused: '+str(exc)) from exc
     if any(change.function not in selected for change in review.changes):
         raise ProgramGraphError('Proposed edits escaped the selected functions')
-    # The compiler is synchronous, but source and disk can still change
-    # through reentrant host callbacks. A review receipt must describe the
-    # exact revision/bytes used for the initial proof, not a later revision.
-    _assert_independent_source_snapshot(
-        session,source_revision,source_text,source_saved_raw,
-        stage='during independent function review')
-    if graph.revision != expected_graph_revision:
-        raise GraphConflict('Graph revision changed during independent function review')
+    # The compiler is synchronous, but a review and its advisory evidence
+    # must be bound to the same original owners after any reentrant callback.
+    assert_proof_owners()
     lines,spans=_independent_change_lines(selected,canonical,baseline,review.changes,
                                          source_text)
     receipt=IndependentFunctionsReview(expected_graph_revision,source_revision,
         hashlib.sha256(raw).hexdigest(),names,
         tuple((name,selected[name].lineno,selected[name].end_lineno) for name in names),
         review.changes,len(external.body)-len(names),lines,spans)
-    # Span/line evidence is derived after proof. It too must describe the
-    # exact owner snapshot captured when qualification began.
-    _assert_independent_source_snapshot(
-        session,source_revision,source_text,source_saved_raw,
-        stage='during independent function review')
-    if graph.revision != expected_graph_revision:
-        raise GraphConflict('Graph revision changed during independent function review')
+    # Span/line evidence is derived after proof; its receipt cannot inherit a
+    # source, disk or graph revision observed later than the compiler witness.
+    assert_proof_owners()
     return receipt,commands
 
 

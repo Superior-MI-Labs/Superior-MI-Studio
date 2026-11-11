@@ -1,4 +1,20 @@
-# Codex start here — Superior MI Studio v2.141
+# Codex start here — Superior MI Studio v2.142
+
+## v2.142 — failed independent compiler diagnostics verify the exact owners (CI/host pending)
+
+The independent-function planner already rechecked graph/source/disk
+provenance on successful proofs, but a fallback regional compiler
+diagnostic could change the source or graph and still return a stale
+function-specific refusal. A small lexical `assert_proof_owners` within
+`_independent_functions_plan` now reuses the established saved-byte/disk
+source gate and ProgramGraph revision proof on every compiler success and
+diagnostic exit. The region-isolation loop remains bounded and read-only,
+and no compiler or document authority was added. Six headless adversarial
+tests check late editor, disk, saved-byte or graph changes, combined
+failure attribution, and a valid import. See
+`docs/architecture/PHASE4-INDEPENDENT-DIAGNOSTIC-PREIMAGE-v2.142.md`.
+v2.141 passed both GitHub CI lanes; v2.138 remains the latest Mint host PASS.
+
 
 ## v2.141 — linked-source attachment now verifies both owners after preview (CI/host pending)
 
