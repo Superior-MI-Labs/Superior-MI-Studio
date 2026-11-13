@@ -1219,9 +1219,13 @@ def main():
     screenshot=os.environ.get('SMI_QT_WORKSPACE_SCREENSHOT')
     if screenshot:
         assert w.grab().save(screenshot,'PNG'), 'Workspace visual capture failed'
-    # Check Save As and Open JSON independently of the native platform portal.
+    # Source-owned Save As must never write the unrelated legacy draft.
+    # The original JSON fixture now selects its actual Legacy / Dev owner.
+    assert w.save_as() is False
     with tempfile.TemporaryDirectory() as tmp:
         destination=Path(tmp)/'menu-smoke.json'
+        w.open_legacy_graph(w.canvas,'Node workspace')
+        w.canvas.setFocus();app.processEvents()
         w._choose_file=lambda **kw:(picked.append(kw) or str(destination))
         try:save_action.trigger()
         finally:w._choose_file=original_picker
@@ -1232,6 +1236,7 @@ def main():
         try:open_json_action.trigger()
         finally:w._choose_file=original_picker
         assert w.current_path==destination
+    w.activate_source_tab();w.source_canvas.setFocus();app.processEvents()
     # v1.6: the default right side is an editable .py text document, not the
     # old inspector. Node selection must highlight the exact source span.
     assert w.source_editor_dock.isVisible()
