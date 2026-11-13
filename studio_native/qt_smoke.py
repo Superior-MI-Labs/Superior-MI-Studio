@@ -846,7 +846,7 @@ def exercise_save_command_ownership(app):
         assert w.save_as() is False
 
         assert w.open_source_in_new_tab(source)
-        assert w.tabs.currentWidget() is not w.source_page
+        assert w.tabs.currentWidget() is not w._source_tabs['source'].page
         w.source_canvas.setFocus();app.processEvents()
         w.source_editor.setPlainText('value = 3\n');app.processEvents()
         assert w.save_current_document(), 'Secondary source view lost its owner'
