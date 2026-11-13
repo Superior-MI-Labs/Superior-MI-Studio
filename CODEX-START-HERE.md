@@ -1,4 +1,23 @@
-# Codex start here — Superior MI Studio v2.146
+# Codex start here — Superior MI Studio v2.147
+
+## v2.147 — selected-document save and linked-import outcome (CI / host pending)
+
+The existing `NativeLab` File Save and Save As actions dispatch through
+`_graph_tab_for_page` instead of falling through to the prototype draft
+when a resource or secondary source page is selected. The focused source
+editor dock still saves its source document. Source-owned Save As explicitly
+refuses until a separate file-fork contract is implemented. The explicit
+Legacy / Dev page retains its prototype saver.
+
+`ProgramWorkspace.import_linked_python_source` now records its existing
+ProgramGraph revision before import. If a later compiler receipt refresh
+fails after the graph revision changes, the UI repaints and reports the
+changed graph and unaccepted link, without concealing the committed edit.
+The compiler and source/document owners are unchanged. Native Qt smoke
+covers both boundaries. See
+`docs/architecture/PHASE5-SELECTED-DOCUMENT-MUTATION-OUTCOME-v2.147.md`.
+v2.146 passed GitHub CI headless/native Qt; v2.138 is the last uploaded
+Linux Mint host PASS. v2.147 still requires both CI lanes and Mint evidence.
 
 ## v2.146 — linked import receipt refresh validates before restamping (CI / host pending)
 

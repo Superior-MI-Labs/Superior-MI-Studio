@@ -26,7 +26,7 @@ from . import model as m
 from .boundary_edit import parameter_source, terminal_return_target, BoundaryEditError
 from .exit_routes import project_exit_routes, project_folded_exit_connections
 
-APP_TITLE = 'Superior MI Studio · Visual Programming Lab 2.146'
+APP_TITLE = 'Superior MI Studio · Visual Programming Lab 2.147'
 from .semantic_contract import describe_graph, ContractError, canvas_graph_source, port_presentation_role, validated_port_payloads, validated_edge_payloads
 from .assets import AssetIndex
 from .external_icons import ExternalIconAtlas, default_icon_atlas_directory, icon_id_for_resource, icon_id_for_source
@@ -2859,10 +2859,18 @@ class ProgramWorkspace(QWidget):
         if link is None:
             self.report('Import refused: link an exact open .py source first')
             return False
+        before_revision=self.document.revision
         try:
             changed=link.import_edits()
         except (ProgramGraphError,ValueError,TypeError) as exc:
-            self.report('Python source import refused; source text retained: '+str(exc))
+            # A later receipt refresh may refuse after the graph has committed.
+            # Report the actual graph state; never imply a rolled-back import.
+            if self.document.revision != before_revision:
+                self.refresh()
+                self.report('Graph changed during Python source import; link not accepted. '
+                            'Inspect graph and relink explicitly; source retained: '+str(exc))
+            else:
+                self.report('Python source import refused; source text retained: '+str(exc))
             return False
         if changed:
             self.refresh()
@@ -6973,12 +6981,21 @@ class NativeLab(QMainWindow):
         self.setWindowTitle(APP_TITLE)
 
     def save_current_document(self):
-        # Ctrl+S follows the source document even when its AST is invalid.
-        program=self._program_tabs.get(self.tabs.currentWidget())
-        if program is not None:return program.save()
-        if self._active_source_document() and (self.tabs.currentWidget() is self.source_page or self.source_editor.hasFocus()):
+        """Save the selected document owner, never a last-active prototype."""
+        page=self.tabs.currentWidget()
+        view=self._graph_tab_for_page(page)
+        if isinstance(view,ProgramWorkspace):
+            return view.save()
+        # A focused source-editor dock is an explicit source action.
+        if isinstance(view,SourceTabView) or self.source_editor.hasFocus():
             return self.save_python_editor()
-        return self.save_graph()
+        if isinstance(view,ResourceTabView):
+            self.report('Resource graph is read-only; no document to save')
+            return False
+        if page in self._legacy_pages.values():
+            return self.save_graph()
+        self.report('No writable document selected')
+        return False
 
     def save_graph(self):
         if not self.current_path:return self.save_as()
@@ -6987,9 +7004,16 @@ class NativeLab(QMainWindow):
         self.dirty=False;self.setWindowTitle(APP_TITLE);self.report(f'Saved {self.current_path}')
 
     def save_as(self):
-        program=self._program_tabs.get(self.tabs.currentWidget())
-        if program is not None:
-            return program.save_as()
+        page=self.tabs.currentWidget()
+        view=self._graph_tab_for_page(page)
+        if isinstance(view,ProgramWorkspace):
+            return view.save_as()
+        if isinstance(view,(SourceTabView,ResourceTabView)) or self.source_editor.hasFocus():
+            self.report('Save As is not available for this view; no other document was written')
+            return False
+        if page not in self._legacy_pages.values():
+            self.report('No writable document selected')
+            return False
         path=self._choose_file(title='Save dynamic node graph',filters='Node Lab Graph (*.json);;All Files (*)',save=True,proposed=Path.home()/'node-lab.json')
         if not path:return
         candidate=Path(path)
