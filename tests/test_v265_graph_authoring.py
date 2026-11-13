@@ -184,7 +184,14 @@ class GuiContractTests(unittest.TestCase):
 
     def test_save_as_routes_to_program_document_not_legacy_draft(self):
         source=(ROOT/'studio_native/gui.py').read_text()
-        self.assertIn('return program.save_as()',source)
+        tree=ast.parse(source)
+        native=next(n for n in tree.body if isinstance(n,ast.ClassDef) and n.name=='NativeLab')
+        handler=next(n for n in native.body if isinstance(n,ast.FunctionDef) and n.name=='save_as')
+        dispatch=ast.get_source_segment(source,handler)
+        self.assertIn('view=self._graph_tab_for_page(page)',dispatch)
+        self.assertIn('if isinstance(view,ProgramWorkspace):',dispatch)
+        self.assertIn('return view.save_as()',dispatch)
+        self.assertIn('if page not in self._legacy_pages.values():',dispatch)
         self.assertIn('fork=self.document.save_as(path)',source)
         self.assertIn('self.document=fork',source)
 

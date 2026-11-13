@@ -829,6 +829,87 @@ def exercise_program_workspace(app):
         assert w.close();app.processEvents()
 
 
+
+def exercise_save_command_ownership(app):
+    """Ctrl+S and Save As must never save an inactive prototype graph."""
+    print('QT_STAGE selected-document-save-ownership',flush=True)
+    w=NativeLab();w.show();app.processEvents()
+    with tempfile.TemporaryDirectory() as directory:
+        source=Path(directory)/'editable.py'
+        source.write_text('value = 1\n',encoding='utf-8')
+        assert w._open_python_source_path(source)
+        w.tabs.setCurrentWidget(w.source_page);w.source_canvas.setFocus()
+        w.source_editor.setPlainText('value = 2\n');app.processEvents()
+        assert w._active_source_document().dirty
+        assert w.save_current_document()
+        assert source.read_text(encoding='utf-8')=='value = 2\n'
+        assert w.save_as() is False
+
+        assert w.open_source_in_new_tab(source)
+        assert w.tabs.currentWidget() is not w._source_tabs['source'].page
+        w.source_canvas.setFocus();app.processEvents()
+        w.source_editor.setPlainText('value = 3\n');app.processEvents()
+        assert w.save_current_document(), 'Secondary source view lost its owner'
+        assert source.read_text(encoding='utf-8')=='value = 3\n'
+        assert w.save_as() is False
+
+        w.tabs.setCurrentWidget(w.resource_page)
+        w.resource_canvas.setFocus();app.processEvents()
+        assert w.save_current_document() is False
+        assert w.save_as() is False
+        assert source.read_text(encoding='utf-8')=='value = 3\n'
+        assert w.current_path is None
+
+        # Preserve the explicitly selected prototype page until migration.
+        w.open_legacy_graph(w.canvas,'Node workspace')
+        w.canvas.setFocus();app.processEvents()
+        w.current_path=Path(directory)/'legacy.json'
+        w.save_current_document()
+        assert w.current_path.is_file()
+    assert w.close();app.processEvents()
+
+
+def exercise_linked_import_outcome(app):
+    """A refused postcommit receipt must still show the committed graph."""
+    print('QT_STAGE linked-postcommit-ui-outcome',flush=True)
+    from unittest.mock import patch
+    from . import python_lowering as compiler
+    from .program_graph import ProgramGraphError
+
+    w=NativeLab();w.show();app.processEvents()
+    with tempfile.TemporaryDirectory() as directory:
+        example=Path(__file__).resolve().parents[1]/'examples/qualified-integer-program.smi-graph'
+        program=w.open_visual_program(path=example)
+        assert program is not None
+        original=program.preview_python(show=False).source
+        assert original is not None
+        source=Path(directory)/'linked.py'
+        source.write_text(original,encoding='utf-8')
+        session=SourceDocumentSession.open(source)
+        assert program.link_python_source(session=session)
+        accepted_revision=program._source_link.graph_revision
+        session.update(_replace_once_for_smoke(original,'_smi_value_0 = 1','_smi_value_0 = 17'))
+        original_preview=compiler.preview_python
+
+        def refuse_after_graph_commit(state):
+            if program.document.revision!=accepted_revision:
+                raise ProgramGraphError('injected postcommit receipt failure')
+            return original_preview(state)
+
+        with patch.object(compiler,'preview_python',side_effect=refuse_after_graph_commit):
+            assert program.import_linked_python_source() is False
+        assert program.document.revision==accepted_revision+1
+        assert program._source_link.graph_revision==accepted_revision
+        assert f'revision {program.document.revision}' in program.status.text()
+        status=w.statusBar().currentMessage()
+        assert 'Graph changed during Python source import' in status,status
+        assert 'link not accepted' in status,status
+        assert source.read_text(encoding='utf-8')==original
+        assert session.dirty and '17' in session.text
+        assert program.save_as(path=Path(directory)/'retained-graph.smi-graph')
+    assert w.close();app.processEvents()
+
+
 def main():
     # Qt may report an exception raised by a Python slot through sys.excepthook
     # and continue its event loop. A completed screenshot is not proof of a
@@ -864,6 +945,8 @@ def main():
         return
     if os.environ.get('SMI_QT_PROGRAM_ONLY')=='1':
         exercise_program_workspace(app)
+        exercise_save_command_ownership(app)
+        exercise_linked_import_outcome(app)
         app.processEvents()
         _test_config.cleanup()
         sys.excepthook=previous_excepthook
@@ -1136,9 +1219,13 @@ def main():
     screenshot=os.environ.get('SMI_QT_WORKSPACE_SCREENSHOT')
     if screenshot:
         assert w.grab().save(screenshot,'PNG'), 'Workspace visual capture failed'
-    # Check Save As and Open JSON independently of the native platform portal.
+    # Source-owned Save As must never write the unrelated legacy draft.
+    # The original JSON fixture now selects its actual Legacy / Dev owner.
+    assert w.save_as() is False
     with tempfile.TemporaryDirectory() as tmp:
         destination=Path(tmp)/'menu-smoke.json'
+        w.open_legacy_graph(w.canvas,'Node workspace')
+        w.canvas.setFocus();app.processEvents()
         w._choose_file=lambda **kw:(picked.append(kw) or str(destination))
         try:save_action.trigger()
         finally:w._choose_file=original_picker
@@ -1149,6 +1236,7 @@ def main():
         try:open_json_action.trigger()
         finally:w._choose_file=original_picker
         assert w.current_path==destination
+    w.activate_source_tab();w.source_canvas.setFocus();app.processEvents()
     # v1.6: the default right side is an editable .py text document, not the
     # old inspector. Node selection must highlight the exact source span.
     assert w.source_editor_dock.isVisible()
