@@ -26,7 +26,7 @@ from . import model as m
 from .boundary_edit import parameter_source, terminal_return_target, BoundaryEditError
 from .exit_routes import project_exit_routes, project_folded_exit_connections
 
-APP_TITLE = 'Superior MI Studio · Visual Programming Lab 2.147'
+APP_TITLE = 'Superior MI Studio · Visual Programming Lab 2.148'
 from .semantic_contract import describe_graph, ContractError, canvas_graph_source, port_presentation_role, validated_port_payloads, validated_edge_payloads
 from .assets import AssetIndex
 from .external_icons import ExternalIconAtlas, default_icon_atlas_directory, icon_id_for_resource, icon_id_for_source
@@ -1107,9 +1107,6 @@ class NodeItem(QGraphicsObject):
         # Historic name kept for callers; it now returns all 8 resize grips.
         if not (self.region and self.surface):return None
         return resize_handle(pos.x(),pos.y(),self.width,self.height)
-
-    def _at_graph_resize_grip(self,pos):
-        return bool(self._resize_corner(pos))
 
     def hoverMoveEvent(self,event):
         corner=self._resize_corner(event.pos())
@@ -4331,10 +4328,6 @@ class NativeLab(QMainWindow):
         return propose_composed_call(self.python_doc,scope,
                 CallComposition(selector.currentData(),tuple(inputs),result.text(),feed.isChecked()),anchor)
 
-    def _create_qualified_branch(self):
-        """Compatibility entry point; the adapter owns the actual operation."""
-        self._create_qualified_operation('python.branch-early-return.v1')
-
     def _create_qualified_operation(self, operation_id: str, *, pin=None, qualified_action=None,
                                     preferred_value=None, preferred_symbol=None):
         """Present adapter-qualified inputs; all source writes use the existing review path."""
@@ -5003,8 +4996,11 @@ class NativeLab(QMainWindow):
 
     def _build_menu(self):
         file=self.menuBar().addMenu('File')
-        for label,callback,shortcut in [('New graph',self.new_graph,'Ctrl+N'),('Open JSON graph…',self.open_graph,'Ctrl+O'),
-                                        ('Save',self.save_current_document,'Ctrl+S'),('Save as…',self.save_as,'Ctrl+Shift+S')]:
+        for label,callback,shortcut in [
+                ('New visual program (.smi-graph)',self.new_visual_program,'Ctrl+N'),
+                ('Open visual program (.smi-graph)…',self.open_visual_program,'Ctrl+O'),
+                ('Save',self.save_current_document,'Ctrl+S'),
+                ('Save as…',self.save_as,'Ctrl+Shift+S')]:
             action=QAction(label,self);action.triggered.connect(callback);action.setShortcut(shortcut);file.addAction(action)
         file.addSeparator()
         new_python=QAction('New Python source file…',self)
@@ -5027,9 +5023,6 @@ class NativeLab(QMainWindow):
         file.addAction(close_tab)
         py_save=QAction('Save Python text',self);py_save.setShortcut('Ctrl+Alt+S')
         py_save.triggered.connect(self.save_python_editor);file.addAction(py_save)
-        file.addSeparator()
-        file.addAction('New visual program (.smi-graph)',self.new_visual_program)
-        file.addAction('Open visual program (.smi-graph)…',self.open_visual_program)
         edit_menu=self.menuBar().addMenu('Edit')
         # Committed edits have a separate explicit history/shortcut.
         edit_menu.addAction('Undo unsaved Python text',self.undo_source_draft)
@@ -5063,9 +5056,12 @@ class NativeLab(QMainWindow):
             action.toggled.connect(lambda visible,c=canvas,l=label:
                                    self.toggle_legacy_graph(c,l,visible))
             self._legacy_actions[canvas]=action
+        legacy.addSeparator()
+        legacy.addAction('New prototype graph',self.new_graph)
+        legacy.addAction('Open prototype JSON…',self.open_graph)
+        legacy.addAction('Add String Constant',lambda:self.create_node('string'))
+        legacy.addAction('Add Custom Node',lambda:self.create_node('custom'))
         graph=self.menuBar().addMenu('Graph')
-        graph.addAction('Add String Constant',lambda:self.create_node('string'))
-        graph.addAction('Add Custom Node',lambda:self.create_node('custom'))
         graph.addAction('Reset zoom',self.reset_current_zoom)
         graph.addAction('Open Python scope graph',self.activate_source_tab)
         graph.addAction('Open current source in new tab',lambda:self.open_source_in_new_tab(self.python_doc.path,self.source_scope if self.source_view_mode=='focus' else 'module') if self.python_doc else None)
@@ -5680,10 +5676,6 @@ class NativeLab(QMainWindow):
         if mode=='always':return True
         return node.hovered or node.canvas.space_held or bool(node.canvas.pending)
 
-    def is_port_connected(self,node_id,port_id):
-        return any((e['source']==node_id and e['sourcePort']==port_id) or
-                   (e['target']==node_id and e['targetPort']==port_id) for e in self.state['edges'])
-
     def report(self,text):self.statusBar().showMessage(text,7000)
     def mark_changed(self,settings_view=False):
         if settings_view:return
@@ -5817,9 +5809,6 @@ class NativeLab(QMainWindow):
         timer.timeout.connect(timeout)
         process.start();timer.start()
         dlg.show()
-
-    def source_nodes(self):
-        return self.source_graph['nodes'] if self.source_graph else []
 
     def is_source_port_connected(self,node_id,port_id):
         return bool(self.source_graph and any(
@@ -6963,6 +6952,7 @@ class NativeLab(QMainWindow):
     def new_graph(self):
         if not self.confirm_discard():return
         self.state=m.new_state();self.current_path=None;self.dirty=False
+        self.open_legacy_graph(self.canvas,'Node workspace')
         self.canvas.rebuild();self.settings_canvas.rebuild();self.refresh_inspector()
         self.setWindowTitle(APP_TITLE)
 
@@ -6977,6 +6967,7 @@ class NativeLab(QMainWindow):
         try:loaded=m.read_state(path)
         except (OSError,ValueError) as exc:QMessageBox.warning(self,'Invalid graph',str(exc));return
         self.state=loaded;self.current_path=Path(path);self.dirty=False
+        self.open_legacy_graph(self.canvas,'Node workspace')
         self.canvas.rebuild();self.settings_canvas.rebuild();self.refresh_inspector();self.report(f'Opened {path}')
         self.setWindowTitle(APP_TITLE)
 

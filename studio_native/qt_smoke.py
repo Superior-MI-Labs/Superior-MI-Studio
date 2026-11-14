@@ -910,6 +910,64 @@ def exercise_linked_import_outcome(app):
     assert w.close();app.processEvents()
 
 
+
+def exercise_legacy_command_ownership(app):
+    """Native IDE and explicit legacy prototype must never cross command owners."""
+    print('QT_STAGE native-program-and-legacy-command-ownership',flush=True)
+    from .gui import ProgramWorkspace
+    w=NativeLab();w.show();app.processEvents()
+    file_menu=next(a.menu() for a in w.menuBar().actions() if a.text()=='File')
+    view_menu=next(a.menu() for a in w.menuBar().actions() if a.text()=='View')
+    graph_menu=next(a.menu() for a in w.menuBar().actions() if a.text()=='Graph')
+    legacy_menu=next(a.menu() for a in view_menu.actions() if a.text()=='Legacy / Dev')
+    file_actions={a.text():a for a in file_menu.actions()}
+    legacy_actions={a.text():a for a in legacy_menu.actions()}
+    assert 'New graph' not in file_actions and 'Open JSON graph…' not in file_actions
+    assert 'Add String Constant' not in {a.text() for a in graph_menu.actions()}
+    assert 'Add Custom Node' not in {a.text() for a in graph_menu.actions()}
+    new_program=file_actions['New visual program (.smi-graph)']
+    open_program=file_actions['Open visual program (.smi-graph)…']
+    assert new_program.shortcut().toString()=='Ctrl+N'
+    assert open_program.shortcut().toString()=='Ctrl+O'
+    assert {'New prototype graph','Open prototype JSON…',
+            'Add String Constant','Add Custom Node'}.issubset(legacy_actions)
+    original_prototype=w.state
+    with tempfile.TemporaryDirectory() as directory:
+        new_program.trigger();app.processEvents()
+        program=w.tabs.currentWidget()
+        assert isinstance(program,ProgramWorkspace)
+        assert w.state is original_prototype
+        assert w.current_canvas() is program.canvas
+        saved=Path(directory)/'native.smi-graph'
+        assert program.save(path=saved)
+        w._close_graph_tab(w.tabs.indexOf(program));app.processEvents()
+        assert w.tabs.indexOf(program)<0
+        chosen=[]
+        original_picker=w._choose_file
+        w._choose_file=lambda **kw:(chosen.append(kw) or str(saved))
+        try:open_program.trigger()
+        finally:w._choose_file=original_picker
+        opened=w.tabs.currentWidget()
+        assert isinstance(opened,ProgramWorkspace)
+        assert opened.document.path==saved
+        assert w.state is original_prototype
+        w._close_graph_tab(w.tabs.indexOf(opened));app.processEvents()
+
+        legacy_actions['New prototype graph'].trigger();app.processEvents()
+        assert w.tabs.currentWidget() is w._legacy_pages[w.canvas]
+        assert w.current_path is None
+        prototype=Path(directory)/'prototype.json'
+        w.current_path=prototype
+        w.save_current_document()
+        assert prototype.is_file() and model.read_state(prototype)['format']==model.FORMAT
+        legacy_actions['Add String Constant'].trigger();app.processEvents()
+        assert w.tabs.currentWidget() is w._legacy_pages[w.canvas]
+        assert w.dirty and any(n['kind']=='string' for n in w.state['nodes'])
+        w.save_current_document()
+        assert not w.dirty
+    assert w.close();app.processEvents()
+
+
 def main():
     # Qt may report an exception raised by a Python slot through sys.excepthook
     # and continue its event loop. A completed screenshot is not proof of a
@@ -947,6 +1005,7 @@ def main():
         exercise_program_workspace(app)
         exercise_save_command_ownership(app)
         exercise_linked_import_outcome(app)
+        exercise_legacy_command_ownership(app)
         app.processEvents()
         _test_config.cleanup()
         sys.excepthook=previous_excepthook
@@ -1197,8 +1256,12 @@ def main():
                      if action.text().startswith('Open Python file as graph'))
     save_action=next(action for action in w.menuBar().actions()[0].menu().actions()
                      if action.text().startswith('Save as'))
-    open_json_action=next(action for action in w.menuBar().actions()[0].menu().actions()
-                     if action.text().startswith('Open JSON graph'))
+    view_menu=next(action.menu() for action in w.menuBar().actions()
+                   if action.text()=='View')
+    legacy_menu=next(action.menu() for action in view_menu.actions()
+                     if action.text()=='Legacy / Dev')
+    open_json_action=next(action for action in legacy_menu.actions()
+                          if action.text().startswith('Open prototype JSON'))
     picked=[]
     original_picker=w._choose_file
     w._choose_file=lambda **kw:(picked.append(kw) or str(demo))
