@@ -1,6 +1,6 @@
 # Superior MI Studio — canonical implementation queue
 
-**Source candidate:** v2.147 (selected-document Save routing and truthful linked-source import failure outcomes; GitHub CI and Linux Mint host pending). **Latest uploaded Linux Mint host PASS:** v2.138 (`qualification-20261110-184157-31566.tar.gz`: 1,405 tests and native Qt `NATIVE_QT_SMOKE_PASS`, `CHECKS_PASS`). **v2.146 GitHub CI:** headless and native Qt PASS. The installer still owns managed cleanup only after native qualification.
+**Source candidate:** v2.148 (native program File commands and explicit Legacy / Dev prototype ownership; GitHub CI and Linux Mint host pending). **Latest uploaded Linux Mint host PASS:** v2.138 (`qualification-20261110-184157-31566.tar.gz`: 1,405 tests and native Qt `NATIVE_QT_SMOKE_PASS`, `CHECKS_PASS`). **v2.147 GitHub CI:** headless and native Qt PASS. The installer still owns managed cleanup only after native qualification.
 
 **Product direction:** One VS Code-style workspace and navigable graph, Blueprint-grade visual interactions, interchangeable source and visual programming where semantics can be proven, a growing set of file/asset previewers and relationship providers. Python is the first language, **not** the only target. Source, graph and binary resources keep specialized authoritative owners; shared presentation/tabs do not imply a universal writable AST.
 
@@ -8,11 +8,23 @@
 
 | Priority | Work | Required proof / no-go |
 |---|---|---|
-| 0 | **Qualify v2.147 GitHub native CI and Linux Mint** | v2.146 passed both CI lanes; v2.138 remains the last Mint PASS. Verify that Save and Save As target the selected document owner, and linked-import receipt failures report an advanced graph revision. Mint host proof remains independent. |
+| 0 | **Qualify v2.148 GitHub native CI and Linux Mint** | v2.147 passed both CI lanes; v2.138 remains the last Mint PASS. Verify native New/Open command routing and Legacy / Dev prototype preservation; removed helpers must not be needed by core or native qualification. Mint host proof remains independent. |
 | 1 | **Source/graph reconciliation and compiler proof consolidation** | v2.125 consolidates live-source indexing and keyword-call admission. v2.126–v2.127 capture source snapshots and linked imports. v2.139–v2.145 guard saved-byte, graph-revision, attachment, diagnostic, publication and linked receipt inspection. v2.146 keeps post-import link receipt stamping behind regenerated Python and live owner proof. Next characterize actual source-to-graph round trips and remove proven duplication only. Refuse unsupported AST, fuzzy renames, partial imports and speculative compiler services. |
 | 2 | **Unified tab, route and root compatibility cleanup** | v2.129 fixed destination registry identity, v2.130 consolidated close dispatch, v2.131 stages new secondary pages, v2.132 consolidated selected-view alias binding, and v2.133 stops inactive provider-close focus theft. Next characterize protected source-root bootstrap and remaining aliases; do not delete anchors without actual native parity evidence. |
 | 3 | **Conservative resource capabilities** | Existing previews, imports, literal-reference evidence, relationship inspection, precise source jumps and visible-hop search are implemented. Prefer usability/diagnostics over a recursive filesystem index; static edges are not proven runtime dependencies. |
 | 4 | **Future IDE/language support** | Run/debug/LSP/DAP, other languages and an extension host require stable adapter and execution contracts. Do not build speculative infrastructure before core Python round-trip milestones qualify. |
+
+## v2.148 — native/legacy command boundary and dead-helper removal (GitHub CI / Mint pending)
+
+- Ctrl+N/Ctrl+O and ordinary File New/Open now use the existing native
+  `.smi-graph` program authoring and opening path.
+- The retained prototype `smi.dynamic-node-lab` JSON New/Open and draft
+  node commands move under View > Legacy / Dev. Opening an admitted prototype
+  graph selects its actual legacy tab; no new editor/controller/registry.
+- Four unreferenced Qt helpers are removed; source rewiring keeps its
+  explicitly native-tested entry point. New native Qt stage checks actual
+  QAction routing, shortcuts, native persistence and prototype persistence.
+  See `docs/architecture/PHASE5-NATIVE-LEGACY-COMMAND-BOUNDARY-v2.148.md`.
 
 ## v2.147 — selected-document mutation ownership (GitHub CI / Mint pending)
 

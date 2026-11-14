@@ -20,7 +20,7 @@ import time
 import zipfile
 
 APP_NAME = 'Superior-MI-Python-Visual-Programming-Lab'
-VERSION = 'v2.147'
+VERSION = 'v2.148'
 BASENAME = f'{APP_NAME}-{VERSION}'
 VERSION_DIRECTORY = re.compile(rf'{re.escape(APP_NAME)}-v\d+\.\d+(?:\.\d+)?\Z')
 REPORT_NAME = re.compile(r'qualification-\d{8}-\d{6}-\d+\Z')
