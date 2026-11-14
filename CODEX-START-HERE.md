@@ -1,4 +1,25 @@
-# Codex start here — Superior MI Studio v2.147
+# Codex start here — Superior MI Studio v2.148
+
+## v2.148 — native graph commands own the workbench shortcuts (CI / host pending)
+
+Normal File > New/Open commands and Ctrl+N/Ctrl+O now create and open native
+`.smi-graph` documents. The old `smi.dynamic-node-lab` JSON prototype and
+its node creators remain available explicitly under View > Legacy / Dev;
+prototype New/Open now select that existing page after admission.
+Four GUI methods without active callers were removed
+(`_at_graph_resize_grip`, `_create_qualified_branch`,
+`is_port_connected`, `source_nodes`). The existing qualified authoring
+action, resize-handle path, graph descriptor and source-edit gates remain.
+Do not remove `rewire_python_input`: native Qt still exercises it.
+Shared GraphCanvas/GraphViewSessions/ProgramGraph owners are unchanged.
+
+Native Qt checks real menu actions, shortcuts, native graph save/open,
+explicit prototype editing, and retained JSON format. All previous
+headless and native stages must pass before promotion. See
+`docs/architecture/PHASE5-NATIVE-LEGACY-COMMAND-BOUNDARY-v2.148.md`.
+v2.147 passed GitHub headless/native Qt; v2.138 remains the latest
+uploaded Linux Mint host PASS.
+
 
 ## v2.147 — selected-document save and linked-import outcome (CI / host pending)
 
