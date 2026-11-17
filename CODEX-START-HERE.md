@@ -1,4 +1,24 @@
-# Codex start here — Superior MI Studio v2.148
+# Codex start here — Superior MI Studio v2.149
+
+## v2.149 — legacy developer tab close cannot steal foreground (CI / host pending)
+
+After v2.148 moved prototype commands under the Legacy / Dev menu, an
+inactive prototype toggle-off still called `activate_source_tab`, taking
+foreground focus from an unrelated native ProgramGraph, resource, or source
+view. The existing `toggle_legacy_graph` now distinguishes the selected
+page from an inactive developer page; it selects the protected source-root
+only if the removed developer page was selected. No source/resource
+`GraphViewSession`, camera, document, or registry is re-owned.
+The original prototype JSON model is retained in full under ADR-014.
+
+`QT_STAGE legacy-visibility-preserves-selected-document` covers the actual
+QAction check state, hidden inactive legacy views with native-program/resource
+foreground, an active legacy view while a secondary source alias exists,
+source root recovery, and secondary route persistence. One focused headless
+contract test documents the guard. See
+`docs/architecture/PHASE5-LEGACY-FOREGROUND-RETENTION-v2.149.md`.
+v2.148 passed GitHub headless/native Qt CI; Mint host still needs evidence.
+
 
 ## v2.148 — native graph commands own the workbench shortcuts (CI / host pending)
 

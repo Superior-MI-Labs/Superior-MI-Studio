@@ -1,6 +1,6 @@
 # Superior MI Studio — canonical implementation queue
 
-**Source candidate:** v2.148 (native program File commands and explicit Legacy / Dev prototype ownership; GitHub CI and Linux Mint host pending). **Latest uploaded Linux Mint host PASS:** v2.138 (`qualification-20261110-184157-31566.tar.gz`: 1,405 tests and native Qt `NATIVE_QT_SMOKE_PASS`, `CHECKS_PASS`). **v2.147 GitHub CI:** headless and native Qt PASS. The installer still owns managed cleanup only after native qualification.
+**Source candidate:** v2.149 (legacy developer tab foreground retention; GitHub CI and Linux Mint host pending). **Latest uploaded Linux Mint host PASS:** v2.138 (`qualification-20261110-184157-31566.tar.gz`: 1,405 tests and native Qt `NATIVE_QT_SMOKE_PASS`, `CHECKS_PASS`). **v2.148 GitHub CI:** headless and native Qt PASS. The installer still owns managed cleanup only after native qualification.
 
 **Product direction:** One VS Code-style workspace and navigable graph, Blueprint-grade visual interactions, interchangeable source and visual programming where semantics can be proven, a growing set of file/asset previewers and relationship providers. Python is the first language, **not** the only target. Source, graph and binary resources keep specialized authoritative owners; shared presentation/tabs do not imply a universal writable AST.
 
@@ -8,11 +8,23 @@
 
 | Priority | Work | Required proof / no-go |
 |---|---|---|
-| 0 | **Qualify v2.148 GitHub native CI and Linux Mint** | v2.147 passed both CI lanes; v2.138 remains the last Mint PASS. Verify native New/Open command routing and Legacy / Dev prototype preservation; removed helpers must not be needed by core or native qualification. Mint host proof remains independent. |
+| 0 | **Qualify v2.149 GitHub native CI and Linux Mint** | v2.148 passed both CI lanes; v2.138 remains the last Mint PASS. Verify hiding inactive legacy developer pages never changes selected source/resource/ProgramGraph, and active legacy close returns to protected source root. Mint host proof remains independent. |
 | 1 | **Source/graph reconciliation and compiler proof consolidation** | v2.125 consolidates live-source indexing and keyword-call admission. v2.126–v2.127 capture source snapshots and linked imports. v2.139–v2.145 guard saved-byte, graph-revision, attachment, diagnostic, publication and linked receipt inspection. v2.146 keeps post-import link receipt stamping behind regenerated Python and live owner proof. Next characterize actual source-to-graph round trips and remove proven duplication only. Refuse unsupported AST, fuzzy renames, partial imports and speculative compiler services. |
 | 2 | **Unified tab, route and root compatibility cleanup** | v2.129 fixed destination registry identity, v2.130 consolidated close dispatch, v2.131 stages new secondary pages, v2.132 consolidated selected-view alias binding, and v2.133 stops inactive provider-close focus theft. Next characterize protected source-root bootstrap and remaining aliases; do not delete anchors without actual native parity evidence. |
 | 3 | **Conservative resource capabilities** | Existing previews, imports, literal-reference evidence, relationship inspection, precise source jumps and visible-hop search are implemented. Prefer usability/diagnostics over a recursive filesystem index; static edges are not proven runtime dependencies. |
 | 4 | **Future IDE/language support** | Run/debug/LSP/DAP, other languages and an extension host require stable adapter and execution contracts. Do not build speculative infrastructure before core Python round-trip milestones qualify. |
+
+## v2.149 — legacy developer-tab foreground retention (GitHub CI / Mint pending)
+
+- `toggle_legacy_graph` now captures whether the actual Qt-selected page
+  is the legacy page before removing it. An inactive developer page cannot
+  pull focus to a transient source alias. Closing a selected legacy page
+  returns to the protected source-root page, not a last-active secondary.
+- No new manager or registry; source/resource sessions, ProgramGraph,
+  cameras, prototype schema and document persistence remain unchanged.
+- Native Qt regression exercises both inactive-close provider families,
+  native graph focus, and the source-root/secondary alias distinction.
+  See `docs/architecture/PHASE5-LEGACY-FOREGROUND-RETENTION-v2.149.md`.
 
 ## v2.148 — native/legacy command boundary and dead-helper removal (GitHub CI / Mint pending)
 

@@ -968,6 +968,65 @@ def exercise_legacy_command_ownership(app):
     assert w.close();app.processEvents()
 
 
+
+def exercise_legacy_foreground_close(app):
+    """Closing hidden/inactive prototype tabs must retain true Qt foreground."""
+    print('QT_STAGE legacy-visibility-preserves-selected-document',flush=True)
+    w=NativeLab();w.show();app.processEvents()
+    resource_root=w._resource_tabs['resource'].page
+    source_root=w._source_tabs['source'].page
+    with tempfile.TemporaryDirectory() as directory:
+        program=w.new_visual_program()
+        assert program.save(path=Path(directory)/'selected.smi-graph')
+        w.open_legacy_graph(w.canvas,'Node workspace')
+        legacy_page=w._legacy_pages[w.canvas]
+        legacy_action=w._legacy_actions[w.canvas]
+        assert legacy_action.isChecked() and w.tabs.currentWidget() is legacy_page
+        w.tabs.setCurrentWidget(program);app.processEvents()
+        revision=program.document.revision
+        legacy_action.setChecked(False);app.processEvents()
+        assert w.tabs.currentWidget() is program
+        assert w.current_canvas() is program.canvas
+        assert program.document.revision==revision and not program.document.dirty
+        assert w.tabs.indexOf(legacy_page)==-1
+        assert not legacy_action.isChecked()
+
+        w.open_legacy_graph(w.settings_canvas,'Studio settings graph')
+        settings_page=w._legacy_pages[w.settings_canvas]
+        settings_action=w._legacy_actions[w.settings_canvas]
+        w.tabs.setCurrentWidget(resource_root);app.processEvents()
+        resource_route=w._view_sessions.get('resource').route
+        settings_action.setChecked(False);app.processEvents()
+        assert w.tabs.currentWidget() is resource_root
+        assert w.tabs.indexOf(settings_page)==-1
+        assert w._view_sessions.get('resource').route==resource_route
+        assert w.current_canvas() is w._resource_tabs['resource'].canvas
+
+        source=Path(directory)/'source.py'
+        source.write_text('def sample():\n    return 3\n',encoding='utf-8')
+        assert w._open_python_source_path(source)
+        assert w.open_source_in_new_tab(source)
+        secondary=w._source_tabs[w._active_source_tab_id]
+        assert secondary.session_id!='source'
+        assert w.tabs.currentWidget() is secondary.page
+        secondary_route=w._view_sessions.get(secondary.session_id).route
+        w.open_legacy_graph(w.canvas,'Node workspace')
+        assert legacy_action.isChecked()
+        assert w.tabs.currentWidget() is legacy_page
+        legacy_action.setChecked(False);app.processEvents()
+        assert w.tabs.currentWidget() is source_root
+        assert w._active_source_tab_id=='source'
+        assert w._view_sessions.get(secondary.session_id).route==secondary_route
+        assert w.tabs.indexOf(secondary.page)>=0
+        assert w._active_source_document().path==source
+        assert w.tabs.indexOf(legacy_page)==-1
+
+        w._close_graph_tab(w.tabs.indexOf(secondary.page));app.processEvents()
+        assert w.tabs.indexOf(secondary.page)==-1
+        assert w._view_sessions.get(secondary.session_id) is None
+    assert w.close();app.processEvents()
+
+
 def main():
     # Qt may report an exception raised by a Python slot through sys.excepthook
     # and continue its event loop. A completed screenshot is not proof of a
@@ -1006,6 +1065,7 @@ def main():
         exercise_save_command_ownership(app)
         exercise_linked_import_outcome(app)
         exercise_legacy_command_ownership(app)
+        exercise_legacy_foreground_close(app)
         app.processEvents()
         _test_config.cleanup()
         sys.excepthook=previous_excepthook
