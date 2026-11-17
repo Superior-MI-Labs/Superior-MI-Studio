@@ -12,7 +12,7 @@ We take inspiration from **VS Code's development workflow** and **Unreal Engine 
 
 **[Architecture](docs/architecture) · [Wiki](https://github.com/Superior-MI-Labs/Superior-MI-Studio/wiki) · [Development pipeline](docs/RELEASE-PIPELINE.md) · [Issues](https://github.com/Superior-MI-Labs/Superior-MI-Studio/issues)**
 
-> **Current status: pre-alpha · v2.148 development candidate (GitHub CI and Linux Mint native pending).** v2.148 moves prototype-only graph creation/open commands under Legacy / Dev, gives Ctrl+N/Ctrl+O to native visual program documents, and removes four unused GUI helpers. v2.147 passed GitHub headless and native Qt CI; v2.138 remains the latest uploaded Linux Mint host-qualified baseline (1,405 headless tests and native Qt PASS). Studio is not a stable release.
+> **Current status: pre-alpha · v2.149 development candidate (GitHub CI and Linux Mint native pending).** v2.149 preserves the selected source, resource or native-program tab when an inactive Legacy / Dev page is hidden, and returns to the protected source root when the selected legacy page is hidden. v2.148 passed GitHub headless and native Qt CI; v2.138 remains the latest uploaded Linux Mint host-qualified baseline (1,405 headless tests and native Qt PASS). Studio is not a stable release.
 
 ## The Studio workbench · v2.120 Linux preview
 

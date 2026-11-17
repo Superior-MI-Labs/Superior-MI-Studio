@@ -26,7 +26,7 @@ from . import model as m
 from .boundary_edit import parameter_source, terminal_return_target, BoundaryEditError
 from .exit_routes import project_exit_routes, project_folded_exit_connections
 
-APP_TITLE = 'Superior MI Studio · Visual Programming Lab 2.148'
+APP_TITLE = 'Superior MI Studio · Visual Programming Lab 2.149'
 from .semantic_contract import describe_graph, ContractError, canvas_graph_source, port_presentation_role, validated_port_payloads, validated_edge_payloads
 from .assets import AssetIndex
 from .external_icons import ExternalIconAtlas, default_icon_atlas_directory, icon_id_for_resource, icon_id_for_source
@@ -5617,12 +5617,17 @@ class NativeLab(QMainWindow):
     def toggle_legacy_graph(self,canvas,label,visible):
         if visible:
             self.open_legacy_graph(canvas,label)
-        else:
-            page=self._legacy_pages.get(canvas)
-            index=self.tabs.indexOf(page) if page is not None else -1
-            if index>=0:
-                self.tabs.removeTab(index)
-            self.activate_source_tab()
+            return
+        page=self._legacy_pages.get(canvas)
+        index=self.tabs.indexOf(page) if page is not None else -1
+        if index<0:return
+        closing_selected=self.tabs.currentWidget() is page
+        self.tabs.removeTab(index)
+        # An inactive developer tab must not steal the selected document.
+        # When it WAS selected, return to the protected source root rather
+        # than a last-active secondary source compatibility alias.
+        if closing_selected:
+            self.tabs.setCurrentWidget(self._source_tabs['source'].page)
 
     def focus_selected_scope(self):
         if not self.python_doc:
